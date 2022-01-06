@@ -1,0 +1,1 @@
+{"version":3,"file":"component---src-pages-components-navbar-js-9acf9f95bdc56864c74a.js","mappings":"0IAIA,UAHA,WACI,OAAO","sources":["webpack://nicolaspaillard/./src/pages/components/navbar.js"],"sourcesContent":["import * as React from 'react'\r\nfunction navbar() {\r\n    return <h2>Hi, I am a NavBar !</h2>;\r\n  }\r\nexport default navbar"],"names":[],"sourceRoot":""}
