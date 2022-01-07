@@ -1,2 +1,0 @@
-"use strict";(self.webpackChunknicolaspaillard=self.webpackChunknicolaspaillard||[]).push([[789],{979:function(a,l,e){e.r(l);var n=e(294);l.default=function(){return n.createElement("h2",null,"Hi, I am a NavBar !")}}}]);
-//# sourceMappingURL=component---src-pages-components-navbar-js-9acf9f95bdc56864c74a.js.map
