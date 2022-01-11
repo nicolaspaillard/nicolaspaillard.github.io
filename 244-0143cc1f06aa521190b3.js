@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunknicolaspaillard=self.webpackChunknicolaspaillard||[]).push([[244],{8244:function(e,n,t){t.r(n),t.d(n,{default:function(){return a}});var l=t(7294);function a(e){var n=e.events.map((function(e){return l.createElement("li",{class:"event"},l.createElement("h3",null,e.title),l.createElement("p",null,e.content))}));return l.createElement("ul",{class:"timeline"},n)}}}]);
+//# sourceMappingURL=244-0143cc1f06aa521190b3.js.map
