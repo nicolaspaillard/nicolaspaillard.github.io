@@ -1,0 +1,51 @@
+<canvas class="absolute bottom-0 left-0 right-0 top-0 opacity-50" (window:resize)="matrix()"></canvas>
+<div class="flex h-screen flex-col" [@routeAnimations]="prepareRoute(outlet)">
+  <nav class="container card sticky top-0 z-20 mx-auto flex items-center justify-center *:p-2 [&_button]:w-auto [&_button]:px-4 [&_button]:py-3">
+    <p-button routerLink="/" size="large" routerLinkActive="[&>*]:border [&>*]:border-solid [&>*]:border-[var(--primary-color)]" [routerLinkActiveOptions]="{ exact: true }" label="" [text]="true" styleClass="rounded-lg capitalize" icon="pi pi-home"></p-button>
+    <p-button *ngFor="let route of routes" size="large" [routerLink]="route.path" routerLinkActive="[&>*]:border [&>*]:border-solid [&>*]:border-[var(--primary-color)]" [label]="route.path" [text]="true" styleClass="rounded-lg capitalize"></p-button>
+    <p-button *ngIf="!user" size="large" (onClick)="isSignupShown = true">Inscription</p-button>
+    <p-button *ngIf="!user" size="large" (onClick)="isSigninShown = true">Connexion</p-button>
+    <p-button *ngIf="user" size="large" (onClick)="signout()">Déconnexion</p-button>
+  </nav>
+  <div class="container relative mx-auto grow overflow-x-hidden" [ngClass]="{ '!overflow-hidden': isTransitioning }">
+    <router-outlet #outlet="outlet"></router-outlet>
+  </div>
+</div>
+<p-toast [life]="5000" position="top-right"></p-toast>
+<p-confirmDialog [dismissableMask]="true"></p-confirmDialog>
+<p-dialog header="Connexion" [modal]="true" [(visible)]="isSigninShown" [dismissableMask]="true">
+  <form [formGroup]="formSignin" class="mb-2 flex flex-col gap-2 *:flex *:justify-evenly *:gap-2 [&>label]:gap-0 [&_label]:flex [&_label]:w-full [&_label]:flex-col">
+    <label>
+      Email
+      <input pInputText type="text" formControlName="email" />
+    </label>
+    <label>
+      Mot de passe
+      <input pInputText type="password" formControlName="password" />
+    </label>
+  </form>
+  <div class="flex justify-end gap-2">
+    <p-button (onClick)="isSigninShown = false" [text]="true">Annuler</p-button>
+    <p-button (onClick)="signin()" [disabled]="!formSignin.valid">Connexion</p-button>
+  </div>
+</p-dialog>
+<p-dialog header="Inscription" [modal]="true" [(visible)]="isSignupShown" [dismissableMask]="true">
+  <form [formGroup]="formSignup" class="mb-2 flex flex-col gap-2 *:flex *:w-full *:flex-col">
+    <label>
+      Email
+      <input pInputText type="text" formControlName="email" />
+    </label>
+    <label>
+      Mot de passe
+      <p-password formControlName="password" [feedback]="false" />
+    </label>
+    <label>
+      Répétez le mot de passe
+      <p-password formControlName="passwordrepeat" [feedback]="false" />
+    </label>
+  </form>
+  <div class="flex justify-end gap-2">
+    <p-button (onClick)="isSignupShown = false" [text]="true">Annuler</p-button>
+    <p-button (onClick)="signup()" [disabled]="!formSignup.valid">Inscription</p-button>
+  </div>
+</p-dialog>

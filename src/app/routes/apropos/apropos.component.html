@@ -1,0 +1,20 @@
+<div class="flex min-h-full flex-col justify-center gap-10 py-10">
+  <p-button *ngIf="user && isAdmin" size="large" class="block text-center" icon="pi pi-plus" [text]="true" (onClick)="openDialogSection()"></p-button>
+  <app-section *ngFor="let section of sections" [section]="section" (onSectionEdit)="openDialogSection(section)" (onSectionRemoved)="deleteSection(section)"></app-section>
+</div>
+<p-dialog [modal]="true" [header]="(idEdit.length ? 'Modifier' : 'Ajouter') + ' une expérience'" contentStyleClass="flex flex-col gap-2" [dismissableMask]="true" [(visible)]="isDialogSectionShown">
+  <form [formGroup]="formSection" class="flex flex-col gap-2 *:flex *:justify-evenly *:gap-2 [&>label]:gap-0 [&_label]:flex [&_label]:w-full [&_label]:flex-col">
+    <label>
+      Titre
+      <input pInputText type="text" formControlName="title" />
+    </label>
+    <label>
+      Texte
+      <textarea pInputTextarea formControlName="text"></textarea>
+    </label>
+  </form>
+  <div class="flex justify-end gap-2">
+    <p-button (onClick)="isDialogSectionShown = false" [text]="true">Annuler</p-button>
+    <p-button (onClick)="idEdit.length ? updateSection() : createSection()" [disabled]="!formSection.valid">{{ idEdit.length ? "Modifier" : "Ajouter" }}</p-button>
+  </div>
+</p-dialog>

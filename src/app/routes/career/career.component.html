@@ -1,0 +1,69 @@
+<div class="flex min-h-full flex-col py-10">
+  <p-button *ngIf="user && isAdmin" size="large" class="block text-center" icon="pi pi-plus" [text]="true" (onClick)="openDialog()"></p-button>
+  <div class="relative grow py-10">
+    <div class="absolute left-1/2 top-1 h-full w-[2px] -translate-x-[calc(100%-1px)] rounded bg-[green]"></div>
+    <div class="absolute left-1/2 top-0 -translate-x-[10px] border-b-[15px] border-l-[10px] border-r-[10px] border-t-0 border-solid border-transparent border-b-[green]"></div>
+    <app-experience (onExperienceRemoved)="deleteExperience(experience)" (onExperienceEdit)="openDialog(experience)" *ngFor="let experience of experiences; let index = index" [experience]="experience" [right]="index % 2 != 0" class="block [&:nth-child(n+4)]:-mt-10"></app-experience>
+  </div>
+</div>
+<p-dialog [modal]="true" [header]="(idEdit.length ? 'Modifier' : 'Ajouter') + ' une expérience'" contentStyleClass="flex flex-col gap-2" [dismissableMask]="true" [(visible)]="isDialogShown">
+  <form [formGroup]="formExperience" class="flex flex-col gap-2 *:flex *:justify-evenly *:gap-2 [&>label]:gap-0 [&_label]:flex [&_label]:w-full [&_label]:flex-col">
+    <div>
+      <label>
+        Début
+        <p-calendar formControlName="start" appendTo="body" dateFormat="dd/mm/yy" />
+      </label>
+      <label>
+        Fin
+        <p-calendar formControlName="end" appendTo="body" dateFormat="dd/mm/yy" />
+      </label>
+    </div>
+    <label>
+      Titre
+      <input pInputText type="text" formControlName="title" />
+    </label>
+    <label>
+      Texte
+      <textarea pInputTextarea formControlName="text"></textarea>
+    </label>
+    <div>
+      <label>
+        Société
+        <input pInputText formControlName="company" />
+      </label>
+      <label>
+        Adresse
+        <input pInputText formControlName="address" />
+      </label>
+    </div>
+    <div>
+      <label>
+        Code postal
+        <input pInputText formControlName="postcode" />
+      </label>
+      <label>
+        Ville
+        <input pInputText formControlName="city" />
+      </label>
+    </div>
+    <label class="*:after: flex flex-col !gap-0 *:relative *:flex *:items-center *:ps-6 *:after:absolute *:after:left-2 *:after:h-[6px] *:after:w-[6px] *:after:rounded-full *:after:bg-white *:after:content-['']">
+      Activités
+      <div *ngFor="let activity of activities" class="group justify-between transition-colors hover:bg-black/10" [pTooltip]="activity" tooltipPosition="bottom">
+        <span class="block max-w-[400px] truncate pe-2">{{ activity }}</span>
+        <p-button icon="pi pi-trash" class="opacity-0 transition-opacity group-hover:opacity-100" styleClass="w-auto" [text]="true" size="small" severity="danger" (onClick)="removeActivity(activity)" />
+      </div>
+      <span *ngIf="!activities.length" class="opacity-50">Aucune activité</span>
+    </label>
+    <label>
+      Ajouter une activité
+      <p-inputGroup>
+        <input #activity pInputText placeholder="Activité" />
+        <button [disabled]="!activity.value" type="button" pButton icon="pi pi-plus" (click)="addActivity(activity.value)"></button>
+      </p-inputGroup>
+    </label>
+  </form>
+  <div class="flex justify-end gap-2">
+    <p-button (onClick)="isDialogShown = false" [text]="true">Annuler</p-button>
+    <p-button (onClick)="idEdit.length ? updateExperience() : createExperience()" [disabled]="!formExperience.valid">{{ idEdit.length ? "Modifier" : "Ajouter" }}</p-button>
+  </div>
+</p-dialog>

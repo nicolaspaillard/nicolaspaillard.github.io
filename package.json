@@ -1,0 +1,48 @@
+{
+  "name": "nicolaspaillard",
+  "version": "0.0.0",
+  "scripts": {
+    "start": "ng serve",
+    "build": "ng build",
+    "update": "ng update"
+  },
+  "private": true,
+  "dependencies": {
+    "@angular/animations": "^18.2.12",
+    "@angular/common": "^18.2.12",
+    "@angular/compiler": "^18.2.12",
+    "@angular/core": "^18.2.12",
+    "@angular/fire": "^18.0.1",
+    "@angular/forms": "^18.2.12",
+    "@angular/platform-browser": "^18.2.12",
+    "@angular/platform-browser-dynamic": "^18.2.12",
+    "@angular/router": "^18.2.12",
+    "@cloudinary/ng": "^2.1.1",
+    "@cloudinary/url-gen": "^1.21.0",
+    "devicon": "^2.16.0",
+    "firebase": "^11.0.2",
+    "ngx-typed-js": "^2.1.1",
+    "primeicons": "^6.0.1",
+    "primeng": "^17.18.12",
+    "rxjs": "~7.8.0",
+    "tslib": "^2.3.0",
+    "zone.js": "~0.14.2"
+  },
+  "devDependencies": {
+    "@angular-devkit/build-angular": "^18.2.12",
+    "@angular/cli": "^18.2.12",
+    "@angular/compiler-cli": "^18.2.12",
+    "@types/jasmine": "~5.1.0",
+    "jasmine-core": "~5.1.0",
+    "karma": "~6.4.0",
+    "karma-chrome-launcher": "~3.2.0",
+    "karma-coverage": "~2.2.0",
+    "karma-jasmine": "~5.1.0",
+    "karma-jasmine-html-reporter": "~2.1.0",
+    "prettier": "^3.3.3",
+    "prettier-plugin-organize-imports": "^4.1.0",
+    "prettier-plugin-tailwindcss": "^0.6.9",
+    "tailwindcss": "^3.4.0",
+    "typescript": "~5.5.4"
+  }
+}

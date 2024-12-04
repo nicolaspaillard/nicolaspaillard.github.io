@@ -1,0 +1,55 @@
+/* You can add global styles to this file, and also import other style files */
+@import "assets/theme.css"
+@import "primeng/resources/primeng.css"
+@import "primeicons/primeicons.css"
+// @import url('https://fonts.googleapis.com/css2?family=Iceland&display=swap')
+// @import url('https://fonts.googleapis.com/css2?family=Geo:ital@0;1&display=swap')
+@import url('https://fonts.googleapis.com/css2?family=Aldrich&display=swap')
+@tailwind base
+@tailwind components
+@tailwind utilities
+
+// a,span,p,h1,h2,h3,h4,h5,h6
+//     font-family: "geo","sans-serif"
+//     font-weight: 400
+body
+    margin: 0
+    padding: 0
+    background: #000
+
+.p-link,.p-component
+    border-radius: 0 !important
+
+.p-calendar,.p-inputtext,.p-dropdown
+    width: 100%
+
+.p-button.p-button-icon-only
+    width: auto
+
+.p-carousel
+    .p-carousel-content
+        position: relative
+        .p-carousel-container
+            position: relative
+            > button
+                background-color: rgba(0,0,0,0.1)
+                backdrop-filter: blur(3px)
+                width: fit-content
+                height: fit-content
+                border-radius: 0
+                z-index: 1
+                position: absolute
+                top: 50%
+                transform: translatey(-100%)
+                margin: 0
+                &:first-of-type
+                    left: theme('spacing.1')
+                &:last-of-type
+                    right: theme('spacing.1')
+    .p-carousel-indicators
+        display: none
+
+.p-dropdown-items-wrapper
+    .p-scroller-content
+        position: relative
+        width: 100%
