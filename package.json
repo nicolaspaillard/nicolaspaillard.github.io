@@ -5,7 +5,7 @@
     "start": "ng serve",
     "build": "ng build",
     "update": "ng update",
-    "deploy": "ng deploy --base-href=/nicolaspaillard.github.io/"
+    "deploy": "ng deploy --base-href=/"
   },
   "private": true,
   "dependencies": {
