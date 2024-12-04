@@ -1564,7 +1564,6 @@ export class CompetencesComponent {
     this.authService.admin().subscribe((admin) => (this.isAdmin = admin));
     this.skillsService.categories().subscribe((categories) => (this.categories = categories));
   }
-  log = (data) => console.log(data);
 
   openDialog = (skill?: Skill) => {
     if (skill) {

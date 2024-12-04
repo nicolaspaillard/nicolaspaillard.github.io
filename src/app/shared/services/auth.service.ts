@@ -33,7 +33,7 @@ export class AuthService {
     const status = await validatePassword(this.auth, password);
     if (!status.isValid) {
       this.toastService.error("Erreur", "Mot de passe invalide");
-      console.log(status);
+      console.error(status);
     } else {
       createUserWithEmailAndPassword(this.auth, email, password).catch((error) => console.error(error));
     }

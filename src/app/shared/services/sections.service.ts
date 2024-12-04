@@ -20,7 +20,6 @@ export class SectionsService {
   constructor(private db: Firestore) {
     try {
       getDocs(query(collection(this.db, "data", "sections", "sections"))).then((sections) => {
-        console.log(sections.docs);
         sections.docs.forEach((doc) => {
           let section: Section = new Section(doc.data() as any);
           section.id = doc.id;
