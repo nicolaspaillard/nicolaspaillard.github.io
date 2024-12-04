@@ -9,8 +9,8 @@ module.exports = {
     plugin(function ({ addBase, addComponents, addUtilities, theme }) {
       addComponents({
         ".card": {
-          backgroundColor: "rgba(255,255,255,0.1)",
-          border: "1px solid green",
+          backgroundColor: "rgba(20,20,20,0.1)",
+          border: "1px solid #00ff00",
           "backdrop-filter": "blur(4px)",
         },
       });

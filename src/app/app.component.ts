@@ -99,7 +99,6 @@ export class AppComponent implements OnInit {
     let letters: string[] = "ABCDEFGHIJKLMNOPQRSTUVXYZABCDEFGHIJKLMNOPQRSTUVXYZABCDEFGHIJKLMNOPQRSTUVXYZABCDEFGHIJKLMNOPQRSTUVXYZABCDEFGHIJKLMNOPQRSTUVXYZABCDEFGHIJKLMNOPQRSTUVXYZ".split("");
     let fontSize: number = 10;
     let drops: number[] = [];
-    let drops2: number[] = [];
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
     for (let i = 0; i < canvas.width / fontSize; i++) {
@@ -112,7 +111,7 @@ export class AppComponent implements OnInit {
       context.fillRect(0, 0, canvas.width, canvas.height);
       for (let i = 0; i < drp.length; i++) {
         let text = letters[Math.floor(Math.random() * letters.length)];
-        context.fillStyle = "#0f0";
+        context.fillStyle = "#00ff00";
         context.fillText(text, i * fontSize, drp[i] * fontSize);
         drp[i]++;
         if (drp[i] * fontSize > canvas.height && Math.random() > 0.99) {
@@ -143,7 +142,7 @@ function slideTo(direction: any) {
           position: "absolute",
           top: "0",
           width: "100%",
-          height: "calc(100vh - 68px)",
+          height: "100%",
           [direction]: 0,
         }),
       ],
