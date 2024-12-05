@@ -1,10 +1,11 @@
 import { Component } from "@angular/core";
 import { NgxTypedJsModule } from "ngx-typed-js";
+import { PlaceholderComponent } from "../../shared/components/placeholder/placeholder.component";
 
 @Component({
   selector: "app-accueil",
   standalone: true,
-  imports: [NgxTypedJsModule],
+  imports: [NgxTypedJsModule, PlaceholderComponent],
   templateUrl: "./accueil.component.html",
 })
 export class AccueilComponent {
