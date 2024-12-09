@@ -6,14 +6,14 @@ import { ConfirmService } from "@services/confirm.service";
 import { Category, Skill, SkillsService } from "@services/skills.service";
 import { ButtonModule } from "primeng/button";
 import { DialogModule } from "primeng/dialog";
-import { DropdownModule } from "primeng/dropdown";
 import { InputTextModule } from "primeng/inputtext";
+import { SelectModule } from "primeng/select";
 import { CategoryComponent } from "./category/category.component";
 
 @Component({
   selector: "app-skills",
   standalone: true,
-  imports: [ButtonModule, CategoryComponent, CommonModule, DialogModule, ReactiveFormsModule, InputTextModule, DropdownModule],
+  imports: [ReactiveFormsModule, CommonModule, CategoryComponent, ButtonModule, DialogModule, InputTextModule, SelectModule],
   templateUrl: "./skills.component.html",
 })
 export class SkillsComponent {

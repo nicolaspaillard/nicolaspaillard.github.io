@@ -11,7 +11,7 @@ import { DialogModule } from "primeng/dialog";
 import { FileUploadModule } from "primeng/fileupload";
 import { InputGroupModule } from "primeng/inputgroup";
 import { InputTextModule } from "primeng/inputtext";
-import { InputTextareaModule } from "primeng/inputtextarea";
+import { TextareaModule } from "primeng/textarea";
 import { TooltipModule } from "primeng/tooltip";
 import { ProjectComponent } from "./project/project.component";
 
@@ -20,7 +20,7 @@ declare var cloudinary: any;
 @Component({
   selector: "app-projects",
   standalone: true,
-  imports: [CloudinaryModule, ButtonModule, DialogModule, ReactiveFormsModule, TooltipModule, InputGroupModule, CommonModule, CalendarModule, InputTextModule, InputTextareaModule, FileUploadModule, ProjectComponent],
+  imports: [CommonModule, ReactiveFormsModule, CloudinaryModule, ProjectComponent, ButtonModule, DialogModule, TooltipModule, InputGroupModule, CalendarModule, InputTextModule, TextareaModule, FileUploadModule],
   templateUrl: "./projects.component.html",
 })
 export class ProjectsComponent {

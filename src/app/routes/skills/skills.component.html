@@ -8,7 +8,7 @@
   <form [formGroup]="formCategory" class="flex flex-col gap-2 *:flex *:justify-evenly *:gap-2 [&>label]:gap-0 [&_label]:flex [&_label]:w-full [&_label]:flex-col">
     <label>
       Titre
-      <p-dropdown [options]="categories" formControlName="title" placeholder="Catégorie" [editable]="true" optionLabel="title" optionValue="title" appendTo="body" />
+      <p-select [options]="categories" formControlName="title" placeholder="Catégorie" [editable]="true" optionLabel="title" optionValue="title" appendTo="body" />
     </label>
   </form>
   <div class="flex justify-end gap-2">
@@ -26,11 +26,11 @@
     <div>
       <label>
         Catégorie
-        <p-dropdown [options]="categories" formControlName="category" placeholder="Catégorie" [editable]="true" optionLabel="title" optionValue="title" appendTo="body" />
+        <p-select [options]="categories" formControlName="category" placeholder="Catégorie" [editable]="true" optionLabel="title" optionValue="title" appendTo="body" />
       </label>
       <label>
         Icône
-        <p-dropdown [options]="devIcons" formControlName="icon" [showClear]="true" placeholder="Icône" appendTo="body" [filter]="true" [virtualScroll]="true" [virtualScrollItemSize]="38">
+        <p-select [options]="devIcons" formControlName="icon" [showClear]="true" placeholder="Icône" appendTo="body" [filter]="true" [virtualScroll]="true" [virtualScrollItemSize]="38">
           <ng-template pTemplate="selectedItem">
             <div class="flex items-center gap-2" *ngIf="formSkill.value.icon">
               <img width="24" height="24" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/{{ formSkill.value.icon.includes('dot-net') ? 'dot-net' : formSkill.value.icon.split('-')[0] }}/{{ formSkill.value.icon }}.svg" />
@@ -43,7 +43,7 @@
               <span class="w-full truncate">{{ icon }}</span>
             </div>
           </ng-template>
-        </p-dropdown>
+        </p-select>
       </label>
     </div>
   </form>

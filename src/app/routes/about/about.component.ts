@@ -5,11 +5,9 @@ import { AuthService } from "@services/auth.service";
 import { ConfirmService } from "@services/confirm.service";
 import { Section, SectionsService } from "@services/sections.service";
 import { ButtonModule } from "primeng/button";
-import { CardModule } from "primeng/card";
 import { DialogModule } from "primeng/dialog";
 import { InputTextModule } from "primeng/inputtext";
-import { InputTextareaModule } from "primeng/inputtextarea";
-import { PanelModule } from "primeng/panel";
+import { TextareaModule } from "primeng/textarea";
 import { SectionComponent } from "./section/section.component";
 
 type bubble = {
@@ -21,7 +19,7 @@ type bubble = {
 @Component({
   selector: "app-about",
   standalone: true,
-  imports: [CommonModule, PanelModule, CardModule, DialogModule, ReactiveFormsModule, ButtonModule, CommonModule, SectionComponent, InputTextModule, InputTextareaModule],
+  imports: [CommonModule, SectionComponent, ReactiveFormsModule, DialogModule, ButtonModule, InputTextModule, TextareaModule],
   templateUrl: "./about.component.html",
 })
 export class AboutComponent {

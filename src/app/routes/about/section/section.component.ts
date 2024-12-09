@@ -7,7 +7,7 @@ import { ButtonModule } from "primeng/button";
 @Component({
   selector: "app-section",
   standalone: true,
-  imports: [ButtonModule, CommonModule],
+  imports: [CommonModule, ButtonModule],
   templateUrl: "./section.component.html",
   styles: ``,
 })

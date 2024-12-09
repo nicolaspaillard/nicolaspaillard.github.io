@@ -32,6 +32,7 @@
       "@routes/*": ["src/app/routes/*"],
       "@app/*": ["src/app/*"]
     }
+    // "typeRoots": ["./node_modules/@types", "./node_modules/primeng"]
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,

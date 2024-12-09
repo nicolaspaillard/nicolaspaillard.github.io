@@ -4,13 +4,12 @@ import { ReactiveFormsModule } from "@angular/forms";
 import { AuthService } from "@services/auth.service";
 import { Skill } from "@services/skills.service";
 import { ButtonModule } from "primeng/button";
-import { DialogModule } from "primeng/dialog";
 import { SkillComponent } from "./skill/skill.component";
 
 @Component({
   selector: "app-category",
   standalone: true,
-  imports: [SkillComponent, CommonModule, ButtonModule, DialogModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, SkillComponent, ButtonModule],
   templateUrl: "./category.component.html",
   styles: ``,
 })

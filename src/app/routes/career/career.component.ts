@@ -5,18 +5,18 @@ import { AuthService } from "@services/auth.service";
 import { ConfirmService } from "@services/confirm.service";
 import { Experience, ExperiencesService } from "@services/experiences.service";
 import { ButtonModule } from "primeng/button";
-import { CalendarModule } from "primeng/calendar";
+import { DatePickerModule } from "primeng/datepicker";
 import { DialogModule } from "primeng/dialog";
 import { InputGroupModule } from "primeng/inputgroup";
 import { InputTextModule } from "primeng/inputtext";
-import { InputTextareaModule } from "primeng/inputtextarea";
+import { TextareaModule } from "primeng/textarea";
 import { TooltipModule } from "primeng/tooltip";
 import { ExperienceComponent } from "./experience/experience.component";
 
 @Component({
   selector: "app-career",
   standalone: true,
-  imports: [ExperienceComponent, CommonModule, DialogModule, ReactiveFormsModule, CalendarModule, InputTextareaModule, InputTextModule, ButtonModule, InputGroupModule, TooltipModule],
+  imports: [CommonModule, ReactiveFormsModule, ExperienceComponent, DialogModule, DatePickerModule, TextareaModule, InputTextModule, ButtonModule, InputGroupModule, TooltipModule],
   templateUrl: "./career.component.html",
 })
 export class CareerComponent {

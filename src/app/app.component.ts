@@ -45,7 +45,7 @@ export const cloudinaryConfig = {
   selector: "app-root",
   animations: [slide],
   standalone: true,
-  imports: [CommonModule, RouterModule, RouterOutlet, ButtonModule, DialogModule, ReactiveFormsModule, ToastModule, ConfirmDialogModule, InputTextModule, PasswordModule],
+  imports: [CommonModule, RouterModule, RouterOutlet, ReactiveFormsModule, ButtonModule, DialogModule, ToastModule, ConfirmDialogModule, InputTextModule, PasswordModule],
   templateUrl: "./app.component.html",
 })
 export class AppComponent implements OnInit {
