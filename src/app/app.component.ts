@@ -1,15 +1,12 @@
 import { animate, group, query, style, transition, trigger } from "@angular/animations";
 import { CommonModule } from "@angular/common";
-import { Component, OnInit } from "@angular/core";
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
-import { NavigationEnd, NavigationStart, Router, RouterModule, RouterOutlet, Routes } from "@angular/router";
-import { CustomValidators } from "@helpers/validators";
+import { Component, inject, OnInit } from "@angular/core";
+import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule, ValidationErrors, ValidatorFn, Validators } from "@angular/forms";
+import { CanActivateFn, NavigationEnd, NavigationStart, Router, RouterModule, RouterOutlet, Routes } from "@angular/router";
 import { AboutComponent } from "@routes/about/about.component";
 import { HomeComponent } from "@routes/home/home.component";
 import { ProjectsComponent } from "@routes/projects/projects.component";
 import { SkillsComponent } from "@routes/skills/skills.component";
-import { AuthService } from "@services/auth.service";
-import { ToastService } from "@services/toast.service";
 import { ButtonModule } from "primeng/button";
 import { ConfirmDialogModule } from "primeng/confirmdialog";
 import { DialogModule } from "primeng/dialog";
@@ -17,7 +14,32 @@ import { InputTextModule } from "primeng/inputtext";
 import { PasswordModule } from "primeng/password";
 import { ToastModule } from "primeng/toast";
 import { CareerComponent } from "./routes/career/career.component";
+import { AuthService } from "./services/auth.service";
+import { EventBusService } from "./services/frontend/event-bus.service";
+import { ToastService } from "./services/frontend/toast.service";
 
+// #region config
+export const AuthGuard: CanActivateFn = (route, state) => {
+  let canActivate: boolean = false;
+  // prettier-ignore
+  inject(AuthService).user().subscribe((user) => canActivate = user);
+  if (!canActivate) {
+    inject(ToastService).error("Erreur", "Vous devez d'abord vous connecter");
+    inject(EventBusService).emit({ name: "signin" });
+    inject(Router).navigate([]);
+  }
+  return canActivate;
+};
+export class CustomValidators {
+  static matchPassword(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const password = control.get("password")?.value;
+      const passwordrepeat = control.get("passwordrepeat")?.value;
+      if (password && passwordrepeat && password != passwordrepeat) control.get("passwordrepeat")?.setErrors({ notmatching: true });
+      return null;
+    };
+  }
+}
 export const slide = trigger("routeAnimations", [transition(":increment", slideTo("right")), transition(":decrement", slideTo("left"))]);
 export const routes: Routes = [
   { path: "", title: "Accueil", component: HomeComponent, data: { animation: 0 } },
@@ -27,19 +49,7 @@ export const routes: Routes = [
   { path: "projects", title: "Projets", component: ProjectsComponent, data: { animation: 4 } },
   { path: "**", redirectTo: "" },
 ];
-export const firebaseConfig = {
-  apiKey: "AIzaSyCKSTi3zt6uYsjrwFAo_36OsnkjEK7wxt8",
-  authDomain: "nicolas-paillard.firebaseapp.com",
-  projectId: "nicolas-paillard",
-  storageBucket: "nicolas-paillard.firebasestorage.app",
-  messagingSenderId: "95010764775",
-  appId: "1:95010764775:web:13c56aa8915dd2c65bef42",
-  measurementId: "G-Y6HMSH0JV4",
-};
-
-export const cloudinaryConfig = {
-  cloudName: "dsuvd32up",
-};
+// #endregion
 
 @Component({
   selector: "app-root",

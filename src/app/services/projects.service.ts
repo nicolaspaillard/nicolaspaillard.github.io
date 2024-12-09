@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { addDoc, collection, deleteDoc, doc, Firestore, getDoc, getDocs, orderBy, query, setDoc } from "@angular/fire/firestore";
-import { cloudinaryConfig } from "@app/app.component";
 import { ReplaySubject, Subject } from "rxjs";
+import { cloudinaryConfig } from "src/main";
 
 export class Project {
   id?: string;

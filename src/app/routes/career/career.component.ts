@@ -1,9 +1,9 @@
 import { CommonModule } from "@angular/common";
 import { Component } from "@angular/core";
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
-import { AuthService } from "@services/auth.service";
-import { ConfirmService } from "@services/confirm.service";
-import { Experience, ExperiencesService } from "@services/experiences.service";
+import { AuthService } from "@app/services/auth.service";
+import { CareerService, Experience } from "@app/services/career.service";
+import { ConfirmService } from "@app/services/frontend/confirm.service";
 import { ButtonModule } from "primeng/button";
 import { DatePickerModule } from "primeng/datepicker";
 import { DialogModule } from "primeng/dialog";
@@ -40,11 +40,11 @@ export class CareerComponent {
   constructor(
     private authService: AuthService,
     private confirmService: ConfirmService,
-    private experiencesService: ExperiencesService,
+    private careerService: CareerService,
   ) {
     this.authService.user().subscribe((user) => (this.user = user));
     this.authService.admin().subscribe((admin) => (this.isAdmin = admin));
-    this.experiencesService.experiences().subscribe((experiences) => (this.experiences = experiences));
+    this.careerService.experiences().subscribe((experiences) => (this.experiences = experiences));
   }
   openDialog = (experience?: Experience) => {
     if (experience) {
@@ -73,18 +73,18 @@ export class CareerComponent {
     });
   };
   createExperience = () => {
-    this.experiencesService.createExperience(this.formExperience.value as Experience);
+    this.careerService.createExperience(this.formExperience.value as Experience);
   };
   updateExperience = () => {
     let experience: Experience = this.formExperience.value as Experience;
     experience.id = this.idEdit;
-    this.experiencesService.updateExperience(experience);
+    this.careerService.updateExperience(experience);
   };
   deleteExperience = (experience: Experience) => {
     this.confirmService.confirm({
       message: `Voulez-vous vraiment supprimer '${experience.title}' ?`,
       accept: async () => {
-        this.experiencesService.deleteExperience(experience);
+        this.careerService.deleteExperience(experience);
       },
     });
   };

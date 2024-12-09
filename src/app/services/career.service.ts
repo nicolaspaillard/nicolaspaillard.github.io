@@ -21,7 +21,7 @@ export class Experience {
 @Injectable({
   providedIn: "root",
 })
-export class ExperiencesService {
+export class CareerService {
   private __experiences: Experience[] = [];
   private _experiences: Subject<Experience[]> = new ReplaySubject(1);
   constructor(private db: Firestore) {

@@ -1,9 +1,9 @@
 import { CommonModule } from "@angular/common";
 import { Component } from "@angular/core";
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
-import { AuthService } from "@services/auth.service";
-import { ConfirmService } from "@services/confirm.service";
-import { Section, SectionsService } from "@services/sections.service";
+import { AuthService } from "@app/services/auth.service";
+import { ConfirmService } from "@app/services/frontend/confirm.service";
+import { Section, SectionsService } from "@app/services/sections.service";
 import { ButtonModule } from "primeng/button";
 import { DialogModule } from "primeng/dialog";
 import { InputTextModule } from "primeng/inputtext";

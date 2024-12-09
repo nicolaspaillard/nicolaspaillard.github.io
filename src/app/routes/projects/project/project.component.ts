@@ -1,12 +1,12 @@
 import { CommonModule } from "@angular/common";
 import { Component, EventEmitter, Input, Output } from "@angular/core";
-import { cloudinaryConfig } from "@app/app.component";
+import { AuthService } from "@app/services/auth.service";
+import { Project } from "@app/services/projects.service";
 import { Cloudinary } from "@cloudinary/url-gen";
 import { fill } from "@cloudinary/url-gen/actions/resize";
-import { AuthService } from "@services/auth.service";
-import { Project } from "@services/projects.service";
 import { ButtonModule } from "primeng/button";
 import { CarouselModule } from "primeng/carousel";
+import { cloudinaryConfig } from "src/main";
 
 @Component({
   selector: "app-project",

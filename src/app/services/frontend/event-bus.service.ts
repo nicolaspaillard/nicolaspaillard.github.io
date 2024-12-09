@@ -1,7 +1,15 @@
 import { Injectable } from "@angular/core";
-import { Event } from "@models/event";
 import { Subject, Subscription } from "rxjs";
 import { filter, map } from "rxjs/operators";
+
+export class Event {
+  name: string;
+  value?: any;
+  constructor(name: string, value?: any) {
+    this.name = name;
+    this.value = value;
+  }
+}
 
 @Injectable({
   providedIn: "root",
