@@ -31,7 +31,7 @@ export class ExperiencesService {
           let experience: Experience = new Experience(doc.data() as any);
           experience.id = doc.id;
           experience.start = doc.data()["start"].toDate();
-          experience.end = doc.data()["end"].toDate();
+          if (doc.data()["end"]) experience.end = doc.data()["end"].toDate();
           this.__experiences.push(experience);
         });
       });
@@ -46,6 +46,7 @@ export class ExperiencesService {
     try {
       experience.id = (await addDoc(collection(this.db, "data", "experiences", "experiences"), experience)).id;
       this.__experiences.push(experience);
+      this.__experiences.sort((exp1, exp2) => (exp1.start == exp2.start ? 0 : exp1.start < exp2.start ? -1 : 1));
       this._experiences.next(this.__experiences);
     } catch (error) {
       console.error(error);

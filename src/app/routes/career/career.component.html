@@ -64,6 +64,6 @@
   </form>
   <div class="flex justify-end gap-2">
     <p-button (onClick)="isDialogShown = false" [text]="true">Annuler</p-button>
-    <p-button (onClick)="idEdit.length ? updateExperience() : createExperience()" [disabled]="!formExperience.valid">{{ idEdit.length ? "Modifier" : "Ajouter" }}</p-button>
+    <p-button (onClick)="idEdit.length ? updateExperience() : createExperience(); isDialogShown = false" [disabled]="!formExperience.valid">{{ idEdit.length ? "Modifier" : "Ajouter" }}</p-button>
   </div>
 </p-dialog>

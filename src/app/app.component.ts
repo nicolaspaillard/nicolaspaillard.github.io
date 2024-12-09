@@ -4,6 +4,10 @@ import { Component, OnInit } from "@angular/core";
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
 import { NavigationEnd, NavigationStart, Router, RouterModule, RouterOutlet, Routes } from "@angular/router";
 import { CustomValidators } from "@helpers/validators";
+import { AboutComponent } from "@routes/about/about.component";
+import { HomeComponent } from "@routes/home/home.component";
+import { ProjectsComponent } from "@routes/projects/projects.component";
+import { SkillsComponent } from "@routes/skills/skills.component";
 import { AuthService } from "@services/auth.service";
 import { ToastService } from "@services/toast.service";
 import { ButtonModule } from "primeng/button";
@@ -12,19 +16,15 @@ import { DialogModule } from "primeng/dialog";
 import { InputTextModule } from "primeng/inputtext";
 import { PasswordModule } from "primeng/password";
 import { ToastModule } from "primeng/toast";
-import { AccueilComponent } from "./routes/accueil/accueil.component";
-import { AproposComponent } from "./routes/apropos/apropos.component";
 import { CareerComponent } from "./routes/career/career.component";
-import { CompetencesComponent } from "./routes/competences/competences.component";
-import { ProjetsComponent } from "./routes/projets/projets.component";
 
 export const slide = trigger("routeAnimations", [transition(":increment", slideTo("right")), transition(":decrement", slideTo("left"))]);
 export const routes: Routes = [
-  { path: "", component: AccueilComponent, data: { animation: 0 } },
-  { path: "apropos", component: AproposComponent, data: { animation: 1 } },
-  { path: "career", component: CareerComponent, data: { animation: 2 } },
-  { path: "competences", component: CompetencesComponent, data: { animation: 3 } },
-  { path: "projets", component: ProjetsComponent, data: { animation: 4 } },
+  { path: "", title: "Accueil", component: HomeComponent, data: { animation: 0 } },
+  { path: "about", title: "À propos", component: AboutComponent, data: { animation: 1 } },
+  { path: "career", title: "Carrière", component: CareerComponent, data: { animation: 2 } },
+  { path: "skills", title: "Compétences", component: SkillsComponent, data: { animation: 3 } },
+  { path: "projects", title: "Projets", component: ProjectsComponent, data: { animation: 4 } },
   { path: "**", redirectTo: "" },
 ];
 export const firebaseConfig = {

@@ -3,12 +3,12 @@ import { NgxTypedJsModule } from "ngx-typed-js";
 import { PlaceholderComponent } from "../../shared/components/placeholder/placeholder.component";
 
 @Component({
-  selector: "app-accueil",
+  selector: "app-home",
   standalone: true,
   imports: [NgxTypedJsModule, PlaceholderComponent],
-  templateUrl: "./accueil.component.html",
+  templateUrl: "./home.component.html",
 })
-export class AccueilComponent {
+export class HomeComponent {
   strings: string[] = ["Web", "Backend", "Frontend", "FullStack", "SQL", "TypeScript", ".NET", "Angular", "Java", "Python"];
   constructor() {}
 }

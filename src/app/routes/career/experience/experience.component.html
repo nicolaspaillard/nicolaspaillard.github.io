@@ -4,19 +4,20 @@
     <p-button *ngIf="user && isAdmin" icon="pi pi-trash" class="opacity-0 transition-opacity group-hover:opacity-100" [text]="true" size="small" severity="danger" (onClick)="onExperienceRemoved.emit(experience)" />
   </div>
 
-  <div class="flex w-60 shrink-0 flex-col border-0 border-solid border-white/25" [ngClass]="right ? 'mr-5 border-r pr-5 text-end' : 'ml-5 border-l pl-5'">
-    <h3>{{ experience.start.getFullYear() }} - {{ experience.end.getFullYear() }}</h3>
-    <span>{{ experience.company }}</span>
-    <span>{{ experience.address }}</span>
-    <span>{{ experience.city }} {{ experience.postcode }}</span>
+  <div class="flex w-60 shrink-0 flex-col border-0 border-solid border-white/25 [&>*:last-child]:mb-0" [ngClass]="right ? 'mr-5 border-r pr-5 text-end' : 'ml-5 border-l pl-5'">
+    <h3>
+      <ng-container *ngIf="experience.end; else day">{{ experience.start.toLocaleDateString("fr-FR", { month: "numeric", year: "numeric" }) }} - {{ experience.end.toLocaleDateString("fr-FR", { month: "numeric", year: "numeric" }) }}</ng-container>
+      <ng-template #day>{{ experience.start.toLocaleDateString("fr-FR", { day: "numeric", month: "numeric", year: "numeric" }) }}</ng-template>
+    </h3>
+    <span *ngIf="experience.company">{{ experience.company }}</span>
+    <span *ngIf="experience.address">{{ experience.address }}</span>
+    <span *ngIf="experience.city || experience.postcode">{{ experience.city }} {{ experience.postcode }}</span>
   </div>
-  <div [ngClass]="right ? '' : 'text-end'">
+  <div [ngClass]="right ? '' : 'text-end'" class="[&>*:last-child]:mb-0">
     <h3>{{ experience.title }}</h3>
-    <p class="">{{ experience.text }}</p>
-    <div [dir]="right ? '' : 'rtl'">
-      <ul [ngClass]="{ 'text-start': !right }" *ngIf="experience.activities.length">
-        <li *ngFor="let activity of experience.activities.split(';')">{{ activity }}</li>
-      </ul>
-    </div>
+    <p *ngIf="experience.text">{{ experience.text }}</p>
+    <ul *ngIf="experience.activities" [dir]="right ? '' : 'rtl'" [ngClass]="{ 'text-start': !right }">
+      <li *ngFor="let activity of experience.activities.split(';')">{{ activity }}</li>
+    </ul>
   </div>
 </div>

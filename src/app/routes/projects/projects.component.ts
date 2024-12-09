@@ -18,12 +18,12 @@ import { ProjectComponent } from "./project/project.component";
 declare var cloudinary: any;
 
 @Component({
-  selector: "app-projets",
+  selector: "app-projects",
   standalone: true,
   imports: [CloudinaryModule, ButtonModule, DialogModule, ReactiveFormsModule, TooltipModule, InputGroupModule, CommonModule, CalendarModule, InputTextModule, InputTextareaModule, FileUploadModule, ProjectComponent],
-  templateUrl: "./projets.component.html",
+  templateUrl: "./projects.component.html",
 })
-export class ProjetsComponent {
+export class ProjectsComponent {
   isAdmin: boolean = false;
   isDialogShown: boolean = false;
   user: any = null;

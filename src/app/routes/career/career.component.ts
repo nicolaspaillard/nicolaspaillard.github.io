@@ -27,13 +27,13 @@ export class CareerComponent {
   idEdit: string = "";
   formExperience = new FormGroup({
     start: new FormControl(new Date(), [Validators.required]),
-    end: new FormControl(new Date(), [Validators.required]),
+    end: new FormControl(new Date(), []),
     title: new FormControl("", [Validators.required]),
-    text: new FormControl("", [Validators.required]),
-    company: new FormControl("", [Validators.required]),
-    address: new FormControl("", [Validators.required]),
-    postcode: new FormControl("", [Validators.required]),
-    city: new FormControl("", [Validators.required]),
+    text: new FormControl("", []),
+    company: new FormControl("", []),
+    address: new FormControl("", []),
+    postcode: new FormControl("", []),
+    city: new FormControl("", []),
     activities: new FormControl("", []),
   });
   experiences: Experience[] = [];
@@ -47,9 +47,9 @@ export class CareerComponent {
     this.experiencesService.experiences().subscribe((experiences) => (this.experiences = experiences));
   }
   openDialog = (experience?: Experience) => {
-    if (experience instanceof Experience) {
+    if (experience) {
       this.idEdit = experience.id!;
-      this.activities = experience.activities.split(";");
+      if (experience.activities && experience.activities.length) this.activities = experience.activities.split(";");
       let tmp = new Experience(experience);
       delete tmp.id;
       this.formExperience.setValue(tmp);

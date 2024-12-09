@@ -19,12 +19,12 @@ type bubble = {
 };
 
 @Component({
-  selector: "app-apropos",
+  selector: "app-about",
   standalone: true,
   imports: [CommonModule, PanelModule, CardModule, DialogModule, ReactiveFormsModule, ButtonModule, CommonModule, SectionComponent, InputTextModule, InputTextareaModule],
-  templateUrl: "./apropos.component.html",
+  templateUrl: "./about.component.html",
 })
-export class AproposComponent {
+export class AboutComponent {
   bubbles: bubble[] = [
     { icon: "heroMagnifyingGlassSolid", text: "Recherche CDI" },
     { icon: "heroCakeSolid", text: new Date().getFullYear() - 1997 + " ans" },
