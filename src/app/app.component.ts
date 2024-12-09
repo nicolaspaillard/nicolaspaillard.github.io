@@ -107,7 +107,7 @@ export class AppComponent implements OnInit {
     clearInterval(this.interval);
     this.interval = setInterval(() => interval(drops), 33);
     function interval(drp: number[]) {
-      context.fillStyle = "rgba(0, 0, 0, .026)";
+      context.fillStyle = "rgba(0, 0, 0, .03)";
       context.fillRect(0, 0, canvas.width, canvas.height);
       for (let i = 0; i < drp.length; i++) {
         let text = letters[Math.floor(Math.random() * letters.length)];
