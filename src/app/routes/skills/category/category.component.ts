@@ -8,11 +8,10 @@ import { DialogModule } from "primeng/dialog";
 import { SkillComponent } from "./skill/skill.component";
 
 @Component({
-  selector: "app-category",
-  standalone: true,
-  imports: [SkillComponent, CommonModule, ButtonModule, DialogModule, ReactiveFormsModule],
-  templateUrl: "./category.component.html",
-  styles: ``,
+    selector: "app-category",
+    imports: [SkillComponent, CommonModule, ButtonModule, DialogModule, ReactiveFormsModule],
+    templateUrl: "./category.component.html",
+    styles: ``
 })
 export class CategoryComponent {
   @Input() title: string;

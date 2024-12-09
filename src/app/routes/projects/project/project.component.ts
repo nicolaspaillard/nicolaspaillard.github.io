@@ -9,11 +9,10 @@ import { ButtonModule } from "primeng/button";
 import { CarouselModule } from "primeng/carousel";
 
 @Component({
-  selector: "app-project",
-  standalone: true,
-  imports: [CommonModule, ButtonModule, CarouselModule],
-  templateUrl: "./project.component.html",
-  styles: ``,
+    selector: "app-project",
+    imports: [CommonModule, ButtonModule, CarouselModule],
+    templateUrl: "./project.component.html",
+    styles: ``
 })
 export class ProjectComponent {
   @Input() project: Project;

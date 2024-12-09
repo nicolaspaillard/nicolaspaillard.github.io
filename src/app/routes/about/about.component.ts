@@ -19,10 +19,9 @@ type bubble = {
 };
 
 @Component({
-  selector: "app-about",
-  standalone: true,
-  imports: [CommonModule, PanelModule, CardModule, DialogModule, ReactiveFormsModule, ButtonModule, CommonModule, SectionComponent, InputTextModule, InputTextareaModule],
-  templateUrl: "./about.component.html",
+    selector: "app-about",
+    imports: [CommonModule, PanelModule, CardModule, DialogModule, ReactiveFormsModule, ButtonModule, CommonModule, SectionComponent, InputTextModule, InputTextareaModule],
+    templateUrl: "./about.component.html"
 })
 export class AboutComponent {
   bubbles: bubble[] = [

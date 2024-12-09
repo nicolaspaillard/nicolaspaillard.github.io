@@ -18,10 +18,9 @@ import { ProjectComponent } from "./project/project.component";
 declare var cloudinary: any;
 
 @Component({
-  selector: "app-projects",
-  standalone: true,
-  imports: [CloudinaryModule, ButtonModule, DialogModule, ReactiveFormsModule, TooltipModule, InputGroupModule, CommonModule, CalendarModule, InputTextModule, InputTextareaModule, FileUploadModule, ProjectComponent],
-  templateUrl: "./projects.component.html",
+    selector: "app-projects",
+    imports: [CloudinaryModule, ButtonModule, DialogModule, ReactiveFormsModule, TooltipModule, InputGroupModule, CommonModule, CalendarModule, InputTextModule, InputTextareaModule, FileUploadModule, ProjectComponent],
+    templateUrl: "./projects.component.html"
 })
 export class ProjectsComponent {
   isAdmin: boolean = false;

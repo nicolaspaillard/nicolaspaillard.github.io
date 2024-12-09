@@ -5,11 +5,10 @@ import { Section } from "@services/sections.service";
 import { ButtonModule } from "primeng/button";
 
 @Component({
-  selector: "app-section",
-  standalone: true,
-  imports: [ButtonModule, CommonModule],
-  templateUrl: "./section.component.html",
-  styles: ``,
+    selector: "app-section",
+    imports: [ButtonModule, CommonModule],
+    templateUrl: "./section.component.html",
+    styles: ``
 })
 export class SectionComponent {
   @Input() section: Section;

@@ -2,11 +2,10 @@ import { CommonModule } from "@angular/common";
 import { Component, Input } from "@angular/core";
 
 @Component({
-  selector: "app-placeholder",
-  standalone: true,
-  imports: [CommonModule],
-  templateUrl: "./placeholder.component.html",
-  styles: ``,
+    selector: "app-placeholder",
+    imports: [CommonModule],
+    templateUrl: "./placeholder.component.html",
+    styles: ``
 })
 export class PlaceholderComponent {
   @Input() width: number;

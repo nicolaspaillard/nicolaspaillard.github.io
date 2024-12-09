@@ -11,10 +11,9 @@ import { InputTextModule } from "primeng/inputtext";
 import { CategoryComponent } from "./category/category.component";
 
 @Component({
-  selector: "app-skills",
-  standalone: true,
-  imports: [ButtonModule, CategoryComponent, CommonModule, DialogModule, ReactiveFormsModule, InputTextModule, DropdownModule],
-  templateUrl: "./skills.component.html",
+    selector: "app-skills",
+    imports: [ButtonModule, CategoryComponent, CommonModule, DialogModule, ReactiveFormsModule, InputTextModule, DropdownModule],
+    templateUrl: "./skills.component.html"
 })
 export class SkillsComponent {
   isAdmin: boolean = false;
