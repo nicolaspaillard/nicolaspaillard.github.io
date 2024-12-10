@@ -1,0 +1,8 @@
+{
+  "plugins": ["prettier-plugin-tailwindcss", "prettier-plugin-organize-imports"],
+  "bracketSameLine": true,
+  "htmlWhitespaceSensitivity": "ignore",
+  "printWidth": 400,
+  "semi": true,
+  "tailwindAttributes": ["contentStyleClass", "tabStyleClass", "headerStyleClass", "styleClass", "routerLinkActive"]
+}

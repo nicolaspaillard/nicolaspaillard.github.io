@@ -5,6 +5,7 @@ import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule, Validatio
 import { CanActivateFn, NavigationEnd, NavigationStart, Router, RouterModule, RouterOutlet, Routes } from "@angular/router";
 import { AboutComponent } from "@routes/about/about.component";
 import { DesignerComponent } from "@routes/designer/designer.component";
+import { GeneratorComponent } from "@routes/generator/generator.component";
 import { HomeComponent } from "@routes/home/home.component";
 import { ProjectsComponent } from "@routes/projects/projects.component";
 import { SkillsComponent } from "@routes/skills/skills.component";
@@ -22,9 +23,8 @@ import { ToastService } from "./services/frontend/toast.service";
 // #region routes
 export const AuthGuard: CanActivateFn = (route, state) => {
   let canActivate: boolean = false;
-  if (route.data["role"])
-    // prettier-ignore
-    inject(AuthService).user().subscribe((user) => canActivate = user);
+  // prettier-ignore
+  if (route.data["role"]) inject(AuthService).user().subscribe((user) => canActivate = user);
   if (!canActivate) {
     inject(ToastService).error("Erreur", "Vous devez d'abord vous connecter");
     inject(EventBusService).emit({ name: "signin" });
@@ -34,12 +34,13 @@ export const AuthGuard: CanActivateFn = (route, state) => {
 };
 export const slide = trigger("routeAnimations", [transition(":increment", slideTo("right")), transition(":decrement", slideTo("left"))]);
 export const routes: Routes = [
-  { path: "", title: "Accueil", component: HomeComponent, data: { animation: 0 } },
+  { path: "", title: "Nicolas Paillard", component: HomeComponent, data: { animation: 0 } },
   { path: "about", title: "À propos", component: AboutComponent, data: { animation: 1 } },
   { path: "career", title: "Carrière", component: CareerComponent, data: { animation: 2 } },
   { path: "skills", title: "Compétences", component: SkillsComponent, data: { animation: 3 } },
   { path: "projects", title: "Projets", component: ProjectsComponent, data: { animation: 4 } },
   { path: "designer", title: "Designer", component: DesignerComponent, data: { animation: 5, role: "admin" }, canActivate: [AuthGuard] },
+  { path: "generator", title: "Générateur", component: GeneratorComponent, data: { animation: 6 } },
   { path: "**", redirectTo: "" },
 ];
 export class CustomValidators {
