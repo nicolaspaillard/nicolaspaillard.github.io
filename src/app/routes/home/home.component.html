@@ -1,7 +1,6 @@
 <div class="flex h-full items-center justify-center overflow-hidden">
   <div class="inline-flex">
-    <!-- <img src="https://nicolaspaillard.mo.cloudinary.net/PhbKLYv/profile.jpg" class="" width="400" height="400" /> -->
-    <span class="flex h-[400px] w-[400px] items-center justify-center bg-[rgba(255,255,255,0.4)] text-xl">Photo</span>
+    <advanced-image [cldImg]="picture" width="400" height="400"></advanced-image>
     <div class="card flex flex-col justify-center border-l-0 p-10">
       <h1 class="m-0 text-5xl font-light">Nicolas Paillard</h1>
       <ngx-typed-js [strings]="strings" [loop]="true" [shuffle]="true" [backSpeed]="30" [typeSpeed]="30">

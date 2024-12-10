@@ -4,12 +4,15 @@ import { ToastService } from "@app/services/frontend/toast.service";
 import { SectionsService } from "@app/services/sections.service";
 import { SkillsService } from "@app/services/skills.service";
 import { TemplatesService } from "@app/services/templates.service";
+import { Cloudinary } from "@cloudinary/url-gen";
+import { fill } from "@cloudinary/url-gen/actions/resize";
 import { cloneDeep, Template } from "@pdfme/common";
 import { generate } from "@pdfme/generator";
 import { date, dateTime, ellipse, image, line, multiVariableText, rectangle, svg, table, text, time } from "@pdfme/schemas";
 import { Designer } from "@pdfme/ui";
 import { Button } from "primeng/button";
 import { FileUpload, FileUploadHandlerEvent } from "primeng/fileupload";
+import { cloudinaryConfig } from "src/main";
 
 const blank: Template = {
   basePdf: {
@@ -56,6 +59,9 @@ export class DesignerComponent implements OnInit, OnDestroy {
           domContainer: document.getElementById("container")!,
           template: template ? template : blank,
           plugins: plugins,
+          options: {
+            theme: {},
+          },
         })),
     );
   }
@@ -104,7 +110,18 @@ export class DesignerComponent implements OnInit, OnDestroy {
       );
     };
   };
-  auto = () => {
+  auto = async () => {
+    let imageB64: string = "";
+    let image = new Image();
+    image.crossOrigin = "Anonymous";
+    image.src = new Cloudinary({ cloud: { cloudName: cloudinaryConfig.cloudName } }).image("nicolasPaillard/profile").resize(fill().width(500).aspectRatio("1.0")).toURL();
+    await image.decode().then(() => {
+      var canvas = document.createElement("canvas");
+      canvas.height = image.naturalHeight;
+      canvas.width = image.naturalWidth;
+      canvas.getContext("2d")!.drawImage(image, 0, 0);
+      imageB64 = canvas.toDataURL("image/jpeg");
+    });
     this.careerService.experiences().subscribe((experiences) => {
       this.skillsService.categories().subscribe((categories) => {
         this.sectionsService.sections().subscribe((sections) => {
@@ -116,18 +133,15 @@ export class DesignerComponent implements OnInit, OnDestroy {
             },
             schemas: [
               [
-                {
-                  name: "title",
-                  type: "text",
-                  position: { x: 10, y: 10 },
-                  width: 190,
-                  height: 10,
-                },
+                { name: "photo", type: "image", content: imageB64, position: { x: 10, y: 10 }, width: 40, height: 40 },
+                { name: "title", type: "text", content: "Nicolas Paillard", position: { x: 50, y: 10 }, alignment: "center", verticalAlignment: "middle", width: 150, height: 7, fontSize: 20 },
+                { name: "subtitle", type: "text", content: "Développeur Full Stack", position: { x: 50, y: 17 }, alignment: "center", verticalAlignment: "middle", width: 150, height: 5 },
+                { name: "line", type: "line", position: { x: 50, y: 21.9 }, width: 150, height: 0.2, readOnly: true, color: "#000000" },
               ],
             ],
           };
-          let inputs = [{ title: "Nicolas Paillard" }];
-          let i = 2;
+          let inputs = [{ photo: imageB64, title: "Nicolas Paillard", subtitle: "Développeur Full Stack" }];
+          let i = 3;
           // for (let section of sections) {
           //   template.schemas[0].push({
           //     name: i.toString(),
@@ -150,17 +164,17 @@ export class DesignerComponent implements OnInit, OnDestroy {
           //   inputs[0][i.toString()] = category.title;
           //   i++;
           // }
-          for (let experience of experiences) {
-            template.schemas[0].push({
-              name: i.toString(),
-              type: "text",
-              position: { x: 10, y: i * 10 },
-              width: 190,
-              height: 10,
-            });
-            inputs[0][i.toString()] = experience.title;
-            i++;
-          }
+          // for (let experience of experiences) {
+          //   template.schemas[0].push({
+          //     name: i.toString(),
+          //     type: "text",
+          //     position: { x: 10, y: i * 10 },
+          //     width: 190,
+          //     height: 10,
+          //   });
+          //   inputs[0][i.toString()] = experience.title;
+          //   i++;
+          // }
           this.designer.updateTemplate(template);
           generate({ template: template, inputs: inputs, plugins: plugins }).then((pdf) => {
             const blob = new Blob([pdf.buffer], { type: "application/pdf" });
