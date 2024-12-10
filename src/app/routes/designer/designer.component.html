@@ -1,0 +1,13 @@
+<div class="flex h-full flex-col gap-2 py-10">
+  <div class="mx-auto flex justify-center gap-2">
+    <p-button (onClick)="clearTemplate()" icon="pi pi-refresh" label="Réinitialiser"></p-button>
+    <p-button (onClick)="uploadTemplate()" icon="pi pi-save" label="Sauvegarder"></p-button>
+    <p-fileupload (uploadHandler)="loadModel($event)" mode="basic" chooseIcon="pi pi-upload" url="https://www.primefaces.org/cdn/api/upload.php" accept=".pdf" maxFileSize="1000000" [customUpload]="true" [auto]="true" chooseLabel="Importer modèle" />
+    <p-fileupload (uploadHandler)="loadTemplate($event)" mode="basic" chooseIcon="pi pi-upload" url="https://www.primefaces.org/cdn/api/upload.php" accept=".json" maxFileSize="1000000" [customUpload]="true" [auto]="true" chooseLabel="Importer template" />
+    <p-button (onClick)="logTemplate()" icon="pi pi-print" label="Afficher"></p-button>
+    <p-button (onClick)="downloadTemplate()" icon="pi pi-download" label="Télécharger"></p-button>
+    <p-button (onClick)="downloadPDF()" icon="pi pi-file-pdf" label="Générer"></p-button>
+    <p-button (onClick)="auto()" icon="pi pi-file-pdf" label="Générer auto"></p-button>
+  </div>
+  <div id="container" class="h-full overflow-hidden"></div>
+</div>

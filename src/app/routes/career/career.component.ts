@@ -20,7 +20,6 @@ import { ExperienceComponent } from "./experience/experience.component";
   templateUrl: "./career.component.html",
 })
 export class CareerComponent {
-  isAdmin: boolean = false;
   isDialogShown: boolean = false;
   user: any = null;
   activities: string[] = [];
@@ -43,7 +42,6 @@ export class CareerComponent {
     private careerService: CareerService,
   ) {
     this.authService.user().subscribe((user) => (this.user = user));
-    this.authService.admin().subscribe((admin) => (this.isAdmin = admin));
     this.careerService.experiences().subscribe((experiences) => (this.experiences = experiences));
   }
   openDialog = (experience?: Experience) => {

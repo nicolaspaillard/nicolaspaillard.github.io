@@ -16,9 +16,7 @@ export class ExperienceComponent {
   @Output() onExperienceRemoved = new EventEmitter<Experience>();
   @Output() onExperienceEdit = new EventEmitter<Experience>();
   user: any = null;
-  isAdmin: boolean = false;
   constructor(private authService: AuthService) {
     this.authService.user().subscribe((user) => (this.user = user));
-    this.authService.admin().subscribe((admin) => (this.isAdmin = admin));
   }
 }

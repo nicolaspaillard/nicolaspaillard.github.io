@@ -17,7 +17,6 @@ import { CategoryComponent } from "./category/category.component";
   templateUrl: "./skills.component.html",
 })
 export class SkillsComponent {
-  isAdmin: boolean = false;
   isDialogCategoryShown: boolean = false;
   isDialogSkillShown: boolean = false;
   user: any = null;
@@ -1561,7 +1560,6 @@ export class SkillsComponent {
     private confirmService: ConfirmService,
   ) {
     this.authService.user().subscribe((user) => (this.user = user));
-    this.authService.admin().subscribe((admin) => (this.isAdmin = admin));
     this.skillsService.categories().subscribe((categories) => (this.categories = categories));
   }
 

@@ -24,7 +24,6 @@ declare var cloudinary: any;
   templateUrl: "./projects.component.html",
 })
 export class ProjectsComponent {
-  isAdmin: boolean = false;
   isDialogShown: boolean = false;
   user: any = null;
   activities: string[] = [];
@@ -49,7 +48,6 @@ export class ProjectsComponent {
     private projectsService: ProjectsService,
   ) {
     this.authService.user().subscribe((user) => (this.user = user));
-    this.authService.admin().subscribe((admin) => (this.isAdmin = admin));
     this.projectsService.projects().subscribe((projects) => (this.projects = projects));
   }
   openDialog = (project?: Project) => {

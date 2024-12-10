@@ -1,5 +1,5 @@
 <div class="flex min-h-full flex-col py-10">
-  <p-button *ngIf="user && isAdmin" size="large" class="block text-center" icon="pi pi-plus" [text]="true" (onClick)="openDialog()"></p-button>
+  <p-button *ngIf="user && user['roles'].includes('admin')" size="large" class="block text-center" icon="pi pi-plus" [text]="true" (onClick)="openDialog()"></p-button>
   <div class="relative grow py-10">
     <div class="absolute left-1/2 top-1 h-full w-[2px] -translate-x-[calc(100%-1px)] rounded bg-[green]"></div>
     <div class="absolute left-1/2 top-0 -translate-x-[10px] border-b-[15px] border-l-[10px] border-r-[10px] border-t-0 border-solid border-transparent border-b-[green]"></div>

@@ -21,9 +21,7 @@ export class CategoryComponent {
   @Output() onSkillRemoved = new EventEmitter<Skill>();
   @Output() onSkillEdit = new EventEmitter<Skill>();
   user: any = null;
-  isAdmin: boolean = false;
   constructor(private authService: AuthService) {
     this.authService.user().subscribe((user) => (this.user = user));
-    this.authService.admin().subscribe((admin) => (this.isAdmin = admin));
   }
 }

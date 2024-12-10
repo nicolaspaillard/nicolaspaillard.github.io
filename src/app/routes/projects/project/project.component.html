@@ -1,5 +1,5 @@
 <div class="group card relative h-full">
-  <div *ngIf="user && isAdmin" class="absolute right-0 top-0 z-10">
+  <div *ngIf="user && user['roles'].includes('admin')" class="absolute right-0 top-0 z-10">
     <p-button icon="pi pi-pencil" class="opacity-0 transition-opacity group-hover:opacity-100" [text]="true" size="small" (onClick)="onProjectEdit.emit(project)" />
     <p-button icon="pi pi-trash" class="opacity-0 transition-opacity group-hover:opacity-100" [text]="true" size="small" severity="danger" (onClick)="onProjectRemoved.emit(project)" />
   </div>

@@ -1,5 +1,5 @@
 <div class="flex min-h-full flex-col justify-center gap-10 py-10">
-  <p-button *ngIf="user && isAdmin" size="large" class="block text-center" icon="pi pi-plus" [text]="true" (onClick)="openDialogSection()"></p-button>
+  <p-button *ngIf="user && user['roles'].includes('admin')" size="large" class="block text-center" icon="pi pi-plus" [text]="true" (onClick)="openDialogSection()"></p-button>
   <app-section *ngFor="let section of sections" [section]="section" (onSectionEdit)="openDialogSection(section)" (onSectionRemoved)="deleteSection(section)"></app-section>
 </div>
 <p-dialog [modal]="true" [header]="(idEdit.length ? 'Modifier' : 'Ajouter') + ' une expérience'" contentStyleClass="flex flex-col gap-2" [dismissableMask]="true" [(visible)]="isDialogSectionShown">

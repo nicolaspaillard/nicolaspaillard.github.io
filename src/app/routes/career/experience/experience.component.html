@@ -1,7 +1,7 @@
 <div class="group card relative flex w-[calc(50%-2.5rem)] p-10 before:absolute before:top-1/2 before:h-[2px] before:w-10 before:-translate-y-full before:bg-[green] before:content-['']" [ngClass]="right ? 'ml-auto before:-left-[calc(theme(spacing.10)+1px)]' : 'flex-row-reverse before:-right-[calc(theme(spacing.10)+1px)]'">
   <div class="absolute top-0" [ngClass]="right ? 'left-0' : 'right-0'">
-    <p-button *ngIf="user && isAdmin" icon="pi pi-pencil" class="opacity-0 transition-opacity group-hover:opacity-100" [text]="true" size="small" (onClick)="onExperienceEdit.emit(experience)" />
-    <p-button *ngIf="user && isAdmin" icon="pi pi-trash" class="opacity-0 transition-opacity group-hover:opacity-100" [text]="true" size="small" severity="danger" (onClick)="onExperienceRemoved.emit(experience)" />
+    <p-button *ngIf="user && user['roles'].includes('admin')" icon="pi pi-pencil" class="opacity-0 transition-opacity group-hover:opacity-100" [text]="true" size="small" (onClick)="onExperienceEdit.emit(experience)" />
+    <p-button *ngIf="user && user['roles'].includes('admin')" icon="pi pi-trash" class="opacity-0 transition-opacity group-hover:opacity-100" [text]="true" size="small" severity="danger" (onClick)="onExperienceRemoved.emit(experience)" />
   </div>
 
   <div class="flex w-60 shrink-0 flex-col border-0 border-solid border-white/25 [&>*:last-child]:mb-0" [ngClass]="right ? 'mr-5 border-r pr-5 text-end' : 'ml-5 border-l pl-5'">

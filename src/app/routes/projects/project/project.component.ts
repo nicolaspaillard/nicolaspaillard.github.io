@@ -25,10 +25,8 @@ export class ProjectComponent {
     },
   });
   user: any = null;
-  isAdmin: boolean = false;
   constructor(private authService: AuthService) {
     this.authService.user().subscribe((user) => (this.user = user));
-    this.authService.admin().subscribe((admin) => (this.isAdmin = admin));
   }
   // prettier-ignore
   getURL = (image: string) => this.cld.image("nicolasPaillard/" + image).resize(fill().width(500).aspectRatio("1.0")).toURL();

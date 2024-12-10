@@ -4,6 +4,7 @@ import { Component, inject, OnInit } from "@angular/core";
 import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule, ValidationErrors, ValidatorFn, Validators } from "@angular/forms";
 import { CanActivateFn, NavigationEnd, NavigationStart, Router, RouterModule, RouterOutlet, Routes } from "@angular/router";
 import { AboutComponent } from "@routes/about/about.component";
+import { DesignerComponent } from "@routes/designer/designer.component";
 import { HomeComponent } from "@routes/home/home.component";
 import { ProjectsComponent } from "@routes/projects/projects.component";
 import { SkillsComponent } from "@routes/skills/skills.component";
@@ -18,11 +19,12 @@ import { AuthService } from "./services/auth.service";
 import { EventBusService } from "./services/frontend/event-bus.service";
 import { ToastService } from "./services/frontend/toast.service";
 
-// #region config
+// #region routes
 export const AuthGuard: CanActivateFn = (route, state) => {
   let canActivate: boolean = false;
-  // prettier-ignore
-  inject(AuthService).user().subscribe((user) => canActivate = user);
+  if (route.data["role"])
+    // prettier-ignore
+    inject(AuthService).user().subscribe((user) => canActivate = user);
   if (!canActivate) {
     inject(ToastService).error("Erreur", "Vous devez d'abord vous connecter");
     inject(EventBusService).emit({ name: "signin" });
@@ -30,6 +32,16 @@ export const AuthGuard: CanActivateFn = (route, state) => {
   }
   return canActivate;
 };
+export const slide = trigger("routeAnimations", [transition(":increment", slideTo("right")), transition(":decrement", slideTo("left"))]);
+export const routes: Routes = [
+  { path: "", title: "Accueil", component: HomeComponent, data: { animation: 0 } },
+  { path: "about", title: "À propos", component: AboutComponent, data: { animation: 1 } },
+  { path: "career", title: "Carrière", component: CareerComponent, data: { animation: 2 } },
+  { path: "skills", title: "Compétences", component: SkillsComponent, data: { animation: 3 } },
+  { path: "projects", title: "Projets", component: ProjectsComponent, data: { animation: 4 } },
+  { path: "designer", title: "Designer", component: DesignerComponent, data: { animation: 5, role: "admin" }, canActivate: [AuthGuard] },
+  { path: "**", redirectTo: "" },
+];
 export class CustomValidators {
   static matchPassword(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
@@ -40,15 +52,6 @@ export class CustomValidators {
     };
   }
 }
-export const slide = trigger("routeAnimations", [transition(":increment", slideTo("right")), transition(":decrement", slideTo("left"))]);
-export const routes: Routes = [
-  { path: "", title: "Accueil", component: HomeComponent, data: { animation: 0 } },
-  { path: "about", title: "À propos", component: AboutComponent, data: { animation: 1 } },
-  { path: "career", title: "Carrière", component: CareerComponent, data: { animation: 2 } },
-  { path: "skills", title: "Compétences", component: SkillsComponent, data: { animation: 3 } },
-  { path: "projects", title: "Projets", component: ProjectsComponent, data: { animation: 4 } },
-  { path: "**", redirectTo: "" },
-];
 // #endregion
 
 @Component({
@@ -99,8 +102,8 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     this.matrix();
   }
-  prepareRoute = (outlet: RouterOutlet) => outlet && outlet.activatedRouteData && outlet.activatedRouteData["animation"];
 
+  prepareRoute = (outlet: RouterOutlet) => outlet && outlet.activatedRouteData && outlet.activatedRouteData["animation"];
   interval: any;
   matrix() {
     let canvas: HTMLCanvasElement = document.querySelector("canvas")!;

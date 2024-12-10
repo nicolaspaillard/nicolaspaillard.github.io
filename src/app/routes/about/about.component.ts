@@ -31,8 +31,6 @@ export class AboutComponent {
     { icon: "heroAcademicCapSolid", text: "BTS Systèmes Numériques, option Informatique et Réseaux" },
     { icon: "heroEnvelopeSolid", text: "Contacter par mail", href: "" },
   ];
-
-  isAdmin: boolean = false;
   user: any = null;
   isDialogSectionShown: boolean = false;
   idEdit: string = "";
@@ -47,7 +45,6 @@ export class AboutComponent {
     private confirmService: ConfirmService,
   ) {
     this.authService.user().subscribe((user) => (this.user = user));
-    this.authService.admin().subscribe((admin) => (this.isAdmin = admin));
     this.sectionsService.sections().subscribe((sections) => (this.sections = sections));
   }
   openDialogSection = (section?: Section) => {

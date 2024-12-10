@@ -2,10 +2,13 @@
 <div class="flex h-screen flex-col" [@routeAnimations]="prepareRoute(outlet)">
   <nav class="container card sticky top-0 z-20 mx-auto flex items-center justify-center *:p-2 [&_button]:w-auto [&_button]:px-4 [&_button]:py-3">
     <p-button routerLink="/" size="large" routerLinkActive="[&>*]:!border [&>*]:!border-solid [&>*]:!border-[var(--primary-color)]" [routerLinkActiveOptions]="{ exact: true }" label="" [text]="true" styleClass="rounded-lg capitalize" icon="pi pi-home"></p-button>
-    <p-button *ngFor="let route of routes" size="large" [routerLink]="route.path" routerLinkActive="[&>*]:!border [&>*]:!border-solid [&>*]:!border-[var(--primary-color)]" [label]="route.title" [text]="true" styleClass="rounded-lg capitalize"></p-button>
+    <ng-container *ngFor="let route of routes">
+      <p-button *ngIf="!route.data['role'] || (user && user['roles'].includes(route.data['role']))" size="large" [routerLink]="route.path" routerLinkActive="[&>*]:!border [&>*]:!border-solid [&>*]:!border-[var(--primary-color)]" [label]="route.title" [text]="true" styleClass="rounded-lg capitalize"></p-button>
+    </ng-container>
     <p-button *ngIf="!user" size="large" (onClick)="isSignupShown = true">Inscription</p-button>
     <p-button *ngIf="!user" size="large" (onClick)="isSigninShown = true">Connexion</p-button>
     <p-button *ngIf="user" size="large" (onClick)="signout()">Déconnexion</p-button>
+    <p-button size="large" (onClick)="(null)">CV</p-button>
   </nav>
   <div class="container relative mx-auto grow overflow-x-hidden" [ngClass]="{ '!overflow-hidden': isTransitioning }">
     <router-outlet #outlet="outlet"></router-outlet>
