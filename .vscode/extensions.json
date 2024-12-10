@@ -12,11 +12,6 @@
     "esbenp.prettier-vscode",
     "syler.sass-indented",
     "bradlc.vscode-tailwindcss",
-    "redhat.vscode-xml",
-    "gitlab.gitlab-workflow",
-    "redhat.vscode-yaml",
-    "bmewburn.vscode-intelephense-client",
-    "ecmel.vscode-html-css",
-    "tomwhite007.rename-angular-component"
+    "ecmel.vscode-html-css"
   ]
 }
