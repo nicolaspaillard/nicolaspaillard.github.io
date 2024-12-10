@@ -10,10 +10,8 @@ import { cloudinaryConfig } from "src/main";
 
 @Component({
   selector: "app-project",
-  standalone: true,
   imports: [CommonModule, ButtonModule, CarouselModule],
   templateUrl: "./project.component.html",
-  styles: ``,
 })
 export class ProjectComponent {
   @Input() project: Project;

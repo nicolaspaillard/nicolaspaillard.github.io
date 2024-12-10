@@ -14,10 +14,9 @@ import { TooltipModule } from "primeng/tooltip";
 import { ExperienceComponent } from "./experience/experience.component";
 
 @Component({
-  selector: "app-career",
-  standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, ExperienceComponent, DialogModule, DatePickerModule, TextareaModule, InputTextModule, ButtonModule, InputGroupModule, TooltipModule],
-  templateUrl: "./career.component.html",
+    selector: "app-career",
+    imports: [CommonModule, ReactiveFormsModule, ExperienceComponent, DialogModule, DatePickerModule, TextareaModule, InputTextModule, ButtonModule, InputGroupModule, TooltipModule],
+    templateUrl: "./career.component.html"
 })
 export class CareerComponent {
   isDialogShown: boolean = false;

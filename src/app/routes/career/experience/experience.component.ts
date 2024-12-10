@@ -5,10 +5,9 @@ import { Experience } from "@app/services/career.service";
 import { ButtonModule } from "primeng/button";
 
 @Component({
-  selector: "app-experience",
-  standalone: true,
-  imports: [CommonModule, ButtonModule],
-  templateUrl: "./experience.component.html",
+    selector: "app-experience",
+    imports: [CommonModule, ButtonModule],
+    templateUrl: "./experience.component.html"
 })
 export class ExperienceComponent {
   @Input() experience: Experience;

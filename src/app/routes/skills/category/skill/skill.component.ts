@@ -6,10 +6,8 @@ import { ButtonModule } from "primeng/button";
 
 @Component({
   selector: "app-skill",
-  standalone: true,
   imports: [CommonModule, ButtonModule],
   templateUrl: "./skill.component.html",
-  styles: ``,
 })
 export class SkillComponent {
   @Input() skill: Skill;

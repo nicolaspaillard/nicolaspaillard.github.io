@@ -56,11 +56,10 @@ export class CustomValidators {
 // #endregion
 
 @Component({
-  selector: "app-root",
-  animations: [slide],
-  standalone: true,
-  imports: [CommonModule, RouterModule, RouterOutlet, ReactiveFormsModule, ButtonModule, DialogModule, ToastModule, ConfirmDialogModule, InputTextModule, PasswordModule],
-  templateUrl: "./app.component.html",
+    selector: "app-root",
+    animations: [slide],
+    imports: [CommonModule, RouterModule, RouterOutlet, ReactiveFormsModule, ButtonModule, DialogModule, ToastModule, ConfirmDialogModule, InputTextModule, PasswordModule],
+    templateUrl: "./app.component.html"
 })
 export class AppComponent implements OnInit {
   isSignupShown: boolean = false;

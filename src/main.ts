@@ -1,8 +1,9 @@
 import { provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
+import { getAnalytics, provideAnalytics, ScreenTrackingService, UserTrackingService } from "@angular/fire/analytics";
 import { FirebaseOptions, initializeApp, provideFirebaseApp } from "@angular/fire/app";
+import { initializeAppCheck, provideAppCheck, ReCaptchaEnterpriseProvider } from "@angular/fire/app-check";
 import { getAuth, provideAuth } from "@angular/fire/auth";
 import { getFirestore, provideFirestore } from "@angular/fire/firestore";
-import { getStorage, provideStorage } from "@angular/fire/storage";
 import { bootstrapApplication } from "@angular/platform-browser";
 import { provideAnimationsAsync } from "@angular/platform-browser/animations/async";
 import { provideRouter, withComponentInputBinding, withInMemoryScrolling } from "@angular/router";
@@ -697,8 +698,9 @@ bootstrapApplication(AppComponent, {
     provideHttpClient(withInterceptorsFromDi()),
     provideFirebaseApp(() => initializeApp(firebaseConfig)),
     provideFirestore(() => getFirestore()),
-    provideStorage(() => getStorage()),
     provideAuth(() => getAuth()),
+    provideAnalytics(() => getAnalytics()),
+    provideAppCheck(() => initializeAppCheck(undefined, { provider: new ReCaptchaEnterpriseProvider("6LdH4IYqAAAAAFEF9U2RMeZGVxRXVZAf_67iHt9M"), isTokenAutoRefreshEnabled: true })),
     provideAnimationsAsync(),
     providePrimeNG({
       theme: {
@@ -707,5 +709,7 @@ bootstrapApplication(AppComponent, {
     }),
     ConfirmationService,
     MessageService,
+    ScreenTrackingService,
+    UserTrackingService,
   ],
 }).catch((err) => console.error(err));

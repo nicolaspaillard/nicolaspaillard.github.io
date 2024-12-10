@@ -10,10 +10,9 @@ import { FileUpload } from "primeng/fileupload";
 import { cloudinaryConfig } from "src/main";
 
 @Component({
-  selector: "app-home",
-  standalone: true,
-  imports: [CommonModule, NgxTypedJsModule, CloudinaryModule, ButtonModule, FileUpload],
-  templateUrl: "./home.component.html",
+    selector: "app-home",
+    imports: [CommonModule, NgxTypedJsModule, CloudinaryModule, ButtonModule, FileUpload],
+    templateUrl: "./home.component.html"
 })
 export class HomeComponent {
   strings: string[] = ["Web", "Backend", "Frontend", "FullStack", "SQL", "TypeScript", ".NET", "Angular", "Java", "Python"];

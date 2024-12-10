@@ -9,7 +9,7 @@ import { fill } from "@cloudinary/url-gen/actions/resize";
 import { cloneDeep, Template } from "@pdfme/common";
 import { generate } from "@pdfme/generator";
 import { date, dateTime, ellipse, image, line, multiVariableText, rectangle, svg, table, text, time } from "@pdfme/schemas";
-import { Designer /* @vite-ignore */ } from "@pdfme/ui";
+import { /* @vite-ignore */ Designer } from "@pdfme/ui";
 import { Button } from "primeng/button";
 import { FileUpload, FileUploadHandlerEvent } from "primeng/fileupload";
 import { cloudinaryConfig } from "src/main";
@@ -38,10 +38,8 @@ const plugins = {
 
 @Component({
   selector: "app-designer",
-  standalone: true,
   imports: [Button, FileUpload],
   templateUrl: "./designer.component.html",
-  styles: ``,
 })
 export class DesignerComponent implements OnInit, OnDestroy {
   designer: Designer;

@@ -11,10 +11,9 @@ import { SelectModule } from "primeng/select";
 import { CategoryComponent } from "./category/category.component";
 
 @Component({
-  selector: "app-skills",
-  standalone: true,
-  imports: [ReactiveFormsModule, CommonModule, CategoryComponent, ButtonModule, DialogModule, InputTextModule, SelectModule],
-  templateUrl: "./skills.component.html",
+    selector: "app-skills",
+    imports: [ReactiveFormsModule, CommonModule, CategoryComponent, ButtonModule, DialogModule, InputTextModule, SelectModule],
+    templateUrl: "./skills.component.html"
 })
 export class SkillsComponent {
   isDialogCategoryShown: boolean = false;

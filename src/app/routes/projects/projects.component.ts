@@ -6,7 +6,7 @@ import { ConfirmService } from "@app/services/frontend/confirm.service";
 import { Project, ProjectsService } from "@app/services/projects.service";
 import { CloudinaryModule } from "@cloudinary/ng";
 import { ButtonModule } from "primeng/button";
-import { CalendarModule } from "primeng/calendar";
+import { DatePickerModule } from "primeng/datepicker";
 import { DialogModule } from "primeng/dialog";
 import { FileUploadModule } from "primeng/fileupload";
 import { InputGroupModule } from "primeng/inputgroup";
@@ -19,8 +19,7 @@ declare var cloudinary: any;
 
 @Component({
   selector: "app-projects",
-  standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, CloudinaryModule, ProjectComponent, ButtonModule, DialogModule, TooltipModule, InputGroupModule, CalendarModule, InputTextModule, TextareaModule, FileUploadModule],
+  imports: [CommonModule, ReactiveFormsModule, CloudinaryModule, ProjectComponent, ButtonModule, DialogModule, TooltipModule, InputGroupModule, DatePickerModule, InputTextModule, TextareaModule, FileUploadModule],
   templateUrl: "./projects.component.html",
 })
 export class ProjectsComponent {

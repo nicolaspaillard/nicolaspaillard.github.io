@@ -18,7 +18,6 @@ type bubble = {
 
 @Component({
   selector: "app-about",
-  standalone: true,
   imports: [CommonModule, SectionComponent, ReactiveFormsModule, DialogModule, ButtonModule, InputTextModule, TextareaModule],
   templateUrl: "./about.component.html",
 })

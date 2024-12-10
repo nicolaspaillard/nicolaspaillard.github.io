@@ -8,10 +8,8 @@ import { SkillComponent } from "./skill/skill.component";
 
 @Component({
   selector: "app-category",
-  standalone: true,
   imports: [CommonModule, ReactiveFormsModule, SkillComponent, ButtonModule],
   templateUrl: "./category.component.html",
-  styles: ``,
 })
 export class CategoryComponent {
   @Input() title: string;
