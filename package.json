@@ -1,11 +1,11 @@
 {
   "name": "nicolaspaillard",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "scripts": {
     "start": "ng serve",
     "build": "ng build",
     "update": "ng update",
-    "deploy": "ng deploy --no-nojekyll --no-notfound"
+    "deploy": "ng deploy --no-nojekyll"
   },
   "private": true,
   "dependencies": {
