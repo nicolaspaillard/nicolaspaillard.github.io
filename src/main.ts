@@ -1,4 +1,5 @@
 import { provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
+import { inject } from "@angular/core";
 import { getAnalytics, provideAnalytics, ScreenTrackingService, UserTrackingService } from "@angular/fire/analytics";
 import { FirebaseOptions, initializeApp, provideFirebaseApp } from "@angular/fire/app";
 import { initializeAppCheck, provideAppCheck, ReCaptchaEnterpriseProvider } from "@angular/fire/app-check";
@@ -6,12 +7,22 @@ import { getAuth, provideAuth } from "@angular/fire/auth";
 import { getFirestore, provideFirestore } from "@angular/fire/firestore";
 import { bootstrapApplication } from "@angular/platform-browser";
 import { provideAnimationsAsync } from "@angular/platform-browser/animations/async";
-import { provideRouter, withComponentInputBinding, withInMemoryScrolling } from "@angular/router";
+import { CanActivateFn, provideRouter, Router, Routes, withComponentInputBinding, withInMemoryScrolling } from "@angular/router";
+import { AuthService } from "@app/services/auth.service";
+import { EventBusService } from "@app/services/frontend/event-bus.service";
+import { ToastService } from "@app/services/frontend/toast.service";
 import { definePreset } from "@primeng/themes";
 import Aura from "@primeng/themes/aura";
+import { AboutComponent } from "@routes/about/about.component";
+import { CareerComponent } from "@routes/career/career.component";
+import { DesignerComponent } from "@routes/designer/designer.component";
+import { GeneratorComponent } from "@routes/generator/generator.component";
+import { HomeComponent } from "@routes/home/home.component";
+import { ProjectsComponent } from "@routes/projects/projects.component";
+import { SkillsComponent } from "@routes/skills/skills.component";
 import { ConfirmationService, MessageService } from "primeng/api";
 import { providePrimeNG } from "primeng/config";
-import { AppComponent, routes } from "./app/app.component";
+import { AppComponent } from "./app/app.component";
 
 // #region configs
 export const cloudinaryConfig = {
@@ -684,7 +695,29 @@ const matrix = definePreset(Aura, {
   },
 });
 // #endregion
-
+// #region routes
+export const AuthGuard: CanActivateFn = (route, state) => {
+  let canActivate: boolean = false;
+  // prettier-ignore
+  if (route.data["role"]) inject(AuthService).user().subscribe((user) => canActivate = user);
+  if (!canActivate) {
+    inject(ToastService).error("Erreur", "Vous devez d'abord vous connecter");
+    inject(EventBusService).emit({ name: "signin" });
+    inject(Router).navigate([]);
+  }
+  return canActivate;
+};
+export const routes: Routes = [
+  { path: "", title: "Nicolas Paillard", component: HomeComponent, data: { animation: 0 } },
+  { path: "about", title: "À propos", component: AboutComponent, data: { animation: 1 } },
+  { path: "career", title: "Carrière", component: CareerComponent, data: { animation: 2 } },
+  { path: "skills", title: "Compétences", component: SkillsComponent, data: { animation: 3 } },
+  { path: "projects", title: "Projets", component: ProjectsComponent, data: { animation: 4 } },
+  { path: "designer", title: "Designer", component: DesignerComponent, data: { animation: 5 } },
+  { path: "generator", title: "Générateur", component: GeneratorComponent, data: { animation: 6 } },
+  { path: "**", redirectTo: "" },
+];
+// #endregion
 bootstrapApplication(AppComponent, {
   providers: [
     provideRouter(

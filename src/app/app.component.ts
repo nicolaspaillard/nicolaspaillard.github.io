@@ -1,48 +1,19 @@
 import { animate, group, query, style, transition, trigger } from "@angular/animations";
 import { CommonModule } from "@angular/common";
-import { Component, inject, OnInit } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule, ValidationErrors, ValidatorFn, Validators } from "@angular/forms";
-import { CanActivateFn, NavigationEnd, NavigationStart, Router, RouterModule, RouterOutlet, Routes } from "@angular/router";
-import { AboutComponent } from "@routes/about/about.component";
-import { DesignerComponent } from "@routes/designer/designer.component";
-import { GeneratorComponent } from "@routes/generator/generator.component";
-import { HomeComponent } from "@routes/home/home.component";
-import { ProjectsComponent } from "@routes/projects/projects.component";
-import { SkillsComponent } from "@routes/skills/skills.component";
+import { NavigationEnd, NavigationStart, Router, RouterModule, RouterOutlet } from "@angular/router";
 import { ButtonModule } from "primeng/button";
 import { ConfirmDialogModule } from "primeng/confirmdialog";
 import { DialogModule } from "primeng/dialog";
 import { InputTextModule } from "primeng/inputtext";
 import { PasswordModule } from "primeng/password";
 import { ToastModule } from "primeng/toast";
-import { CareerComponent } from "./routes/career/career.component";
+import { routes } from "src/main";
 import { AuthService } from "./services/auth.service";
-import { EventBusService } from "./services/frontend/event-bus.service";
 import { ToastService } from "./services/frontend/toast.service";
 
-// #region routes
-export const AuthGuard: CanActivateFn = (route, state) => {
-  let canActivate: boolean = false;
-  // prettier-ignore
-  if (route.data["role"]) inject(AuthService).user().subscribe((user) => canActivate = user);
-  if (!canActivate) {
-    inject(ToastService).error("Erreur", "Vous devez d'abord vous connecter");
-    inject(EventBusService).emit({ name: "signin" });
-    inject(Router).navigate([]);
-  }
-  return canActivate;
-};
 export const slide = trigger("routeAnimations", [transition(":increment", slideTo("right")), transition(":decrement", slideTo("left"))]);
-export const routes: Routes = [
-  { path: "", title: "Nicolas Paillard", component: HomeComponent, data: { animation: 0 } },
-  { path: "about", title: "À propos", component: AboutComponent, data: { animation: 1 } },
-  { path: "career", title: "Carrière", component: CareerComponent, data: { animation: 2 } },
-  { path: "skills", title: "Compétences", component: SkillsComponent, data: { animation: 3 } },
-  { path: "projects", title: "Projets", component: ProjectsComponent, data: { animation: 4 } },
-  { path: "designer", title: "Designer", component: DesignerComponent, data: { animation: 5 } },
-  { path: "generator", title: "Générateur", component: GeneratorComponent, data: { animation: 6 } },
-  { path: "**", redirectTo: "" },
-];
 export class CustomValidators {
   static matchPassword(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
@@ -53,13 +24,12 @@ export class CustomValidators {
     };
   }
 }
-// #endregion
 
 @Component({
-    selector: "app-root",
-    animations: [slide],
-    imports: [CommonModule, RouterModule, RouterOutlet, ReactiveFormsModule, ButtonModule, DialogModule, ToastModule, ConfirmDialogModule, InputTextModule, PasswordModule],
-    templateUrl: "./app.component.html"
+  selector: "app-root",
+  animations: [slide],
+  imports: [CommonModule, RouterModule, RouterOutlet, ReactiveFormsModule, ButtonModule, DialogModule, ToastModule, ConfirmDialogModule, InputTextModule, PasswordModule],
+  templateUrl: "./app.component.html",
 })
 export class AppComponent implements OnInit {
   isSignupShown: boolean = false;
@@ -99,7 +69,7 @@ export class AppComponent implements OnInit {
       }
     });
   }
-  ngOnInit(): void {
+  ngOnInit() {
     this.matrix();
   }
 
@@ -133,17 +103,9 @@ export class AppComponent implements OnInit {
       }
     }
   }
-  signup = () => {
-    this.authService.signup(this.formSignup.value.email!, this.formSignup.value.password!);
-    this.isSignupShown = false;
-  };
-  signin = () => {
-    this.authService.signin(this.formSignin.value.email!, this.formSignin.value.password!);
-    this.isSigninShown = false;
-  };
-  signout = () => {
-    this.authService.signout();
-  };
+  signup = () => this.authService.signup(this.formSignup.value.email!, this.formSignup.value.password!).then(() => (this.isSignupShown = false));
+  signin = () => this.authService.signin(this.formSignin.value.email!, this.formSignin.value.password!).then(() => (this.isSigninShown = false));
+  signout = () => this.authService.signout();
 }
 function slideTo(direction: any) {
   const optional = { optional: true };
