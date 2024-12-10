@@ -46,19 +46,19 @@
         <input pInputText formControlName="city" />
       </label>
     </div>
-    <label class="*:after: flex flex-col !gap-0 *:relative *:flex *:items-center *:ps-6 *:after:absolute *:after:left-2 *:after:h-[6px] *:after:w-[6px] *:after:rounded-full *:after:bg-white *:after:content-['']">
+    <label class="!block">
       Activités
-      <div *ngFor="let activity of activities" class="group justify-between transition-colors hover:bg-black/10" [pTooltip]="activity" tooltipPosition="bottom">
-        <span class="block max-w-[400px] truncate pe-2">{{ activity }}</span>
-        <p-button icon="pi pi-trash" class="opacity-0 transition-opacity group-hover:opacity-100" styleClass="w-auto" [text]="true" size="small" severity="danger" (onClick)="removeActivity(activity)" />
+      <span *ngIf="!activities.length" class="opacity-50">&nbsp;(Aucune activité)</span>
+      <div *ngFor="let activity of activities" class="group relative flex items-center justify-between ps-6 transition-colors after:absolute after:left-2 after:h-[6px] after:w-[6px] after:rounded-full after:bg-white after:opacity-50 after:content-[''] hover:bg-black/10" [pTooltip]="activity" tooltipPosition="bottom">
+        <span class="block max-w-[400px] truncate pe-2 opacity-50">{{ activity }}</span>
+        <p-button icon="pi pi-trash" class="opacity-0 transition-opacity group-hover:opacity-100" [text]="true" size="small" severity="danger" (onClick)="removeActivity(activity)" />
       </div>
-      <span *ngIf="!activities.length" class="opacity-50">Aucune activité</span>
     </label>
     <label>
       Ajouter une activité
       <p-inputGroup>
         <input #activity pInputText placeholder="Activité" />
-        <button [disabled]="!activity.value" type="button" pButton icon="pi pi-plus" (click)="addActivity(activity.value)"></button>
+        <p-button [disabled]="!activity.value" icon="pi pi-plus" (onClick)="addActivity(activity.value)" />
       </p-inputGroup>
     </label>
   </form>

@@ -1,6 +1,11 @@
 <div class="flex h-full items-center justify-center overflow-hidden">
   <div class="inline-flex">
-    <advanced-image [cldImg]="picture" width="400" height="400"></advanced-image>
+    <div class="group relative">
+      <div *ngIf="user && user['roles'].includes('admin')" class="absolute right-0 top-0 z-10">
+        <p-fileupload (uploadHandler)="(null)" class="opacity-0 transition-opacity group-hover:opacity-100" mode="basic" chooseIcon="pi pi-pencil" accept="image/*" maxFileSize="1000000" [customUpload]="true" [auto]="true" chooseLabel="" chooseStyleClass="p-button-icon-only p-button-text p-button-sm !text-[#00ff00]" />
+      </div>
+      <advanced-image [cldImg]="picture" width="400" height="400" />
+    </div>
     <div class="card flex flex-col justify-center border-l-0 p-10">
       <h1 class="m-0 text-5xl font-light">Nicolas Paillard</h1>
       <ngx-typed-js [strings]="strings" [loop]="true" [shuffle]="true" [backSpeed]="30" [typeSpeed]="30">

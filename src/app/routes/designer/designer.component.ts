@@ -9,7 +9,7 @@ import { fill } from "@cloudinary/url-gen/actions/resize";
 import { cloneDeep, Template } from "@pdfme/common";
 import { generate } from "@pdfme/generator";
 import { date, dateTime, ellipse, image, line, multiVariableText, rectangle, svg, table, text, time } from "@pdfme/schemas";
-import { Designer } from "@pdfme/ui";
+import { Designer /* @vite-ignore */ } from "@pdfme/ui";
 import { Button } from "primeng/button";
 import { FileUpload, FileUploadHandlerEvent } from "primeng/fileupload";
 import { cloudinaryConfig } from "src/main";
