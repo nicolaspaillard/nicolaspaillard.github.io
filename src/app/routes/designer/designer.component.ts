@@ -68,8 +68,7 @@ export class DesignerComponent implements OnInit, OnDestroy {
   downloadPDF = async () => generate({ template: this.designer.getTemplate(), inputs: [await this.getInputs()], plugins: plugins }).then((pdf) => window.open(URL.createObjectURL(new Blob([pdf.buffer], { type: "application/pdf" }))));
   clearTemplate = () => this.designer.updateTemplate(blank);
   downloadTemplate = () => {
-    const blob = new Blob([JSON.stringify(this.designer.getTemplate())], { type: "application/json" });
-    const url = URL.createObjectURL(blob);
+    const url = URL.createObjectURL(new Blob([JSON.stringify(this.designer.getTemplate())], { type: "application/json" }));
     const link = document.createElement("a");
     link.href = url;
     link.download = `template.json`;
@@ -116,110 +115,9 @@ export class DesignerComponent implements OnInit, OnDestroy {
       title: "Nicolas Paillard",
       subtitle: "Développeur Full-Stack",
       picture: imageB64,
-      intro: this.sections.length ? this.sections[0].text : "",
-      side: JSON.stringify([["<a title='lien' href='https://nicolaspaillard.github.io/'>lien</a>"], ["test"], ["test"], ["test"], ["test"], ["test"]]),
-      skills: JSON.stringify(this.categories.map((category) => [category.title + " : " + category.skills.map((skill) => skill.title).join(", ")])),
+      intro: this.sections.length ? this.sections[0].text : "test",
+      side: JSON.stringify([["test"], ["test"], ["test"], ["test"], ["test"]]),
+      skills: JSON.stringify(this.categories.map((category) => ["\t- " + category.title + " : " + category.skills.map((skill) => skill.title).join(", ")])),
     };
-  };
-  auto = async () => {
-    let imageB64: string = await fetch(new Cloudinary({ cloud: { cloudName: cloudinaryConfig.cloudName } }).image("nicolasPaillard/profile").resize(fill().width(500).aspectRatio("1.0")).toURL())
-      .then((response) => response.blob())
-      .then(
-        (blob) =>
-          new Promise((resolve, reject) => {
-            const reader = new FileReader();
-            reader.onloadend = () => resolve(reader.result as string);
-            reader.onerror = reject;
-            reader.readAsDataURL(blob);
-          }),
-      );
-    console.log(imageB64.replace("\n", ""));
-    let template: Template = {
-      basePdf: {
-        width: 210,
-        height: 297,
-        padding: [10, 10, 10, 10],
-      },
-      schemas: [
-        [
-          { name: "photo", type: "image", content: imageB64, position: { x: 10, y: 10 }, width: 50, height: 0 },
-          { name: "title", type: "text", content: "Nicolas Paillard", position: { x: 60, y: 10 }, alignment: "center", verticalAlignment: "middle", width: 140, height: 0, fontSize: 20 },
-          { name: "subtitle", type: "text", content: "Développeur Full Stack", position: { x: 60, y: 16 }, alignment: "center", verticalAlignment: "middle", width: 140, height: 0, fontSize: 10 },
-          { name: "line", type: "line", position: { x: 60, y: 20.9 }, width: 140, height: 0.2, readOnly: true, color: "#000000" },
-        ],
-      ],
-    };
-    let inputs = [{ photo: imageB64, title: "Nicolas Paillard", subtitle: "Développeur Full Stack" }];
-    let i = 0;
-    let y = 21;
-    let rows: string[][] = this.sections.map((section) => [section.text]);
-    if (rows.length) {
-      template.schemas[0].push({
-        name: "sections",
-        type: "table",
-        position: {
-          x: 60,
-          y: y,
-        },
-        width: 140,
-        height: 0, //dynamique
-        content: JSON.stringify(rows),
-        showHead: false,
-        head: ["section"],
-        headWidthPercentages: [100],
-        tableStyles: {},
-        headStyles: { padding: 0 },
-        bodyStyles: {
-          fontSize: 11,
-          characterSpacing: 0,
-          lineHeight: 1,
-          alternateBackgroundColor: "",
-          borderWidth: { top: 0, right: 0, bottom: 0, left: 0 },
-          padding: { top: 0, right: 0, bottom: 0, left: 0 },
-        },
-        columnStyles: {},
-      });
-      inputs[0]["sections"] = rows;
-    }
-
-    // for (let category of categories) {
-    //   template.schemas[0].push({
-    //     name: i.toString(),
-    //     type: "text",
-    //     position: { x: 10, y: i * 10 },
-    //     width: 10,
-    //     height: 10,
-    //   });
-    //   inputs[0][i.toString()] = category.title;
-    //   i++;
-    // }
-    // for (let experience of experiences) {
-    //   template.schemas[0].push({
-    //     name: i.toString(),
-    //     type: "text",
-    //     position: { x: 10, y: i * 10 },
-    //     width: 190,
-    //     height: 10,
-    //   });
-    //   inputs[0][i.toString()] = experience.title;
-    //   i++;
-    // }
-    this.designer.updateTemplate(template);
-    generate({ template: template, inputs: inputs, plugins: plugins }).then((pdf) => {
-      const blob = new Blob([pdf.buffer], { type: "application/pdf" });
-      window.open(URL.createObjectURL(blob));
-    });
-  };
-  test = () => {
-    const width = 210;
-    const height = 297;
-    /*
-      photo
-      titre
-      sous titre
-      tableau side
-      tableau expériences
-      tableau compétences
-    */
   };
 }
