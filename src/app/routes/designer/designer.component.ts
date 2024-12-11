@@ -9,7 +9,7 @@ import { fill } from "@cloudinary/url-gen/actions/resize";
 import { cloneDeep, Template } from "@pdfme/common";
 import { generate } from "@pdfme/generator";
 import { date, dateTime, ellipse, image, line, multiVariableText, rectangle, svg, table, text, time } from "@pdfme/schemas";
-import { /* @vite-ignore */ Designer } from "@pdfme/ui";
+import { Designer } from "@pdfme/ui";
 import { ButtonModule } from "primeng/button";
 import { FileUploadHandlerEvent, FileUploadModule } from "primeng/fileupload";
 import { cloudinaryConfig } from "src/main";
@@ -24,6 +24,7 @@ const blank: Template = {
 };
 const plugins = {
   Text: text,
+  // Link: link,
   "Multi-Variable Text": multiVariableText,
   Table: table,
   Line: line,
@@ -115,8 +116,8 @@ export class DesignerComponent implements OnInit, OnDestroy {
       title: "Nicolas Paillard",
       subtitle: "Développeur Full-Stack",
       picture: imageB64,
-      intro: this.sections.length ? this.sections[0].text : "test",
-      side: JSON.stringify([["test"], ["test"], ["test"], ["test"], ["test"]]),
+      intro: [[this.sections.length ? this.sections[0].text : "test"]],
+      contacts: JSON.stringify([["test"], ["test"], ["test"], ["test"], ["test"]]),
       skills: JSON.stringify(this.categories.map((category) => ["\t- " + category.title + " : " + category.skills.map((skill) => skill.title).join(", ")])),
     };
   };
