@@ -5,7 +5,7 @@
     "start": "ng serve",
     "build": "ng build",
     "update": "ng update",
-    "deploy": "ng deploy --no-nojekyll"
+    "deploy": "ng deploy"
   },
   "private": true,
   "dependencies": {
@@ -25,7 +25,6 @@
     "@pdfme/schemas": "^5.2.9",
     "@pdfme/ui": "^5.2.9",
     "@primeng/themes": "^18.0.0",
-    "antd": "^5.22.4",
     "devicon": "^2.16.0",
     "firebase": "^11.0.2",
     "ngx-typed-js": "^2.1.1",

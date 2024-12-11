@@ -58,13 +58,11 @@ export class AboutComponent {
     }
     this.isDialogSectionShown = true;
   };
-  createSection = () => {
-    this.sectionsService.createSection(this.formSection.value as Section);
-  };
+  createSection = () => this.sectionsService.createSection(this.formSection.value as Section).then(() => (this.isDialogSectionShown = false));
   updateSection = () => {
     let section: Section = this.formSection.value as Section;
     section.id = this.idEdit;
-    this.sectionsService.updateSection(section);
+    this.sectionsService.updateSection(section).then(() => (this.isDialogSectionShown = false));
   };
   deleteSection = (section: Section) => {
     this.confirmService.confirm({
