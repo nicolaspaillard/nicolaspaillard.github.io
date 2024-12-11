@@ -117,6 +117,8 @@ export class DesignerComponent implements OnInit, OnDestroy {
       subtitle: "Développeur Full-Stack",
       picture: imageB64,
       intro: this.sections.length ? this.sections[0].text : "",
+      side: JSON.stringify([["<a title='lien' href='https://nicolaspaillard.github.io/'>lien</a>"], ["test"], ["test"], ["test"], ["test"], ["test"]]),
+      skills: JSON.stringify(this.categories.map((category) => [category.title + " : " + category.skills.map((skill) => skill.title).join(", ")])),
     };
   };
   auto = async () => {
