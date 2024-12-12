@@ -8,11 +8,11 @@ import { Cloudinary } from "@cloudinary/url-gen";
 import { fill } from "@cloudinary/url-gen/actions/resize";
 import { cloneDeep, Template } from "@pdfme/common";
 import { generate } from "@pdfme/generator";
-import { date, dateTime, ellipse, image, line, multiVariableText, rectangle, svg, table, text, time } from "@pdfme/schemas";
 import { Designer } from "@pdfme/ui";
 import { ButtonModule } from "primeng/button";
 import { FileUploadHandlerEvent, FileUploadModule } from "primeng/fileupload";
 import { cloudinaryConfig } from "src/main";
+import { date, dateTime, ellipse, image, line, link, multiVariableText, rectangle, svg, table, text, time } from "./schemas";
 
 const blank: Template = {
   basePdf: {
@@ -24,8 +24,8 @@ const blank: Template = {
 };
 const plugins = {
   Text: text,
-  // Link: link,
-  "Multi-Variable Text": multiVariableText,
+  Link: link,
+  Paragraph: multiVariableText,
   Table: table,
   Line: line,
   Rectangle: rectangle,
@@ -119,6 +119,7 @@ export class DesignerComponent implements OnInit, OnDestroy {
       intro: [[this.sections.length ? this.sections[0].text : "test"]],
       contacts: JSON.stringify([["test"], ["test"], ["test"], ["test"], ["test"]]),
       skills: JSON.stringify(this.categories.map((category) => ["\t- " + category.title + " : " + category.skills.map((skill) => skill.title).join(", ")])),
+      link: JSON.stringify([["texte test", "https://nicolaspaillard.github.io"]]),
     };
   };
 }
