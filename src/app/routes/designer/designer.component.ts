@@ -14,14 +14,6 @@ import { FileUploadHandlerEvent, FileUploadModule } from "primeng/fileupload";
 import { cloudinaryConfig } from "src/main";
 import { date, dateTime, ellipse, image, line, link, multiVariableText, rectangle, svg, table, text, time } from "./schemas";
 
-const blank: Template = {
-  basePdf: {
-    width: 210,
-    height: 297,
-    padding: [10, 10, 10, 10],
-  },
-  schemas: [[]],
-};
 const plugins = {
   Text: text,
   Link: link,
@@ -51,6 +43,14 @@ export class DesignerComponent implements OnInit, OnDestroy {
   experiences: Experience[] = [];
   categories: Category[] = [];
   sections: Section[] = [];
+  blank: Template = {
+    basePdf: {
+      width: 210,
+      height: 297,
+      padding: [10, 10, 10, 10],
+    },
+    schemas: [[]],
+  };
   constructor(
     private templatesService: TemplatesService,
     private toastService: ToastService,
@@ -63,26 +63,13 @@ export class DesignerComponent implements OnInit, OnDestroy {
     this.sectionsService.sections().subscribe((sections) => (this.sections = sections));
   }
   ngOnInit() {
-    this.templatesService.template().subscribe((template) => (this.designer = new Designer({ domContainer: document.getElementById("container")!, template: template ? template : blank, plugins: plugins })));
+    this.loadTemplate();
   }
-  ngOnDestroy = () => this.designer.destroy();
-  downloadPDF = async () => generate({ template: this.designer.getTemplate(), inputs: [await this.getInputs()], plugins: plugins }).then((pdf) => window.open(URL.createObjectURL(new Blob([pdf.buffer], { type: "application/pdf" }))));
-  clearTemplate = () => this.designer.updateTemplate(blank);
-  downloadTemplate = () => {
-    const url = URL.createObjectURL(new Blob([JSON.stringify(this.designer.getTemplate())], { type: "application/json" }));
-    const link = document.createElement("a");
-    link.href = url;
-    link.download = `template.json`;
-    link.click();
-    URL.revokeObjectURL(url);
-  };
-  logTemplate = () => console.log(this.designer.getTemplate());
-  uploadTemplate = () => {
-    let template = this.designer.getTemplate();
-    template.basePdf = blank.basePdf;
-    this.templatesService.uploadTemplate(template).then(() => this.toastService.success("Succès", "Sauvegarde effectuée"));
-  };
-  loadTemplate = (event: FileUploadHandlerEvent) => {
+  ngOnDestroy() {
+    this.designer.destroy();
+  }
+  loadTemplate = () => this.templatesService.template().subscribe((template) => (this.designer = new Designer({ domContainer: document.getElementById("container")!, template: template ? template : this.blank, plugins: plugins })));
+  importTemplate = (event: FileUploadHandlerEvent) => {
     const fileReader = new FileReader();
     fileReader.readAsText(event.files[0]);
     fileReader.onloadend = (readerEvent: ProgressEvent<FileReader>) => {
@@ -90,7 +77,7 @@ export class DesignerComponent implements OnInit, OnDestroy {
       this.designer.updateTemplate(template);
     };
   };
-  loadModel = (event: FileUploadHandlerEvent) => {
+  importModel = (event: FileUploadHandlerEvent) => {
     const fileReader = new FileReader();
     fileReader.readAsDataURL(event.files[0]);
     fileReader.onloadend = (readerEvent: ProgressEvent<FileReader>) => {
@@ -100,6 +87,20 @@ export class DesignerComponent implements OnInit, OnDestroy {
         }),
       );
     };
+  };
+  downloadPDF = async () => generate({ template: this.designer.getTemplate(), inputs: [await this.getInputs()], plugins: plugins }).then((pdf) => window.open(URL.createObjectURL(new Blob([pdf.buffer], { type: "application/pdf" }))));
+  downloadTemplate = () => {
+    const url = URL.createObjectURL(new Blob([JSON.stringify(this.designer.getTemplate())], { type: "application/json" }));
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = `template.json`;
+    link.click();
+    URL.revokeObjectURL(url);
+  };
+  uploadTemplate = () => {
+    let template = this.designer.getTemplate();
+    template.basePdf = this.blank.basePdf;
+    this.templatesService.uploadTemplate(template).then(() => this.toastService.success("Succès", "Sauvegarde effectuée"));
   };
   getInputs = async () => {
     let imageB64: string = await fetch(new Cloudinary({ cloud: { cloudName: cloudinaryConfig.cloudName } }).image("nicolasPaillard/profile").resize(fill().width(500).aspectRatio("1.0")).toURL())
@@ -119,7 +120,19 @@ export class DesignerComponent implements OnInit, OnDestroy {
       intro: [[this.sections.length ? this.sections[0].text : "test"]],
       contacts: JSON.stringify([["test"], ["test"], ["test"], ["test"], ["test"]]),
       skills: JSON.stringify(this.categories.map((category) => ["\t- " + category.title + " : " + category.skills.map((skill) => skill.title).join(", ")])),
-      link: JSON.stringify([["texte test", "https://nicolaspaillard.github.io"]]),
+      experiences: JSON.stringify(
+        this.experiences
+          .filter((experience) => experience.end && experience.start.getTime() != experience.end.getTime())
+          .map((experience, index) => [`${formatDate(experience.start)} - ${formatDate(experience.end)} : ${experience.title}` + (experience.text.length ? `\n\t${experience.text}` : "") + (index < this.experiences.filter((experience) => experience.end && experience.start.getTime() != experience.end.getTime()).length - 1 ? "\n" : "")]),
+      ),
+      address: "Montpellier",
+      phone: "07 81 48 00 36",
+      email: JSON.stringify([["paillard.nicolas.pro@gmail.com", "mailto:paillard.nicolas.pro@gmail.com"]]),
+      site: JSON.stringify([["nicolaspaillard.github.io", "https://nicolaspaillard.github.io"]]),
+      github: JSON.stringify([["github.com/nicolaspaillard", "https://github.com/nicolaspaillard"]]),
+      gitlab: JSON.stringify([["gitlab.com/nicolaspaillard", "https://gitlab.com/nicolaspaillard"]]),
+      linkedin: JSON.stringify([["nicolaspaillard.github.io", "https://nicolaspaillard.github.io"]]),
     };
   };
 }
+const formatDate = (date: Date) => date.toLocaleDateString("fr-FR", { month: "numeric", year: "numeric" });

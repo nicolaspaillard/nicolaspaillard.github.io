@@ -1,5 +1,5 @@
 import { PDFRenderProps, Plugin } from "@pdfme/common";
-import { PDFName, PDFRef, PDFString } from "@pdfme/pdf-lib";
+import { PDFString } from "@pdfme/pdf-lib";
 import { Link } from "lucide";
 import text from "../text";
 import { pdfRender as parentPdfRender } from "../text/pdfRender";
@@ -23,26 +23,25 @@ export const link: Plugin<LinkSchema> = {
       position: { x, y },
     } = convertForPdfLayoutProps({ schema, pageHeight, applyRotateTranslate: false });
     const values: string[][] = JSON.parse(value);
-
-    const linkAnnotation: PDFRef = pdfDoc.context.register(
-      pdfDoc.context.obj({
-        Type: "Annot",
-        Subtype: "Link",
-        Rect: [x, y, x + width, y + height],
-        // Border: [0, 0, 0],
-        // border color
-        // C: [0, 0, 1],
-        // URI action
-        A: {
-          Type: "Action",
-          S: "URI",
-          URI: PDFString.of(values[0][1]),
-        },
-      }),
+    page.node.addAnnot(
+      pdfDoc.context.register(
+        pdfDoc.context.obj({
+          Type: "Annot",
+          Subtype: "Link",
+          Rect: [x, y, x + width, y + height],
+          // Border: [0, 0, 0],
+          // border color
+          // C: [0, 0, 1],
+          // URI action
+          A: {
+            Type: "Action",
+            S: "URI",
+            URI: PDFString.of(values[0][1]),
+            target: "_blank",
+          },
+        }),
+      ),
     );
-
-    page.node.set(PDFName.of("Annots"), pdfDoc.context.obj([linkAnnotation]));
-    console.log(values);
     const renderArgs = {
       value: values[0][0],
       pdfDoc: pdfDoc,
@@ -54,9 +53,7 @@ export const link: Plugin<LinkSchema> = {
     await parentPdfRender(renderArgs);
   },
   propPanel: {
-    schema: {
-      ...text.propPanel.schema,
-    },
+    schema: text.propPanel.schema,
     defaultSchema: {
       ...text.propPanel.defaultSchema,
       rotate: undefined,

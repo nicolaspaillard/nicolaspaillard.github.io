@@ -16,4 +16,23 @@ import text from "./text/index";
 
 const builtInPlugins = { Text: text };
 
-export { barcodes, builtInPlugins, checkbox, date, dateTime, ellipse, image, line, link, multiVariableText, radioGroup, rectangle, select, svg, table, text, time };
+export {
+  barcodes,
+  builtInPlugins,
+  checkbox,
+  date,
+  dateTime,
+  ellipse,
+  image,
+  line,
+  link,
+  multiVariableText,
+  radioGroup,
+  rectangle,
+  select,
+  svg,
+  table,
+  // schemas
+  text,
+  time,
+};

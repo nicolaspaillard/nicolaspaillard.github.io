@@ -109,7 +109,7 @@ const formUiRender = async (arg: UIRenderProps<MultiVariableTextSchema>) => {
 
 const getVariableIndices = (content: string) => {
   const regex = /\{([^}]+)}/g;
-  const indices: any[] = [];
+  const indices: string[] = [];
   let match;
 
   while ((match = regex.exec(content)) !== null) {

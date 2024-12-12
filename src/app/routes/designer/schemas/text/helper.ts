@@ -1,11 +1,34 @@
-import { b64toUint8Array, DEFAULT_FONT_NAME, Font, getDefaultFont, getFallbackFontName, mm2pt, pt2mm, pt2px } from "@pdfme/common";
-import { Buffer } from "buffer";
-import type { Font as FontKitFont } from "fontkit";
-import * as fontkit from "fontkit";
-import { DEFAULT_CHARACTER_SPACING, DEFAULT_DYNAMIC_FIT, DEFAULT_FONT_SIZE, DEFAULT_LINE_HEIGHT, DYNAMIC_FIT_HORIZONTAL, DYNAMIC_FIT_VERTICAL, FONT_SIZE_ADJUSTMENT, VERTICAL_ALIGN_TOP } from "./constants.js";
-import type { FontWidthCalcValues, TextSchema } from "./types";
+import * as fontkit from 'fontkit';
+import type { Font as FontKitFont } from 'fontkit';
+import {
+  b64toUint8Array,
+  mm2pt,
+  pt2mm,
+  pt2px,
+  Font,
+  getFallbackFontName,
+  getDefaultFont,
+  DEFAULT_FONT_NAME,
+} from '@pdfme/common';
+import { Buffer } from 'buffer';
+import type { TextSchema, FontWidthCalcValues } from './types';
+import {
+  DEFAULT_FONT_SIZE,
+  DEFAULT_CHARACTER_SPACING,
+  DEFAULT_LINE_HEIGHT,
+  FONT_SIZE_ADJUSTMENT,
+  DEFAULT_DYNAMIC_FIT,
+  DYNAMIC_FIT_HORIZONTAL,
+  DYNAMIC_FIT_VERTICAL,
+  VERTICAL_ALIGN_TOP,
+} from './constants.js';
 
-export const getBrowserVerticalFontAdjustments = (fontKitFont: FontKitFont, fontSize: number, lineHeight: number, verticalAlignment: string) => {
+export const getBrowserVerticalFontAdjustments = (
+  fontKitFont: FontKitFont,
+  fontSize: number,
+  lineHeight: number,
+  verticalAlignment: string
+) => {
   const { ascent, descent, unitsPerEm } = fontKitFont;
 
   // Fonts have a designed line height that the browser renders when using `line-height: normal`
@@ -63,10 +86,17 @@ const calculateCharacterSpacing = (textContent: string, textCharacterSpacing: nu
   return (textContent.length - 1) * textCharacterSpacing;
 };
 
-export const widthOfTextAtSize = (text: string, fontKitFont: FontKitFont, fontSize: number, characterSpacing: number) => {
+export const widthOfTextAtSize = (
+  text: string,
+  fontKitFont: FontKitFont,
+  fontSize: number,
+  characterSpacing: number
+) => {
   const { glyphs } = fontKitFont.layout(text);
   const scale = 1000 / fontKitFont.unitsPerEm;
-  const standardWidth = glyphs.reduce((totalWidth, glyph) => totalWidth + glyph.advanceWidth * scale, 0) * (fontSize / 1000);
+  const standardWidth =
+    glyphs.reduce((totalWidth, glyph) => totalWidth + glyph.advanceWidth * scale, 0) *
+    (fontSize / 1000);
   return standardWidth + calculateCharacterSpacing(text, characterSpacing);
 };
 
@@ -77,7 +107,11 @@ const getFallbackFont = (font: Font) => {
 
 const getCacheKey = (fontName: string) => `getFontKitFont-${fontName}`;
 
-export const getFontKitFont = async (fontName: string | undefined, font: Font, _cache: Map<any, any>) => {
+export const getFontKitFont = async (
+  fontName: string | undefined,
+  font: Font,
+  _cache: Map<any, any>
+) => {
   const fntNm = fontName || getFallbackFontName(font);
   const cacheKey = getCacheKey(fntNm);
   if (_cache.has(cacheKey)) {
@@ -86,11 +120,15 @@ export const getFontKitFont = async (fontName: string | undefined, font: Font, _
 
   const currentFont = font[fntNm] || getFallbackFont(font) || getDefaultFont()[DEFAULT_FONT_NAME];
   let fontData = currentFont.data;
-  if (typeof fontData === "string") {
-    fontData = fontData.startsWith("http") ? await fetch(fontData).then((res) => res.arrayBuffer()) : b64toUint8Array(fontData);
+  if (typeof fontData === 'string') {
+    fontData = fontData.startsWith('http')
+      ? await fetch(fontData).then((res) => res.arrayBuffer())
+      : b64toUint8Array(fontData);
   }
 
-  const fontKitFont = fontkit.create(fontData instanceof Buffer ? fontData : Buffer.from(fontData as ArrayBuffer)) as fontkit.Font;
+  const fontKitFont = fontkit.create(
+    fontData instanceof Buffer ? fontData : Buffer.from(fontData as ArrayBuffer)
+  ) as fontkit.Font;
   _cache.set(cacheKey, fontKitFont);
 
   return fontKitFont;
@@ -125,9 +163,9 @@ const getOverPosition = (textLine: string, calcValues: FontWidthCalcValues) => {
  * However, this might need to be revisited for broader language support.
  */
 const isLineBreakableChar = (char: string) => {
-  const lineBreakableChars = [" ", "-", "\u2014", "\u2013"];
+  const lineBreakableChars = [' ', '-', "\u2014", "\u2013"];
   return lineBreakableChars.includes(char);
-};
+}
 
 /**
  * Gets the position of the split. Splits the exceeding line at
@@ -137,7 +175,7 @@ const getSplitPosition = (textLine: string, calcValues: FontWidthCalcValues) => 
   const overPos = getOverPosition(textLine, calcValues);
   if (overPos === null) return textLine.length; // input line is shorter than the available space
 
-  if (textLine[overPos] === " ") {
+  if (textLine[overPos] === ' ') {
     // if the character immediately beyond the boundary is a space, split
     return overPos;
   }
@@ -145,7 +183,7 @@ const getSplitPosition = (textLine: string, calcValues: FontWidthCalcValues) => 
   let overPosTmp = overPos - 1;
   while (overPosTmp >= 0) {
     if (isLineBreakableChar(textLine[overPosTmp])) {
-      return overPosTmp + 1;
+      return overPosTmp+1;
     }
     overPosTmp--;
   }
@@ -183,15 +221,34 @@ export const getSplittedLines = (textLine: string, calcValues: FontWidthCalcValu
  * Calculating space usage involves splitting lines where they exceed
  * the box width based on the proposed size.
  */
-export const calculateDynamicFontSize = async ({ textSchema, font, value, startingFontSize, _cache }: { textSchema: TextSchema; font: Font; value: string; startingFontSize?: number | undefined; _cache: Map<any, any> }) => {
-  const { fontSize: schemaFontSize, dynamicFontSize: dynamicFontSizeSetting, characterSpacing: schemaCharacterSpacing, width: boxWidth, height: boxHeight, lineHeight = DEFAULT_LINE_HEIGHT } = textSchema;
+export const calculateDynamicFontSize = async ({
+  textSchema,
+  font,
+  value,
+  startingFontSize,
+  _cache,
+}: {
+  textSchema: TextSchema;
+  font: Font;
+  value: string;
+  startingFontSize?: number | undefined;
+  _cache: Map<any, any>;
+}) => {
+  const {
+    fontSize: schemaFontSize,
+    dynamicFontSize: dynamicFontSizeSetting,
+    characterSpacing: schemaCharacterSpacing,
+    width: boxWidth,
+    height: boxHeight,
+    lineHeight = DEFAULT_LINE_HEIGHT,
+  } = textSchema;
   const fontSize = startingFontSize || schemaFontSize || DEFAULT_FONT_SIZE;
   if (!dynamicFontSizeSetting) return fontSize;
   if (dynamicFontSizeSetting.max < dynamicFontSizeSetting.min) return fontSize;
 
   const characterSpacing = schemaCharacterSpacing ?? DEFAULT_CHARACTER_SPACING;
   const fontKitFont = await getFontKitFont(textSchema.fontName, font, _cache);
-  const paragraphs = value.split("\n");
+  const paragraphs = value.split('\n');
 
   let dynamicFontSize = fontSize;
   if (dynamicFontSize < dynamicFontSizeSetting.min) {
@@ -264,7 +321,8 @@ export const calculateDynamicFontSize = async ({ textSchema, font, value, starti
   // Attempt to increase the font size up to desired fit
   while (shouldFontGrowToFit(totalWidthInMm, totalHeightInMm)) {
     dynamicFontSize += FONT_SIZE_ADJUSTMENT;
-    const { totalWidthInMm: newWidth, totalHeightInMm: newHeight } = calculateConstraints(dynamicFontSize);
+    const { totalWidthInMm: newWidth, totalHeightInMm: newHeight } =
+      calculateConstraints(dynamicFontSize);
 
     if (newHeight < boxHeight) {
       totalWidthInMm = newWidth;
@@ -284,7 +342,13 @@ export const calculateDynamicFontSize = async ({ textSchema, font, value, starti
   return dynamicFontSize;
 };
 
-export const splitTextToSize = (arg: { value: string; characterSpacing: number; boxWidthInPt: number; fontSize: number; fontKitFont: fontkit.Font }) => {
+export const splitTextToSize = (arg: {
+  value: string;
+  characterSpacing: number;
+  boxWidthInPt: number;
+  fontSize: number;
+  fontKitFont: fontkit.Font;
+}) => {
   const { value, characterSpacing, fontSize, fontKitFont, boxWidthInPt } = arg;
   const fontWidthCalcValues: FontWidthCalcValues = {
     font: fontKitFont,
@@ -293,10 +357,9 @@ export const splitTextToSize = (arg: { value: string; characterSpacing: number; 
     boxWidthInPt,
   };
   let lines: string[] = [];
-  console.log(value);
   value.split(/\r\n|\r|\n|\f|\u000B/g).forEach((line: string) => {
     lines = lines.concat(getSplittedLines(line, fontWidthCalcValues));
   });
   return lines;
 };
-export const isFirefox = () => navigator.userAgent.toLowerCase().indexOf("firefox") > -1;
+export const isFirefox = () => navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
