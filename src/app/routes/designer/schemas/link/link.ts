@@ -57,6 +57,7 @@ export const link: Plugin<LinkSchema> = {
     },
     defaultSchema: {
       ...text.propPanel.defaultSchema,
+      rotate: undefined,
       type: "link",
       url: "",
     },
