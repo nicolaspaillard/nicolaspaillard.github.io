@@ -1,5 +1,5 @@
 import { PDFRenderProps, Plugin } from "@pdfme/common";
-import { PDFName, PDFString } from "@pdfme/pdf-lib";
+import { PDFName, PDFRef, PDFString } from "@pdfme/pdf-lib";
 import { Link } from "lucide";
 import text from "../text";
 import { pdfRender as parentPdfRender } from "../text/pdfRender";
@@ -24,13 +24,15 @@ export const link: Plugin<LinkSchema> = {
     } = convertForPdfLayoutProps({ schema, pageHeight, applyRotateTranslate: false });
     const values: string[][] = JSON.parse(value);
 
-    const linkAnnotation = pdfDoc.context.register(
+    const linkAnnotation: PDFRef = pdfDoc.context.register(
       pdfDoc.context.obj({
         Type: "Annot",
         Subtype: "Link",
         Rect: [x, y, x + width, y + height],
-        Border: [0, 0, 2],
-        C: [0, 0, 1],
+        // Border: [0, 0, 0],
+        // border color
+        // C: [0, 0, 1],
+        // URI action
         A: {
           Type: "Action",
           S: "URI",
