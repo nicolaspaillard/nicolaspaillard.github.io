@@ -12,7 +12,6 @@ import { ToastModule } from "primeng/toast";
 import { routes } from "src/main";
 import { AuthService } from "./services/auth.service";
 import { DesignerService } from "./services/designer/designer.service";
-import { ToastService } from "./services/frontend/toast.service";
 
 export const slide = trigger("routeAnimations", [transition(":increment", slideTo("right")), transition(":decrement", slideTo("left"))]);
 export class CustomValidators {
@@ -55,10 +54,9 @@ export class AppComponent implements OnInit {
   constructor(
     private router: Router,
     private authService: AuthService,
-    private toastService: ToastService,
     private designerService: DesignerService,
   ) {
-    this.toastService.error("Erreur", "Vous devez d'abord vous connecter");
+    if (location.pathname.split("/").pop() === "cv") this.designerService.downloadPDF({ editing: false, replace: true });
     this.authService.user().subscribe((user) => (this.user = user));
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationStart) {

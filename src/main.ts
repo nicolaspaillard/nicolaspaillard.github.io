@@ -713,7 +713,7 @@ export const routes: Routes = [
   { path: "skills", title: "Compétences", component: SkillsComponent, data: { animation: 3 } },
   { path: "projects", title: "Projets", component: ProjectsComponent, data: { animation: 4 } },
   { path: "designer", title: "Designer", component: DesignerComponent, data: { animation: 5 } },
-  { path: "cv", component: DesignerComponent },
+  { path: "cv", children: [] },
   { path: "**", redirectTo: "" },
 ];
 // #endregion
