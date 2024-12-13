@@ -10,7 +10,7 @@ module.exports = {
       addComponents({
         ".card": {
           backgroundColor: "rgba(20,20,20,0.1)",
-          border: "1px solid #00ff00",
+          border: "2px solid #00a000",
           "backdrop-filter": "blur(4px)",
         },
       });

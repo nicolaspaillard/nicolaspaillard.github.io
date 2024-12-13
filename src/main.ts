@@ -16,7 +16,6 @@ import Aura from "@primeng/themes/aura";
 import { AboutComponent } from "@routes/about/about.component";
 import { CareerComponent } from "@routes/career/career.component";
 import { DesignerComponent } from "@routes/designer/designer.component";
-import { GeneratorComponent } from "@routes/generator/generator.component";
 import { HomeComponent } from "@routes/home/home.component";
 import { ProjectsComponent } from "@routes/projects/projects.component";
 import { SkillsComponent } from "@routes/skills/skills.component";
@@ -347,17 +346,17 @@ const matrix = definePreset(Aura, {
     iconSize: "1rem",
     anchorGutter: "2px",
     primary: {
-      50: "#f2fff2",
-      100: "#c2ffc2",
-      200: "#91ff91",
-      300: "#61ff61",
-      400: "#30ff30",
-      500: "#00ff00",
-      600: "#00d900",
-      700: "#00b300",
-      800: "#008c00",
-      900: "#006600",
-      950: "#004000",
+      50: "#f2fcf2",
+      100: "#c2f2c2",
+      200: "#91e791",
+      300: "#61dd61",
+      400: "#30d230",
+      500: "#00c800",
+      600: "#00aa00",
+      700: "#008c00",
+      800: "#006e00",
+      900: "#005000",
+      950: "#003200",
     },
     formField: {
       paddingX: "0.75rem",
@@ -372,7 +371,7 @@ const matrix = definePreset(Aura, {
         paddingX: "0.875rem",
         paddingY: "0.625rem",
       },
-      borderRadius: "{border.radius.md}",
+      borderRadius: "0",
       focusRing: {
         width: "0",
         style: "none",
@@ -390,7 +389,7 @@ const matrix = definePreset(Aura, {
       },
       option: {
         padding: "0.5rem 0.75rem",
-        borderRadius: "{border.radius.sm}",
+        borderRadius: "0",
       },
       optionGroup: {
         padding: "0.5rem 0.75rem",
@@ -398,7 +397,7 @@ const matrix = definePreset(Aura, {
       },
     },
     content: {
-      borderRadius: "{border.radius.md}",
+      borderRadius: "0",
     },
     mask: {
       transitionDuration: "0.15s",
@@ -410,7 +409,7 @@ const matrix = definePreset(Aura, {
       },
       item: {
         padding: "0.5rem 0.75rem",
-        borderRadius: "{border.radius.sm}",
+        borderRadius: "0",
         gap: "0.5rem",
       },
       submenuLabel: {
@@ -423,16 +422,16 @@ const matrix = definePreset(Aura, {
     },
     overlay: {
       select: {
-        borderRadius: "{border.radius.md}",
+        borderRadius: "0",
         shadow: "0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1)",
       },
       popover: {
-        borderRadius: "{border.radius.md}",
+        borderRadius: "0",
         padding: "0.75rem",
         shadow: "0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1)",
       },
       modal: {
-        borderRadius: "{border.radius.xl}",
+        borderRadius: "0",
         padding: "1.25rem",
         shadow: "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1)",
       },
@@ -582,7 +581,7 @@ const matrix = definePreset(Aura, {
           950: "#09090b",
         },
         primary: {
-          color: "{primary.400}",
+          color: "{primary.500}",
           contrastColor: "{surface.900}",
           hoverColor: "{primary.300}",
           activeColor: "{primary.200}",
@@ -714,7 +713,6 @@ export const routes: Routes = [
   { path: "skills", title: "Compétences", component: SkillsComponent, data: { animation: 3 } },
   { path: "projects", title: "Projets", component: ProjectsComponent, data: { animation: 4 } },
   { path: "designer", title: "Designer", component: DesignerComponent, data: { animation: 5 } },
-  { path: "generator", title: "Générateur", component: GeneratorComponent, data: { animation: 6 } },
   { path: "**", redirectTo: "" },
 ];
 // #endregion

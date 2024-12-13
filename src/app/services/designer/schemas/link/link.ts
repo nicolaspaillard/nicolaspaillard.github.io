@@ -6,7 +6,7 @@ import { pdfRender as parentPdfRender } from "../text/pdfRender";
 import { TextSchema } from "../text/types";
 import { convertForPdfLayoutProps, createSvgStr } from "../utils";
 
-// inputs : ["text","url"]
+// inputs : "[['text','url']]"
 
 export interface LinkSchema extends TextSchema {
   url: string;

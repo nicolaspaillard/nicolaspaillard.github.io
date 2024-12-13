@@ -8,7 +8,7 @@
     <p-button *ngIf="!user" size="large" (onClick)="isSignupShown = true">Inscription</p-button>
     <p-button *ngIf="!user" size="large" (onClick)="isSigninShown = true">Connexion</p-button>
     <p-button *ngIf="user" size="large" (onClick)="signout()">Déconnexion</p-button>
-    <p-button size="large" (onClick)="(null)">CV</p-button>
+    <p-button size="large" (onClick)="downloadCV()">CV</p-button>
   </nav>
   <div class="container relative mx-auto grow overflow-x-hidden" [ngClass]="{ '!overflow-hidden': isTransitioning }">
     <router-outlet #outlet="outlet"></router-outlet>

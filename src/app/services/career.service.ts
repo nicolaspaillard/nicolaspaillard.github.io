@@ -13,6 +13,7 @@ export class Experience {
   postcode: string;
   city: string;
   activities: string;
+  active: boolean;
   constructor(experience: Experience) {
     Object.assign(this, experience);
   }

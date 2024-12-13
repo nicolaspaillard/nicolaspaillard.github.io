@@ -11,6 +11,7 @@ import { PasswordModule } from "primeng/password";
 import { ToastModule } from "primeng/toast";
 import { routes } from "src/main";
 import { AuthService } from "./services/auth.service";
+import { DesignerService } from "./services/designer/designer.service";
 import { ToastService } from "./services/frontend/toast.service";
 
 export const slide = trigger("routeAnimations", [transition(":increment", slideTo("right")), transition(":decrement", slideTo("left"))]);
@@ -55,6 +56,7 @@ export class AppComponent implements OnInit {
     private router: Router,
     private authService: AuthService,
     private toastService: ToastService,
+    private designerService: DesignerService,
   ) {
     this.toastService.error("Erreur", "Vous devez d'abord vous connecter");
     this.authService.user().subscribe((user) => (this.user = user));
@@ -72,6 +74,7 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     this.matrix();
   }
+  downloadCV = () => this.designerService.downloadCV();
 
   prepareRoute = (outlet: RouterOutlet) => outlet && outlet.activatedRouteData && outlet.activatedRouteData["animation"];
   interval: any;
