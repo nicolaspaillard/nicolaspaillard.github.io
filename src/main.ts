@@ -707,13 +707,13 @@ export const AuthGuard: CanActivateFn = (route, state) => {
   return canActivate;
 };
 export const routes: Routes = [
+  { path: "cv", children: [] },
   { path: "", title: "Nicolas Paillard", component: HomeComponent, data: { animation: 0 } },
   { path: "about", title: "À propos", component: AboutComponent, data: { animation: 1 } },
   { path: "career", title: "Carrière", component: CareerComponent, data: { animation: 2 } },
   { path: "skills", title: "Compétences", component: SkillsComponent, data: { animation: 3 } },
   { path: "projects", title: "Projets", component: ProjectsComponent, data: { animation: 4 } },
   { path: "designer", title: "Designer", component: DesignerComponent, data: { animation: 5 } },
-  { path: "cv", children: [] },
   { path: "**", redirectTo: "" },
 ];
 // #endregion
