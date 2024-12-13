@@ -3,7 +3,7 @@
   <nav class="container card sticky top-0 z-20 mx-auto flex items-center justify-center *:px-1 *:py-2">
     <p-button routerLink="/" size="large" class="h-full" styleClass="!h-full" routerLinkActive="[&>*]:!border [&>*]:!border-solid [&>*]:!border-[var(--primary-color)]" [routerLinkActiveOptions]="{ exact: true }" [text]="true" icon="pi pi-home"></p-button>
     <ng-container *ngFor="let route of routes">
-      <p-button *ngIf="!route.data['role'] || (user && user['roles'].includes(route.data['role']))" size="large" [routerLink]="route.path" routerLinkActive="[&>*]:!border [&>*]:!border-solid [&>*]:!border-[var(--primary-color)]" [label]="route.title" [text]="true" styleClass="rounded-lg capitalize"></p-button>
+      <p-button *ngIf="!route.canActivate || !route.data!['role'] || (user && user['roles'].includes(route.data!['role']))" size="large" [routerLink]="route.path" routerLinkActive="[&>*]:!border [&>*]:!border-solid [&>*]:!border-[var(--primary-color)]" [label]="route.title + ''" [text]="true" styleClass="rounded-lg capitalize"></p-button>
     </ng-container>
     <p-button *ngIf="!user" size="large" (onClick)="isSignupShown = true">Inscription</p-button>
     <p-button *ngIf="!user" size="large" (onClick)="isSigninShown = true">Connexion</p-button>

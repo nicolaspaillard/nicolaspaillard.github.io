@@ -2,7 +2,7 @@ import { animate, group, query, style, transition, trigger } from "@angular/anim
 import { CommonModule } from "@angular/common";
 import { Component, OnInit } from "@angular/core";
 import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule, ValidationErrors, ValidatorFn, Validators } from "@angular/forms";
-import { NavigationEnd, NavigationStart, Router, RouterModule, RouterOutlet } from "@angular/router";
+import { NavigationEnd, NavigationStart, Route, Router, RouterModule, RouterOutlet } from "@angular/router";
 import { ButtonModule } from "primeng/button";
 import { ConfirmDialogModule } from "primeng/confirmdialog";
 import { DialogModule } from "primeng/dialog";
@@ -36,7 +36,7 @@ export class AppComponent implements OnInit {
   isSigninShown: boolean = false;
   isTransitioning: boolean = false;
   user: any = null;
-  routes: any[] = routes.filter((route) => route.path && route.data);
+  routes: Route[] = routes.filter((route) => route.path && route.data);
   formSignup = new FormGroup(
     {
       password: new FormControl("", [Validators.required, Validators.minLength(8)]),
