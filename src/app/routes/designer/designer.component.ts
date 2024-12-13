@@ -45,7 +45,7 @@ export class DesignerComponent implements OnInit, OnDestroy {
   loadTemplate = () => this.designerService.loadTemplate("container");
   importTemplate = (event: FileUploadHandlerEvent) => this.designerService.importTemplate(event.files[0]);
   importModel = (event: FileUploadHandlerEvent) => this.designerService.importModel(event.files[0]);
-  downloadPDF = () => this.designerService.downloadPDF();
+  downloadPDF = () => this.designerService.downloadPDF(true);
   downloadTemplate = () => this.designerService.downloadTemplate();
   uploadTemplate = () => this.designerService.uploadTemplate();
 }

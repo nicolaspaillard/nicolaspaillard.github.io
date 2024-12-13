@@ -74,7 +74,7 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     this.matrix();
   }
-  downloadCV = () => this.designerService.downloadCV();
+  downloadCV = () => this.designerService.downloadPDF();
 
   prepareRoute = (outlet: RouterOutlet) => outlet && outlet.activatedRouteData && outlet.activatedRouteData["animation"];
   interval: any;

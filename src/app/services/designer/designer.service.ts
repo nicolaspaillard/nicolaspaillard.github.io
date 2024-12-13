@@ -73,8 +73,7 @@ export class DesignerService {
     fileReader.readAsDataURL(file);
     fileReader.onloadend = (readerEvent: ProgressEvent<FileReader>) => this.designer.updateTemplate(Object.assign(cloneDeep(this.designer.getTemplate()), { basePdf: readerEvent.target!.result! }));
   };
-  downloadPDF = async () => generate({ template: this.designer.getTemplate(), inputs: [await this.getInputs()], plugins: plugins }).then((pdf) => window.open(URL.createObjectURL(new Blob([pdf.buffer], { type: "application/pdf" }))));
-  downloadCV = async () => generate({ template: await this.getTemplate(), inputs: [await this.getInputs()], plugins: plugins }).then((pdf) => window.open(URL.createObjectURL(new Blob([pdf.buffer], { type: "application/pdf" }))));
+  downloadPDF = async (editing: boolean = false) => generate({ template: editing ? this.designer.getTemplate() : await this.getTemplate(), inputs: await this.getInputs(), plugins: plugins }).then((pdf) => window.open(URL.createObjectURL(new Blob([pdf.buffer], { type: "application/pdf" }))));
   downloadTemplate = () => {
     const url = URL.createObjectURL(new Blob([JSON.stringify(this.designer.getTemplate())], { type: "application/json" }));
     const link = document.createElement("a");
@@ -113,21 +112,23 @@ export class DesignerService {
           (index < experiences.length - 1 ? "\n" : ""),
       ]);
 
-    return {
-      title: "Nicolas Paillard",
-      subtitle: "Développeur Full-Stack",
-      picture: imageB64,
-      intro: [[this.sections.length ? this.sections[0].text : "test"]],
-      contacts: JSON.stringify([["test"], ["test"], ["test"], ["test"], ["test"]]),
-      skills: JSON.stringify(this.categories.map((category) => ["\t- " + category.title + " : " + category.skills.map((skill) => skill.title).join(", ")])),
-      experiences: JSON.stringify(formatExperiences(this.experiences.filter((experience) => experience.end && experience.start.getTime() != experience.end.getTime()))),
-      address: "Montpellier",
-      phone: JSON.stringify([["07 81 48 00 36", "tel:0781480036"]]),
-      email: JSON.stringify([["paillard.nicolas.pro@gmail.com", "mailto:paillard.nicolas.pro@gmail.com"]]),
-      site: JSON.stringify([["nicolaspaillard.github.io", "https://nicolaspaillard.github.io"]]),
-      github: JSON.stringify([["github.com/nicolaspaillard", "https://github.com/nicolaspaillard"]]),
-      gitlab: JSON.stringify([["gitlab.com/nicolaspaillard", "https://gitlab.com/nicolaspaillard"]]),
-      linkedin: JSON.stringify([["nicolaspaillard.github.io", "https://nicolaspaillard.github.io"]]),
-    };
+    return [
+      {
+        title: "Nicolas Paillard",
+        subtitle: "Développeur Full-Stack",
+        picture: imageB64,
+        intro: [[this.sections.length ? this.sections[0].text : "test"]],
+        contacts: JSON.stringify([["test"], ["test"], ["test"], ["test"], ["test"]]),
+        skills: JSON.stringify(this.categories.map((category) => ["\t- " + category.title + " : " + category.skills.map((skill) => skill.title).join(", ")])),
+        experiences: JSON.stringify(formatExperiences(this.experiences.filter((experience) => experience.end && experience.start.getTime() != experience.end.getTime()))),
+        address: "Montpellier",
+        phone: JSON.stringify([["07 81 48 00 36", "tel:0781480036"]]),
+        email: JSON.stringify([["paillard.nicolas.pro@gmail.com", "mailto:paillard.nicolas.pro@gmail.com"]]),
+        site: JSON.stringify([["nicolaspaillard.github.io", "https://nicolaspaillard.github.io"]]),
+        github: JSON.stringify([["github.com/nicolaspaillard", "https://github.com/nicolaspaillard"]]),
+        gitlab: JSON.stringify([["gitlab.com/nicolaspaillard", "https://gitlab.com/nicolaspaillard"]]),
+        linkedin: JSON.stringify([["nicolaspaillard.github.io", "https://nicolaspaillard.github.io"]]),
+      },
+    ];
   };
 }
