@@ -37,7 +37,7 @@ export class AppComponent implements OnInit {
   isSigninShown: boolean = false;
   isTransitioning: boolean = false;
   user: any = null;
-  routes: any[] = routes.filter((route) => !["", "**"].includes(route.path!));
+  routes: any[] = routes.filter((route) => route.path && route.data);
   formSignup = new FormGroup(
     {
       password: new FormControl("", [Validators.required, Validators.minLength(8)]),
@@ -74,7 +74,7 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     this.matrix();
   }
-  downloadCV = () => this.designerService.downloadPDF();
+  downloadCV = () => this.designerService.downloadPDF({ editing: false, replace: false });
 
   prepareRoute = (outlet: RouterOutlet) => outlet && outlet.activatedRouteData && outlet.activatedRouteData["animation"];
   interval: any;

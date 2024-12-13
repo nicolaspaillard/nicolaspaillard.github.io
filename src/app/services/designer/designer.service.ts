@@ -73,7 +73,7 @@ export class DesignerService {
     fileReader.readAsDataURL(file);
     fileReader.onloadend = (readerEvent: ProgressEvent<FileReader>) => this.designer.updateTemplate(Object.assign(cloneDeep(this.designer.getTemplate()), { basePdf: readerEvent.target!.result! }));
   };
-  downloadPDF = async (editing: boolean = false) => generate({ template: editing ? this.designer.getTemplate() : await this.getTemplate(), inputs: await this.getInputs(), plugins: plugins }).then((pdf) => window.open(URL.createObjectURL(new Blob([pdf.buffer], { type: "application/pdf" }))));
+  downloadPDF = async ({ editing, replace }: { editing: boolean; replace: boolean }) => generate({ template: editing ? this.designer.getTemplate() : await this.getTemplate(), inputs: await this.getInputs(), plugins: plugins }).then((pdf) => window.open(URL.createObjectURL(new Blob([pdf.buffer], { type: "application/pdf" })), replace ? "_self" : "_blank"));
   downloadTemplate = () => {
     const url = URL.createObjectURL(new Blob([JSON.stringify(this.designer.getTemplate())], { type: "application/json" }));
     const link = document.createElement("a");

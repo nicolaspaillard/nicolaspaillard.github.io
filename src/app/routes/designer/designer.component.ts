@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from "@angular/core";
+import { Router } from "@angular/router";
 import { CareerService, Experience } from "@app/services/career.service";
 import { DesignerService } from "@app/services/designer/designer.service";
 import { Section, SectionsService } from "@app/services/sections.service";
@@ -31,10 +32,12 @@ export class DesignerComponent implements OnInit, OnDestroy {
     private skillsService: SkillsService,
     private sectionsService: SectionsService,
     private designerService: DesignerService,
+    private router: Router,
   ) {
     this.careerService.experiences().subscribe((experiences) => (this.experiences = experiences));
     this.skillsService.categories().subscribe((categories) => (this.categories = categories));
     this.sectionsService.sections().subscribe((sections) => (this.sections = sections));
+    if (this.router.url === "/cv") this.designerService.downloadPDF({ editing: false, replace: true });
   }
   ngOnInit() {
     this.loadTemplate();
@@ -45,7 +48,7 @@ export class DesignerComponent implements OnInit, OnDestroy {
   loadTemplate = () => this.designerService.loadTemplate("container");
   importTemplate = (event: FileUploadHandlerEvent) => this.designerService.importTemplate(event.files[0]);
   importModel = (event: FileUploadHandlerEvent) => this.designerService.importModel(event.files[0]);
-  downloadPDF = () => this.designerService.downloadPDF(true);
+  downloadPDF = () => this.designerService.downloadPDF({ editing: true, replace: false });
   downloadTemplate = () => this.designerService.downloadTemplate();
   uploadTemplate = () => this.designerService.uploadTemplate();
 }
