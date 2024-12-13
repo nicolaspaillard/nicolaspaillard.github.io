@@ -1,5 +1,5 @@
 import { inject, Injectable } from "@angular/core";
-import { Auth, createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut, validatePassword } from "@angular/fire/auth";
+import { Auth, createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut, User, validatePassword } from "@angular/fire/auth";
 import { Observable, ReplaySubject, Subject } from "rxjs";
 import { ToastService } from "./frontend/toast.service";
 
@@ -8,7 +8,7 @@ import { ToastService } from "./frontend/toast.service";
 })
 export class AuthService {
   private auth = inject(Auth);
-  private _user: Subject<any> = new ReplaySubject(1);
+  private _user: Subject<{ user: User; roles: string[] } | null> = new ReplaySubject(1);
   constructor(private toastService: ToastService) {
     onAuthStateChanged(this.auth, (user) => {
       if (user) {
@@ -17,8 +17,11 @@ export class AuthService {
         user.getIdTokenResult().then((idTokenResult) => {
           if(idTokenResult.claims["admin"]) roles.push("admin")
         }).catch((error) => console.error(error));
-        user["roles"] = roles;
-        this._user.next(user);
+        let userWithRoles = {
+          user: user,
+          roles: roles,
+        };
+        this._user.next(userWithRoles);
       } else {
         this._user.next(null);
       }

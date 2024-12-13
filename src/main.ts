@@ -3,7 +3,7 @@ import { inject } from "@angular/core";
 import { getAnalytics, provideAnalytics, ScreenTrackingService, UserTrackingService } from "@angular/fire/analytics";
 import { FirebaseOptions, initializeApp, provideFirebaseApp } from "@angular/fire/app";
 import { initializeAppCheck, provideAppCheck, ReCaptchaEnterpriseProvider } from "@angular/fire/app-check";
-import { getAuth, provideAuth } from "@angular/fire/auth";
+import { getAuth, provideAuth, User } from "@angular/fire/auth";
 import { getFirestore, provideFirestore } from "@angular/fire/firestore";
 import { bootstrapApplication } from "@angular/platform-browser";
 import { provideAnimationsAsync } from "@angular/platform-browser/animations/async";
@@ -697,8 +697,11 @@ const matrix = definePreset(Aura, {
 // #region routes
 export const AuthGuard: CanActivateFn = (route, state) => {
   let canActivate: boolean = false;
-  // prettier-ignore
-  if (route.data["role"]) inject(AuthService).user().subscribe((user) => canActivate = user);
+  inject(AuthService)
+    .user()
+    .subscribe((user: { user: User; roles: string[] } | null) => {
+      canActivate = user != null && (!route.data["role"] || user.roles.includes(route.data["role"]));
+    });
   if (!canActivate) {
     inject(ToastService).error("Erreur", "Vous devez d'abord vous connecter");
     inject(EventBusService).emit({ name: "signin" });
@@ -712,7 +715,7 @@ export const routes: Routes = [
   { path: "career", title: "Carrière", component: CareerComponent, data: { animation: 2 } },
   { path: "skills", title: "Compétences", component: SkillsComponent, data: { animation: 3 } },
   { path: "projects", title: "Projets", component: ProjectsComponent, data: { animation: 4 } },
-  { path: "designer", title: "Designer", component: DesignerComponent, data: { animation: 5 } },
+  { path: "designer", title: "Designer", component: DesignerComponent, data: { animation: 5, role: "admin" }, canActivate: [AuthGuard] },
   { path: "cv", children: [] },
   { path: "**", redirectTo: "" },
 ];
