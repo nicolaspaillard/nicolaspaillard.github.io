@@ -715,7 +715,7 @@ export const routes: Routes = [
   { path: "career", title: "Carrière", component: CareerComponent, data: { animation: 2 } },
   { path: "skills", title: "Compétences", component: SkillsComponent, data: { animation: 3 } },
   { path: "projects", title: "Projets", component: ProjectsComponent, data: { animation: 4 } },
-  { path: "designer", title: "Designer", component: DesignerComponent, data: { animation: 5, role: "admin" }, canActivate: [AuthGuard] },
+  { path: "designer", title: "Designer", component: DesignerComponent, data: { animation: 5, role: "admin" } },
   { path: "cv", children: [] },
   { path: "**", redirectTo: "" },
 ];
