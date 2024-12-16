@@ -104,7 +104,12 @@ export class AppComponent implements OnInit {
       }
     }
   }
-  signup = () => this.authService.signup(this.formSignup.value.email!, this.formSignup.value.password!).then(() => (this.isSignupShown = false));
+  signup = () =>
+    this.authService.signup(this.formSignup.value.email!, this.formSignup.value.password!).then(() => {
+      this.formSignin.setValue({ email: this.formSignup.value.email!, password: this.formSignup.value.password! });
+      this.isSignupShown = false;
+      this.isSigninShown = true;
+    });
   signin = () => this.authService.signin(this.formSignin.value.email!, this.formSignin.value.password!).then(() => (this.isSigninShown = false));
   signout = () => this.authService.signout();
 }
