@@ -4,8 +4,6 @@ import { CareerService, Experience } from "@app/services/career.service";
 import { DesignerService } from "@app/services/designer/designer.service";
 import { Section, SectionsService } from "@app/services/sections.service";
 import { Category, SkillsService } from "@app/services/skills.service";
-import { Template } from "@pdfme/common";
-import { Designer } from "@pdfme/ui";
 import { MenuItem } from "primeng/api";
 import { ButtonModule } from "primeng/button";
 import { FileUploadHandlerEvent, FileUploadModule } from "primeng/fileupload";
@@ -20,15 +18,6 @@ export class DesignerComponent implements OnInit, OnDestroy {
   experiences: Experience[] = [];
   categories: Category[] = [];
   sections: Section[] = [];
-  designer: Designer;
-  blank: Template = {
-    basePdf: {
-      width: 210,
-      height: 297,
-      padding: [10, 10, 10, 10],
-    },
-    schemas: [[]],
-  };
   menuItems: MenuItem[] = [];
   constructor(
     private careerService: CareerService,
@@ -45,7 +34,7 @@ export class DesignerComponent implements OnInit, OnDestroy {
       {
         label: "Réinitialiser",
         icon: "pi pi-trash",
-        command: () => this.designer.updateTemplate(this.blank),
+        command: () => this.resetTemplate(),
       },
       {
         label: "Recharger",
@@ -80,7 +69,8 @@ export class DesignerComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.designerService.destroy();
   }
-  loadTemplate = () => this.designerService.loadTemplate("container");
+  resetTemplate = () => this.designerService.resetTemplate();
+  loadTemplate = () => this.designerService.init("container");
   importTemplate = (event: FileUploadHandlerEvent) => this.designerService.importTemplate(event.files[0]);
   importModel = (event: FileUploadHandlerEvent) => this.designerService.importModel(event.files[0]);
   downloadPDF = () => this.designerService.downloadPDF({ editing: true, replace: false });

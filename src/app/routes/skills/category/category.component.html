@@ -1,10 +1,10 @@
 <div class="group card relative h-full p-10">
-  <div *ngIf="user && user['roles'].includes('admin')" class="absolute right-0 top-0 z-10">
-    <p-button icon="pi pi-pencil" class="opacity-0 transition-opacity group-hover:opacity-100" [text]="true" size="small" (onClick)="onCategoryEdit.emit(title)" />
-    <p-button icon="pi pi-trash" class="opacity-0 transition-opacity group-hover:opacity-100" [text]="true" size="small" severity="danger" (onClick)="onCategoryRemoved.emit(title)" />
+  <div *ngIf="user && user['roles'].includes('admin')" class="absolute right-0 top-0 z-10 transition-opacity group-hover:opacity-100 lg:opacity-0">
+    <p-button icon="pi pi-pencil" [text]="true" size="small" (onClick)="onCategoryEdit.emit(title)" />
+    <p-button icon="pi pi-trash" [text]="true" size="small" severity="danger" (onClick)="onCategoryRemoved.emit(title)" />
   </div>
   <h3 class="mt-0">{{ title }}</h3>
-  <div class="grid grid-cols-3 gap-2">
+  <div class="grid grid-cols-2 gap-2 lg:grid-cols-3">
     <app-skill *ngFor="let skill of skills" [skill]="skill" (onSkillEdit)="onSkillEdit.emit($event)" (onSkillRemoved)="onSkillRemoved.emit($event)"></app-skill>
   </div>
 </div>

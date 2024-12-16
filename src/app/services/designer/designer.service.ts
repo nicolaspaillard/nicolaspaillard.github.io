@@ -63,13 +63,22 @@ export class DesignerService {
   destroy = () => this.designer.destroy();
   getTemplate = async () => await getDoc(doc(this.db, "data", "template")).then((document) => (document.exists() ? JSON.parse(document.data()!["template"]) : this.blank) as Template);
   timer: NodeJS.Timeout;
-  loadTemplate = async (containerId: string) => {
+  init = async (containerId: string) => {
     this.designer = new Designer({ domContainer: document.getElementById(containerId)!, template: await this.getTemplate(), plugins: plugins });
     this.designer.onChangeTemplate(() => {
       clearTimeout(this.timer);
       this.timer = setTimeout(() => this.uploadTemplate(), 3000);
     });
   };
+  resetTemplate = () =>
+    this.designer.updateTemplate({
+      basePdf: {
+        width: 210,
+        height: 297,
+        padding: [10, 10, 10, 10],
+      },
+      schemas: [[]],
+    });
   importTemplate = (file: File) => {
     const fileReader = new FileReader();
     fileReader.readAsText(file);

@@ -1,10 +1,16 @@
-<div class="group card relative flex w-[calc(50%-2.5rem)] p-10 before:absolute before:top-1/2 before:h-[2px] before:w-10 before:-translate-y-full before:bg-[green] before:content-['']" [ngClass]="right ? 'ml-auto before:-left-[calc(theme(spacing.10)+1px)]' : 'flex-row-reverse before:-right-[calc(theme(spacing.10)+1px)]'">
-  <div class="absolute top-0" [ngClass]="right ? 'left-0' : 'right-0'">
-    <p-button *ngIf="user && user['roles'].includes('admin')" icon="pi pi-pencil" class="opacity-0 transition-opacity group-hover:opacity-100" [text]="true" size="small" (onClick)="onExperienceEdit.emit(experience)" />
-    <p-button *ngIf="user && user['roles'].includes('admin')" icon="pi pi-trash" class="opacity-0 transition-opacity group-hover:opacity-100" [text]="true" size="small" severity="danger" (onClick)="onExperienceRemoved.emit(experience)" />
+<div
+  class="group card relative flex w-full p-5 lg:w-[calc(50%-theme(spacing.5))] lg:before:content-[''] xl:w-[calc(50%-theme(spacing.10))] xl:p-10"
+  [ngClass]="{
+    'lg:before:absolute lg:before:top-1/2 lg:before:h-[2px] lg:before:w-5 lg:before:-translate-y-full lg:before:bg-[green] xl:before:w-10': true,
+    'lg:ml-auto lg:before:-left-[calc(theme(spacing.5)+1px)] xl:before:-left-[calc(theme(spacing.10)+1px)]': right,
+    'lg:flex-row-reverse lg:before:-right-[calc(theme(spacing.5)+1px)] xl:before:-right-[calc(theme(spacing.10)+1px)]': !right,
+  }">
+  <div class="absolute top-0 transition-opacity group-hover:opacity-100 lg:opacity-0" [ngClass]="right ? 'right-0 lg:left-0' : 'right-0'">
+    <p-button *ngIf="user && user['roles'].includes('admin')" icon="pi pi-pencil" [text]="true" size="small" (onClick)="onExperienceEdit.emit(experience)" />
+    <p-button *ngIf="user && user['roles'].includes('admin')" icon="pi pi-trash" [text]="true" size="small" severity="danger" (onClick)="onExperienceRemoved.emit(experience)" />
   </div>
 
-  <div class="flex w-60 shrink-0 flex-col border-0 border-solid border-white/25 [&>*:last-child]:mb-0" [ngClass]="right ? 'mr-5 border-r pr-5 text-end' : 'ml-5 border-l pl-5'">
+  <div class="flex flex-col border-0 border-solid border-white/25 lg:w-48 xl:w-60 [&>*:last-child]:mb-0" [ngClass]="right ? 'mr-5 border-r pr-5 text-end' : 'mr-5 border-r pr-5 text-end lg:ml-5 lg:mr-0 lg:border-l lg:border-r-0 lg:pl-5 lg:text-start'">
     <h3>
       <ng-container *ngIf="experience.end; else day">{{ experience.start.toLocaleDateString("fr-FR", { month: "numeric", year: "numeric" }) }} - {{ experience.end.toLocaleDateString("fr-FR", { month: "numeric", year: "numeric" }) }}</ng-container>
       <ng-template #day>{{ experience.start.toLocaleDateString("fr-FR", { day: "numeric", month: "numeric", year: "numeric" }) }}</ng-template>
@@ -13,7 +19,7 @@
     <span *ngIf="experience.address">{{ experience.address }}</span>
     <span *ngIf="experience.city || experience.postcode">{{ experience.city }} {{ experience.postcode }}</span>
   </div>
-  <div [ngClass]="right ? '' : 'text-end'" class="[&>*:last-child]:mb-0">
+  <div [ngClass]="right ? '' : 'lg:text-end'" class="[&>*:last-child]:mb-0">
     <h3>{{ experience.title }}</h3>
     <p *ngIf="experience.text">{{ experience.text }}</p>
     <ul *ngIf="experience.activities" [dir]="right ? '' : 'rtl'" [ngClass]="{ 'text-start': !right }">

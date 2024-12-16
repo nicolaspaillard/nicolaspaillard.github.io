@@ -1,9 +1,10 @@
-<div class="flex min-h-full flex-col justify-center gap-10 py-10">
-  <p-button *ngIf="user && user['roles'].includes('admin')" size="large" class="block text-center" icon="pi pi-plus" [text]="true" (onClick)="openDialog()"></p-button>
-  <div class="grid grid-cols-3 items-stretch gap-10">
+<div class="flex min-h-full flex-col items-center justify-center px-5 py-5 lg:px-0">
+  <p-button *ngIf="user && user['roles'].includes('admin')" size="large" class="mb-5 block text-center" icon="pi pi-plus" [text]="true" (onClick)="openDialog()"></p-button>
+  <div class="grid grid-cols-1 items-stretch gap-5 lg:grid-cols-3">
     <app-category *ngFor="let category of categories" [skills]="category.skills" [title]="category.title" (onCategoryEdit)="editing = category.title; formCategory.setValue({ title: category.title }); isDialogCategoryShown = true" (onCategoryRemoved)="deleteCategory($event)" (onSkillEdit)="openDialog($event)" (onSkillRemoved)="deleteSkill($event)"></app-category>
   </div>
 </div>
+
 <p-dialog [modal]="true" header="Modifier une catégorie" contentStyleClass="flex flex-col gap-2" [dismissableMask]="true" [(visible)]="isDialogCategoryShown">
   <form [formGroup]="formCategory" class="flex flex-col gap-2 *:flex *:justify-evenly *:gap-2 [&>label]:gap-0 [&_label]:flex [&_label]:w-full [&_label]:flex-col">
     <label>
@@ -16,7 +17,6 @@
     <p-button (onClick)="updateCategory(); isDialogCategoryShown = false" [disabled]="!formCategory.valid">Modifier</p-button>
   </div>
 </p-dialog>
-
 <p-dialog [modal]="true" [header]="(editing.length ? 'Modifier' : 'Ajouter') + ' une compétence'" contentStyleClass="flex flex-col gap-2" [dismissableMask]="true" [(visible)]="isDialogSkillShown">
   <form [formGroup]="formSkill" class="flex flex-col gap-2 *:flex *:justify-evenly *:gap-2 [&>label]:gap-0 [&_label]:flex [&_label]:w-full [&_label]:flex-col">
     <label>

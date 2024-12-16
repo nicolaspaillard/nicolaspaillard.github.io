@@ -4,14 +4,18 @@
 @tailwind components
 @tailwind utilities
 
-h1,h2,h3,h4,h5,h6
-    margin-top: 0
+html,body
+    margin: 0
+    height: 100%
 
 body
-    margin: 0
-    padding: 0
-    background: #000
     font-family: Aldrich
+    background-color: black
+    color: white
+
+h1,h2,h3,h4,h5,h6
+    font-size: 16px
+    margin-top: 0
 
 img
     display: block
@@ -24,6 +28,9 @@ img
 
 .p-datepicker,.p-inputtext,.p-select
     width: 100%
+
+.p-button:not([class*='p-button-'])
+    color: black !important
 
 .p-carousel
     .p-carousel-content

@@ -1,5 +1,5 @@
 <span class="group/skill relative flex items-center">
-  <div *ngIf="user && user['roles'].includes('admin')" class="absolute z-10 flex w-full justify-center opacity-0 transition-opacity group-hover/skill:opacity-100">
+  <div *ngIf="user && user['roles'].includes('admin')" class="absolute z-10 flex w-full justify-center transition-opacity group-hover/skill:opacity-100 lg:opacity-0">
     <p-button icon="pi pi-pencil" [text]="true" size="small" (onClick)="onSkillEdit.emit(skill)" />
     <p-button icon="pi pi-trash" [text]="true" size="small" severity="danger" (onClick)="onSkillRemoved.emit(skill)" />
   </div>
