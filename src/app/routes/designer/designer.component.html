@@ -1,12 +1,13 @@
 <div class="flex h-full flex-col gap-2 py-10">
-  <div class="mx-auto flex justify-center gap-2">
+  <div class="mx-auto hidden items-center gap-2 lg:flex">
     <p-button (onClick)="designer.updateTemplate(blank)" icon="pi pi-trash" label="Réinitialiser"></p-button>
     <p-button (onClick)="loadTemplate()" icon="pi pi-refresh" label="Recharger"></p-button>
     <p-button (onClick)="uploadTemplate()" icon="pi pi-save" label="Sauvegarder"></p-button>
-    <p-fileupload (uploadHandler)="importModel($event)" mode="basic" chooseIcon="pi pi-upload" url="https://www.primefaces.org/cdn/api/upload.php" accept=".pdf" maxFileSize="1000000" [customUpload]="true" [auto]="true" chooseLabel="Importer modèle" />
-    <p-fileupload (uploadHandler)="importTemplate($event)" mode="basic" chooseIcon="pi pi-upload" url="https://www.primefaces.org/cdn/api/upload.php" accept=".json" maxFileSize="1000000" [customUpload]="true" [auto]="true" chooseLabel="Importer template" />
+    <p-fileupload id="upload-model" class="inline-flex" (uploadHandler)="importModel($event)" mode="basic" chooseIcon="pi pi-upload" accept=".pdf" maxFileSize="1000000" [customUpload]="true" [auto]="true" chooseLabel="Importer modèle" />
+    <p-fileupload id="upload-template" class="inline-flex" (uploadHandler)="importTemplate($event)" mode="basic" chooseIcon="pi pi-upload" accept=".json" maxFileSize="1000000" [customUpload]="true" [auto]="true" chooseLabel="Importer template" />
     <p-button (onClick)="downloadTemplate()" icon="pi pi-download" label="Télécharger"></p-button>
     <p-button (onClick)="downloadPDF()" icon="pi pi-file-pdf" label="Générer"></p-button>
   </div>
+  <p-splitbutton menuStyleClass="!absolute" class="mx-auto lg:hidden" label="Sauvegarder" (onClick)="uploadTemplate()" [model]="menuItems" />
   <div id="container" class="h-full overflow-hidden"></div>
 </div>

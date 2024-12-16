@@ -741,6 +741,7 @@ bootstrapApplication(AppComponent, {
       theme: {
         preset: matrix,
       },
+      ripple: true,
     }),
     ConfirmationService,
     MessageService,

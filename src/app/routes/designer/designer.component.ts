@@ -6,12 +6,14 @@ import { Section, SectionsService } from "@app/services/sections.service";
 import { Category, SkillsService } from "@app/services/skills.service";
 import { Template } from "@pdfme/common";
 import { Designer } from "@pdfme/ui";
+import { MenuItem } from "primeng/api";
 import { ButtonModule } from "primeng/button";
 import { FileUploadHandlerEvent, FileUploadModule } from "primeng/fileupload";
+import { SplitButton } from "primeng/splitbutton";
 
 @Component({
   selector: "app-designer",
-  imports: [ButtonModule, FileUploadModule],
+  imports: [ButtonModule, FileUploadModule, SplitButton],
   templateUrl: "./designer.component.html",
 })
 export class DesignerComponent implements OnInit, OnDestroy {
@@ -27,6 +29,7 @@ export class DesignerComponent implements OnInit, OnDestroy {
     },
     schemas: [[]],
   };
+  menuItems: MenuItem[] = [];
   constructor(
     private careerService: CareerService,
     private skillsService: SkillsService,
@@ -38,6 +41,38 @@ export class DesignerComponent implements OnInit, OnDestroy {
     this.skillsService.categories().subscribe((categories) => (this.categories = categories));
     this.sectionsService.sections().subscribe((sections) => (this.sections = sections));
     if (this.router.url === "/cv") this.designerService.downloadPDF({ editing: false, replace: true });
+    this.menuItems = [
+      {
+        label: "Réinitialiser",
+        icon: "pi pi-trash",
+        command: () => this.designer.updateTemplate(this.blank),
+      },
+      {
+        label: "Recharger",
+        icon: "pi pi-refresh",
+        command: () => this.loadTemplate(),
+      },
+      {
+        label: "Importer modèle",
+        icon: "pi pi-upload",
+        command: () => (document.querySelector("#upload-model button")! as HTMLElement).click(),
+      },
+      {
+        label: "Importer template",
+        icon: "pi pi-upload",
+        command: () => (document.querySelector("#upload-template button")! as HTMLElement).click(),
+      },
+      {
+        label: "Télécharger",
+        icon: "pi pi-download",
+        command: () => this.downloadTemplate(),
+      },
+      {
+        label: "Générer",
+        icon: "pi pi-file-pdf",
+        command: () => this.downloadPDF(),
+      },
+    ];
   }
   ngOnInit() {
     this.loadTemplate();

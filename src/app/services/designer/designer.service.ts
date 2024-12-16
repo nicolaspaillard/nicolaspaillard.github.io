@@ -62,7 +62,14 @@ export class DesignerService {
   }
   destroy = () => this.designer.destroy();
   getTemplate = async () => await getDoc(doc(this.db, "data", "template")).then((document) => (document.exists() ? JSON.parse(document.data()!["template"]) : this.blank) as Template);
-  loadTemplate = async (containerId: string) => (this.designer = new Designer({ domContainer: document.getElementById(containerId)!, template: await this.getTemplate(), plugins: plugins }));
+  timer: NodeJS.Timeout;
+  loadTemplate = async (containerId: string) => {
+    this.designer = new Designer({ domContainer: document.getElementById(containerId)!, template: await this.getTemplate(), plugins: plugins });
+    this.designer.onChangeTemplate(() => {
+      clearTimeout(this.timer);
+      this.timer = setTimeout(() => this.uploadTemplate(), 3000);
+    });
+  };
   importTemplate = (file: File) => {
     const fileReader = new FileReader();
     fileReader.readAsText(file);
@@ -89,7 +96,7 @@ export class DesignerService {
       await setDoc(doc(this.db, "data", "template"), { template: JSON.stringify(template) });
       this.toastService.success("Succès", "Sauvegarde effectuée");
     } catch (error) {
-      this.toastService.success("Erreur", "Sauvegarde échouée");
+      this.toastService.error("Erreur", "Sauvegarde échouée");
       console.error(error);
     }
   };
