@@ -30,6 +30,7 @@ export class AnimationComponent implements OnDestroy {
       if (section >= animation.sections.length) {
         clearInterval(this.interval);
         animation.callback();
+        this.isAnimationShown = false;
         return;
       } else if (line == animation.sections[section].length) {
         section++;
