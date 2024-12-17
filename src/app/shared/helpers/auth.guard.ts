@@ -1,0 +1,21 @@
+import { inject } from "@angular/core";
+import { CanActivateFn, Router } from "@angular/router";
+import { AuthService } from "@services/auth.service";
+import { EventBusService } from "@services/frontend/event-bus.service";
+import { ToastService } from "@services/frontend/toast.service";
+import { User } from "firebase/auth";
+
+export const AuthGuard: CanActivateFn = (route, state) => {
+  let canActivate: boolean = false;
+  inject(AuthService)
+    .user()
+    .subscribe((user: { user: User; roles: string[] } | null) => {
+      canActivate = user != null && (!route.data["role"] || user.roles.includes(route.data["role"]));
+    });
+  if (!canActivate) {
+    inject(ToastService).error("Erreur", "Vous devez d'abord vous connecter");
+    inject(EventBusService).emit({ name: "signin" });
+    inject(Router).navigate([]);
+  }
+  return canActivate;
+};

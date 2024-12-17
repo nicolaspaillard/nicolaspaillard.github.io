@@ -1,16 +1,13 @@
 import { provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
-import { inject } from "@angular/core";
 import { getAnalytics, provideAnalytics, ScreenTrackingService, UserTrackingService } from "@angular/fire/analytics";
 import { FirebaseOptions, initializeApp, provideFirebaseApp } from "@angular/fire/app";
 import { initializeAppCheck, provideAppCheck, ReCaptchaEnterpriseProvider } from "@angular/fire/app-check";
-import { getAuth, provideAuth, User } from "@angular/fire/auth";
+import { getAuth, provideAuth } from "@angular/fire/auth";
 import { getFirestore, provideFirestore } from "@angular/fire/firestore";
 import { bootstrapApplication } from "@angular/platform-browser";
 import { provideAnimationsAsync } from "@angular/platform-browser/animations/async";
-import { CanActivateFn, provideRouter, Router, Routes, withComponentInputBinding, withInMemoryScrolling } from "@angular/router";
-import { AuthService } from "@app/services/auth.service";
-import { EventBusService } from "@app/services/frontend/event-bus.service";
-import { ToastService } from "@app/services/frontend/toast.service";
+import { provideRouter, Routes, withComponentInputBinding, withInMemoryScrolling } from "@angular/router";
+import { AuthGuard } from "@helpers/auth.guard";
 import { definePreset } from "@primeng/themes";
 import Aura from "@primeng/themes/aura";
 import { AboutComponent } from "@routes/about/about.component";
@@ -695,27 +692,14 @@ const matrix = definePreset(Aura, {
 });
 // #endregion
 // #region routes
-export const AuthGuard: CanActivateFn = (route, state) => {
-  let canActivate: boolean = false;
-  inject(AuthService)
-    .user()
-    .subscribe((user: { user: User; roles: string[] } | null) => {
-      canActivate = user != null && (!route.data["role"] || user.roles.includes(route.data["role"]));
-    });
-  if (!canActivate) {
-    inject(ToastService).error("Erreur", "Vous devez d'abord vous connecter");
-    inject(EventBusService).emit({ name: "signin" });
-    inject(Router).navigate([]);
-  }
-  return canActivate;
-};
+
 export const routes: Routes = [
   { path: "", title: "Nicolas Paillard", component: HomeComponent, data: { animation: 0 } },
   { path: "about", title: "À propos", component: AboutComponent, data: { animation: 1 } },
   { path: "career", title: "Carrière", component: CareerComponent, data: { animation: 2 } },
   { path: "skills", title: "Compétences", component: SkillsComponent, data: { animation: 3 } },
   { path: "projects", title: "Projets", component: ProjectsComponent, data: { animation: 4 } },
-  { path: "designer", title: "Designer", component: DesignerComponent, data: { animation: 5, role: "admin" } },
+  { path: "designer", title: "Designer", component: DesignerComponent, data: { animation: 5, role: "admin" }, canActivate: [AuthGuard] },
   { path: "cv", children: [] },
   { path: "**", redirectTo: "" },
 ];

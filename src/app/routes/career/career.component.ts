@@ -1,9 +1,9 @@
 import { CommonModule } from "@angular/common";
 import { Component } from "@angular/core";
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
-import { AuthService } from "@app/services/auth.service";
-import { CareerService, Experience } from "@app/services/career.service";
-import { ConfirmService } from "@app/services/frontend/confirm.service";
+import { AuthService } from "@app/shared/services/auth.service";
+import { CareerService, Experience } from "@app/shared/services/career.service";
+import { ConfirmService } from "@app/shared/services/frontend/confirm.service";
 import { ButtonModule } from "primeng/button";
 import { DatePickerModule } from "primeng/datepicker";
 import { DialogModule } from "primeng/dialog";
@@ -14,9 +14,9 @@ import { TooltipModule } from "primeng/tooltip";
 import { ExperienceComponent } from "./experience/experience.component";
 
 @Component({
-    selector: "app-career",
-    imports: [CommonModule, ReactiveFormsModule, ExperienceComponent, DialogModule, DatePickerModule, TextareaModule, InputTextModule, ButtonModule, InputGroupModule, TooltipModule],
-    templateUrl: "./career.component.html"
+  selector: "app-career",
+  imports: [CommonModule, ReactiveFormsModule, ExperienceComponent, DialogModule, DatePickerModule, TextareaModule, InputTextModule, ButtonModule, InputGroupModule, TooltipModule],
+  templateUrl: "./career.component.html",
 })
 export class CareerComponent {
   isDialogShown: boolean = false;

@@ -1,13 +1,13 @@
 import { CommonModule } from "@angular/common";
 import { Component, EventEmitter, Input, Output } from "@angular/core";
-import { AuthService } from "@app/services/auth.service";
-import { Experience } from "@app/services/career.service";
+import { AuthService } from "@app/shared/services/auth.service";
+import { Experience } from "@app/shared/services/career.service";
 import { ButtonModule } from "primeng/button";
 
 @Component({
-    selector: "app-experience",
-    imports: [CommonModule, ButtonModule],
-    templateUrl: "./experience.component.html"
+  selector: "app-experience",
+  imports: [CommonModule, ButtonModule],
+  templateUrl: "./experience.component.html",
 })
 export class ExperienceComponent {
   @Input() experience: Experience;

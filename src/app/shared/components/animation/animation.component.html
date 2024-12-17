@@ -1,0 +1,8 @@
+<div [ngClass]="{ 'pointer-events-auto opacity-100': isAnimationShown }" class="pointer-events-none absolute bottom-0 left-0 right-0 top-0 z-20 bg-black/50 opacity-0 transition-opacity"></div>
+<div [ngClass]="{ 'pointer-events-auto opacity-100': isAnimationShown }" class="card pointer-events-none absolute left-1/2 top-1/2 z-30 h-[480px] w-[720px] -translate-x-1/2 -translate-y-1/2 overflow-hidden bg-black p-10 opacity-0 transition-opacity">
+  <div [id]="containerId" class="flex h-full overflow-y-auto">
+    <div class="flex h-auto w-full flex-col font-mono">
+      <span *ngFor="let line of text" class="w-full leading-none" [innerHTML]="line | safeHtml"></span>
+    </div>
+  </div>
+</div>

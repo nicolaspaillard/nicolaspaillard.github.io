@@ -1,9 +1,9 @@
 import { CommonModule } from "@angular/common";
 import { Component } from "@angular/core";
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
-import { AuthService } from "@app/services/auth.service";
-import { ConfirmService } from "@app/services/frontend/confirm.service";
-import { Project, ProjectsService } from "@app/services/projects.service";
+import { AuthService } from "@app/shared/services/auth.service";
+import { ConfirmService } from "@app/shared/services/frontend/confirm.service";
+import { Project, ProjectsService } from "@app/shared/services/projects.service";
 import { CloudinaryModule } from "@cloudinary/ng";
 import { ButtonModule } from "primeng/button";
 import { DatePickerModule } from "primeng/datepicker";

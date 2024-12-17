@@ -1,6 +1,6 @@
 import { CommonModule } from "@angular/common";
 import { Component } from "@angular/core";
-import { AuthService } from "@app/services/auth.service";
+import { AuthService } from "@app/shared/services/auth.service";
 import { CloudinaryModule } from "@cloudinary/ng";
 import { Cloudinary, CloudinaryImage } from "@cloudinary/url-gen";
 import { scale } from "@cloudinary/url-gen/actions/resize";

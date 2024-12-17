@@ -1,7 +1,7 @@
 import { CommonModule } from "@angular/common";
 import { Component, EventEmitter, Input, Output } from "@angular/core";
-import { AuthService } from "@app/services/auth.service";
-import { Project } from "@app/services/projects.service";
+import { AuthService } from "@app/shared/services/auth.service";
+import { Project } from "@app/shared/services/projects.service";
 import { Cloudinary } from "@cloudinary/url-gen";
 import { fill } from "@cloudinary/url-gen/actions/resize";
 import { ButtonModule } from "primeng/button";

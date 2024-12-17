@@ -1,12 +1,13 @@
 import { Injectable } from "@angular/core";
 import { doc, Firestore, getDoc, setDoc } from "@angular/fire/firestore";
-import { CareerService, Experience } from "@app/services/career.service";
+import { CareerService, Experience } from "@app/shared/services/career.service";
 import { Cloudinary } from "@cloudinary/url-gen";
 import { fill } from "@cloudinary/url-gen/actions/resize";
 import { cloneDeep, Template } from "@pdfme/common";
 import { generate } from "@pdfme/generator";
 import { Designer } from "@pdfme/ui";
 import { cloudinaryConfig } from "src/main";
+import { AnimationService } from "../animation.service";
 import { ToastService } from "../frontend/toast.service";
 import { Section, SectionsService } from "../sections.service";
 import { Category, SkillsService } from "../skills.service";
@@ -54,6 +55,7 @@ export class DesignerService {
     private careerService: CareerService,
     private skillsService: SkillsService,
     private sectionsService: SectionsService,
+    private animationService: AnimationService,
     private db: Firestore,
   ) {
     this.careerService.experiences().subscribe((experiences) => (this.experiences = experiences));
@@ -89,7 +91,18 @@ export class DesignerService {
     fileReader.readAsDataURL(file);
     fileReader.onloadend = (readerEvent: ProgressEvent<FileReader>) => this.designer.updateTemplate(Object.assign(cloneDeep(this.designer.getTemplate()), { basePdf: readerEvent.target!.result! }));
   };
-  downloadPDF = async ({ editing, replace }: { editing: boolean; replace: boolean }) => generate({ template: editing ? this.designer.getTemplate() : await this.getTemplate(), inputs: await this.getInputs(), plugins: plugins }).then((pdf) => window.open(URL.createObjectURL(new Blob([pdf.buffer], { type: "application/pdf" })), replace ? "_self" : "_blank"));
+  downloadPDF = async ({ editing, replace }: { editing: boolean; replace: boolean }) => {
+    // prettier-ignore
+    this.animationService.animate({
+      callback: async () => generate({ template: editing ? this.designer.getTemplate() : await this.getTemplate(), inputs: await this.getInputs(), plugins: plugins }).then((pdf) => window.open(URL.createObjectURL(new Blob([pdf.buffer], { type: "application/pdf" })), replace ? "_self" : "_blank")),
+      sections: [
+        ["Ajout des sections",...this.sections.map((section) => section.title)],
+        ["<br>","Ajout des compétences",...this.categories.map((category) => category.title)],
+        ["<br>","Ajout des expériences",...this.experiences.map((experience) => experience.title)],
+      ],
+    });
+  };
+
   downloadTemplate = () => {
     const url = URL.createObjectURL(new Blob([JSON.stringify(this.designer.getTemplate())], { type: "application/json" }));
     const link = document.createElement("a");
@@ -134,7 +147,6 @@ export class DesignerService {
         subtitle: "Développeur Full-Stack",
         picture: imageB64,
         intro: [[this.sections.length ? this.sections[0].text : "test"]],
-        contacts: JSON.stringify([["test"], ["test"], ["test"], ["test"], ["test"]]),
         skills: JSON.stringify(this.categories.map((category) => ["\t- " + category.title + " : " + category.skills.map((skill) => skill.title).join(", ")])),
         experiences: JSON.stringify(formatExperiences(this.experiences.filter((experience) => experience.end && experience.start.getTime() != experience.end.getTime()))),
         address: "Montpellier",

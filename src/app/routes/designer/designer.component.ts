@@ -1,9 +1,9 @@
 import { Component, OnDestroy, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
-import { CareerService, Experience } from "@app/services/career.service";
-import { DesignerService } from "@app/services/designer/designer.service";
-import { Section, SectionsService } from "@app/services/sections.service";
-import { Category, SkillsService } from "@app/services/skills.service";
+import { CareerService, Experience } from "@app/shared/services/career.service";
+import { DesignerService } from "@app/shared/services/designer/designer.service";
+import { Section, SectionsService } from "@app/shared/services/sections.service";
+import { Category, SkillsService } from "@app/shared/services/skills.service";
 import { MenuItem } from "primeng/api";
 import { ButtonModule } from "primeng/button";
 import { FileUploadHandlerEvent, FileUploadModule } from "primeng/fileupload";

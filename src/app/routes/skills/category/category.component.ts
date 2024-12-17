@@ -1,8 +1,8 @@
 import { CommonModule } from "@angular/common";
 import { Component, EventEmitter, Input, Output } from "@angular/core";
 import { ReactiveFormsModule } from "@angular/forms";
-import { AuthService } from "@app/services/auth.service";
-import { Skill } from "@app/services/skills.service";
+import { AuthService } from "@app/shared/services/auth.service";
+import { Skill } from "@app/shared/services/skills.service";
 import { ButtonModule } from "primeng/button";
 import { SkillComponent } from "./skill/skill.component";
 

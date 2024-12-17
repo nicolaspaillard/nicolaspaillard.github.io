@@ -1,9 +1,9 @@
 import { CommonModule } from "@angular/common";
 import { Component } from "@angular/core";
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
-import { AuthService } from "@app/services/auth.service";
-import { ConfirmService } from "@app/services/frontend/confirm.service";
-import { Category, Skill, SkillsService } from "@app/services/skills.service";
+import { AuthService } from "@app/shared/services/auth.service";
+import { ConfirmService } from "@app/shared/services/frontend/confirm.service";
+import { Category, Skill, SkillsService } from "@app/shared/services/skills.service";
 import { ButtonModule } from "primeng/button";
 import { DialogModule } from "primeng/dialog";
 import { InputTextModule } from "primeng/inputtext";
@@ -11,9 +11,9 @@ import { SelectModule } from "primeng/select";
 import { CategoryComponent } from "./category/category.component";
 
 @Component({
-    selector: "app-skills",
-    imports: [ReactiveFormsModule, CommonModule, CategoryComponent, ButtonModule, DialogModule, InputTextModule, SelectModule],
-    templateUrl: "./skills.component.html"
+  selector: "app-skills",
+  imports: [ReactiveFormsModule, CommonModule, CategoryComponent, ButtonModule, DialogModule, InputTextModule, SelectModule],
+  templateUrl: "./skills.component.html",
 })
 export class SkillsComponent {
   isDialogCategoryShown: boolean = false;

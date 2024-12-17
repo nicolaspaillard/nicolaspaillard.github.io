@@ -3,6 +3,9 @@ import { CommonModule } from "@angular/common";
 import { Component, OnInit } from "@angular/core";
 import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule, ValidationErrors, ValidatorFn, Validators } from "@angular/forms";
 import { NavigationEnd, NavigationStart, Route, Router, RouterModule, RouterOutlet } from "@angular/router";
+import { AnimationComponent } from "@components/animation/animation.component";
+import { AuthService } from "@services/auth.service";
+import { DesignerService } from "@services/designer/designer.service";
 import { ButtonModule } from "primeng/button";
 import { ConfirmDialogModule } from "primeng/confirmdialog";
 import { DialogModule } from "primeng/dialog";
@@ -10,8 +13,6 @@ import { InputTextModule } from "primeng/inputtext";
 import { PasswordModule } from "primeng/password";
 import { ToastModule } from "primeng/toast";
 import { routes } from "src/main";
-import { AuthService } from "./services/auth.service";
-import { DesignerService } from "./services/designer/designer.service";
 
 export const slide = trigger("routeAnimations", [transition(":increment", slideTo("right")), transition(":decrement", slideTo("left"))]);
 export class CustomValidators {
@@ -28,7 +29,7 @@ export class CustomValidators {
 @Component({
   selector: "app-root",
   animations: [slide],
-  imports: [CommonModule, RouterModule, RouterOutlet, ReactiveFormsModule, ButtonModule, DialogModule, ToastModule, ConfirmDialogModule, InputTextModule, PasswordModule],
+  imports: [CommonModule, RouterModule, RouterOutlet, ReactiveFormsModule, ButtonModule, DialogModule, ToastModule, ConfirmDialogModule, InputTextModule, PasswordModule, AnimationComponent],
   templateUrl: "./app.component.html",
 })
 export class AppComponent implements OnInit {
@@ -61,9 +62,7 @@ export class AppComponent implements OnInit {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationStart) {
         this.isTransitioning = true;
-        setTimeout(() => {
-          this.isTransitioning = false;
-        }, 600);
+        setTimeout(() => (this.isTransitioning = false), 600);
       }
       if (event instanceof NavigationEnd) {
       }
@@ -72,6 +71,7 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     this.matrix();
   }
+
   downloadCV = () => this.designerService.downloadPDF({ editing: false, replace: false });
 
   prepareRoute = (outlet: RouterOutlet) => outlet && outlet.activatedRouteData && outlet.activatedRouteData["animation"];
@@ -113,6 +113,7 @@ export class AppComponent implements OnInit {
   signin = () => this.authService.signin(this.formSignin.value.email!, this.formSignin.value.password!).then(() => (this.isSigninShown = false));
   signout = () => this.authService.signout();
 }
+
 function slideTo(direction: any) {
   const optional = { optional: true };
   return [
