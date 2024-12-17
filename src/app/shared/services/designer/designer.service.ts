@@ -72,15 +72,7 @@ export class DesignerService {
       this.timer = setTimeout(() => this.uploadTemplate(), 3000);
     });
   };
-  resetTemplate = () =>
-    this.designer.updateTemplate({
-      basePdf: {
-        width: 210,
-        height: 297,
-        padding: [10, 10, 10, 10],
-      },
-      schemas: [[]],
-    });
+  resetTemplate = () => this.designer.updateTemplate({ basePdf: { width: 210, height: 297, padding: [10, 10, 10, 10] }, schemas: [[]] });
   importTemplate = (file: File) => {
     const fileReader = new FileReader();
     fileReader.readAsText(file);
@@ -92,13 +84,29 @@ export class DesignerService {
     fileReader.onloadend = (readerEvent: ProgressEvent<FileReader>) => this.designer.updateTemplate(Object.assign(cloneDeep(this.designer.getTemplate()), { basePdf: readerEvent.target!.result! }));
   };
   downloadPDF = async ({ editing, replace }: { editing: boolean; replace: boolean }) => {
-    // prettier-ignore
+    const format = (data: Experience[] | Category[] | Section[]) => {
+      let result: string[] = [];
+      data.forEach((item: Experience | Category | Section) => {
+        if (item instanceof Category) result.push("<br>");
+        result.push(item.title);
+        if (item instanceof Experience) {
+          result.push(item.text);
+          if (item.activities) result.push(...item.activities.split(";"));
+        } else if (item instanceof Category) {
+          result.push(...item.skills.map((skill) => skill.title));
+        } else if (item instanceof Section) {
+          result.push(item.text);
+        }
+      });
+      return result;
+    };
     this.animationService.animate({
       callback: async () => generate({ template: editing ? this.designer.getTemplate() : await this.getTemplate(), inputs: await this.getInputs(), plugins: plugins }).then((pdf) => window.open(URL.createObjectURL(new Blob([pdf.buffer], { type: "application/pdf" })), replace ? "_self" : "_blank")),
       sections: [
-        ["Ajout des sections",...this.sections.map((section) => section.title)],
-        ["<br>","Ajout des compétences",...this.categories.map((category) => category.title)],
-        ["<br>","Ajout des expériences",...this.experiences.map((experience) => experience.title)],
+        { route: "home", lines: ["Accueil", "Ajout de la photo", await this.getPhoto()] },
+        { route: "about", lines: ["A propos", "Ajout de la présentation", ...format(this.sections)] },
+        { route: "career", lines: ["Carrière", "Ajout des expériences", ...format(this.experiences)] },
+        { route: "skills", lines: ["Compétences", "Ajout des compétences", ...format(this.categories)] },
       ],
     });
   };
@@ -122,8 +130,8 @@ export class DesignerService {
       console.error(error);
     }
   };
-  private getInputs = async () => {
-    const imageB64: string = await fetch(new Cloudinary({ cloud: { cloudName: cloudinaryConfig.cloudName } }).image("nicolasPaillard/profile").resize(fill().width(500).aspectRatio("1.0")).toURL())
+  private getPhoto = async (): Promise<string> =>
+    await fetch(new Cloudinary({ cloud: { cloudName: cloudinaryConfig.cloudName } }).image("nicolasPaillard/profile").resize(fill().width(500).aspectRatio("1.0")).toURL())
       .then((response) => response.blob())
       .then(
         (blob) =>
@@ -133,6 +141,7 @@ export class DesignerService {
             reader.readAsDataURL(blob);
           }),
       );
+  private getInputs = async () => {
     const formatExperiences = (experiences: Experience[]) =>
       experiences.map((experience, index) => [
         `${experience.start.toLocaleDateString("fr-FR", { month: "numeric", year: "numeric" })} - ${experience.end.toLocaleDateString("fr-FR", { month: "numeric", year: "numeric" })} : ${experience.title}` +
@@ -140,12 +149,11 @@ export class DesignerService {
           (experience.activities ? `\n${"\t- " + experience.activities.split(";").join("\n\t- ")}` : "") +
           (index < experiences.length - 1 ? "\n" : ""),
       ]);
-
     return [
       {
         title: "Nicolas Paillard",
         subtitle: "Développeur Full-Stack",
-        picture: imageB64,
+        picture: await this.getPhoto(),
         intro: [[this.sections.length ? this.sections[0].text : "test"]],
         skills: JSON.stringify(this.categories.map((category) => ["\t- " + category.title + " : " + category.skills.map((skill) => skill.title).join(", ")])),
         experiences: JSON.stringify(formatExperiences(this.experiences.filter((experience) => experience.end && experience.start.getTime() != experience.end.getTime()))),

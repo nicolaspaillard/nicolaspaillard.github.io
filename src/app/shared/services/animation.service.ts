@@ -3,7 +3,7 @@ import { filter, Observable, Subject } from "rxjs";
 
 export class Animation {
   id?: string;
-  sections: string[][];
+  sections: { route?: string; lines: string[] }[];
   callback: Function;
 }
 

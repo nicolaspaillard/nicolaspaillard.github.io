@@ -10,7 +10,7 @@
     <p-button *ngIf="user && user['roles'].includes('admin')" icon="pi pi-trash" [text]="true" size="small" severity="danger" (onClick)="onExperienceRemoved.emit(experience)" />
   </div>
 
-  <div class="flex flex-col border-0 border-solid border-white/25 lg:w-48 xl:w-60 [&>*:last-child]:mb-0" [ngClass]="right ? 'mr-5 border-r pr-5 text-end' : 'mr-5 border-r pr-5 text-end lg:ml-5 lg:mr-0 lg:border-l lg:border-r-0 lg:pl-5 lg:text-start'">
+  <div class="flex shrink flex-col border-0 border-solid border-white/25 lg:w-48 lg:shrink-0 xl:w-60 [&>*:last-child]:mb-0" [ngClass]="right ? 'mr-5 border-r pr-5 text-end' : 'mr-5 border-r pr-5 text-end lg:ml-5 lg:mr-0 lg:border-l lg:border-r-0 lg:pl-5 lg:text-start'">
     <h3>
       <ng-container *ngIf="experience.end; else day">{{ experience.start.toLocaleDateString("fr-FR", { month: "numeric", year: "numeric" }) }} - {{ experience.end.toLocaleDateString("fr-FR", { month: "numeric", year: "numeric" }) }}</ng-container>
       <ng-template #day>{{ experience.start.toLocaleDateString("fr-FR", { day: "numeric", month: "numeric", year: "numeric" }) }}</ng-template>
