@@ -16,6 +16,8 @@ export class AnimationComponent implements OnDestroy {
   text: string[] = [];
   isAnimationShown: boolean = false;
   animationSubscription: Subscription;
+  interval: NodeJS.Timeout;
+  callback: Function;
   constructor(
     private animationService: AnimationService,
     private router: Router,
@@ -23,8 +25,6 @@ export class AnimationComponent implements OnDestroy {
     this.animationSubscription = this.animationService.animations(this.containerId).subscribe((animation: Animation) => this.animate(animation));
   }
   ngOnDestroy = () => this.animationSubscription.unsubscribe();
-  interval: NodeJS.Timeout;
-  callback: Function;
   animate = (animation: Animation) => {
     this.callback = animation.callback;
     this.isAnimationShown = true;

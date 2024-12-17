@@ -72,7 +72,7 @@ export class AppComponent implements OnInit {
     this.matrix();
   }
 
-  downloadCV = () => this.designerService.downloadPDF({ editing: false, replace: false });
+  downloadCV = () => this.designerService.downloadPDF({ editing: false, replace: true });
 
   prepareRoute = (outlet: RouterOutlet) => outlet && outlet.activatedRouteData && outlet.activatedRouteData["animation"];
   interval: any;
