@@ -7,7 +7,7 @@ import { cloneDeep, Template } from "@pdfme/common";
 import { generate } from "@pdfme/generator";
 import { Designer } from "@pdfme/ui";
 import { cloudinaryConfig } from "src/main";
-import { AnimationService } from "../animation.service";
+import { AnimationService } from "../frontend/animation.service";
 import { ToastService } from "../frontend/toast.service";
 import { Section, SectionsService } from "../sections.service";
 import { Category, SkillsService } from "../skills.service";
@@ -84,18 +84,18 @@ export class DesignerService {
     fileReader.onloadend = (readerEvent: ProgressEvent<FileReader>) => this.designer.updateTemplate(Object.assign(cloneDeep(this.designer.getTemplate()), { basePdf: readerEvent.target!.result! }));
   };
   downloadPDF = async ({ editing, replace }: { editing: boolean; replace: boolean }) => {
-    const format = (data: Experience[] | Category[] | Section[]) => {
+    const format = (data: Experience[] | Category[] | Section[], title: string) => {
+      title = `nicolaspaillard.github.io/${title}# `;
       let result: string[] = [];
-      data.forEach((item: Experience | Category | Section) => {
-        if (item instanceof Category) result.push("<br>");
-        result.push(item.title);
+      data.forEach((item: Experience | Category | Section, index) => {
+        result.push(title + item.title);
         if (item instanceof Experience) {
-          result.push(item.text);
-          if (item.activities) result.push(...item.activities.split(";"));
+          if (item.text) result.push(title + item.text);
+          if (item.activities) result.push(...item.activities.split(";").map((activity) => title + activity));
         } else if (item instanceof Category) {
-          result.push(...item.skills.map((skill) => skill.title));
+          result.push(...item.skills.map((skill) => title + skill.title));
         } else if (item instanceof Section) {
-          result.push(item.text);
+          result.push(title + item.text);
         }
       });
       return result;
@@ -103,10 +103,10 @@ export class DesignerService {
     this.animationService.animate({
       callback: async () => generate({ template: editing ? this.designer.getTemplate() : await this.getTemplate(), inputs: await this.getInputs(), plugins: plugins }).then((pdf) => window.open(URL.createObjectURL(new Blob([pdf.buffer], { type: "application/pdf" })), replace ? "_self" : "_blank")),
       sections: [
-        { route: "home", lines: ["Accueil", "Ajout de la photo", await this.getPhoto()] },
-        { route: "about", lines: ["A propos", "Ajout de la présentation", ...format(this.sections)] },
-        { route: "career", lines: ["Carrière", "Ajout des expériences", ...format(this.experiences)] },
-        { route: "skills", lines: ["Compétences", "Ajout des compétences", ...format(this.categories)] },
+        { route: "home", lines: ["Accueil", "nicolaspaillard.github.io/home# " + (await this.getPhoto())] },
+        { route: "about", lines: ["A propos", ...format(this.sections, "about")] },
+        { route: "career", lines: ["Carrière", ...format(this.experiences, "career")] },
+        { route: "skills", lines: ["Compétences", ...format(this.categories, "skills")] },
       ],
     });
   };
