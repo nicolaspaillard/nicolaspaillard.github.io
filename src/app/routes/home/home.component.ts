@@ -1,15 +1,14 @@
-import { CommonModule } from "@angular/common";
+import { CommonModule, NgOptimizedImage } from "@angular/common";
 import { Component } from "@angular/core";
 import { AuthService } from "@app/shared/services/auth.service";
 import { CloudinaryModule } from "@cloudinary/ng";
 import { NgxTypedJsModule } from "ngx-typed-js";
 import { ButtonModule } from "primeng/button";
 import { FileUpload } from "primeng/fileupload";
-import { CldImageComponent } from "../../shared/components/cld-image/cld-image.component";
 
 @Component({
   selector: "app-home",
-  imports: [CommonModule, NgxTypedJsModule, ButtonModule, FileUpload, CloudinaryModule, CldImageComponent],
+  imports: [CommonModule, NgxTypedJsModule, ButtonModule, FileUpload, CloudinaryModule, NgOptimizedImage],
   templateUrl: "./home.component.html",
 })
 export class HomeComponent {

@@ -18,6 +18,7 @@
     "@angular/platform-browser": "^19.0.3",
     "@angular/platform-browser-dynamic": "^19.0.3",
     "@angular/router": "^19.0.3",
+    "@cloudinary-util/url-loader": "^6.0.0",
     "@cloudinary/ng": "^2.1.1",
     "@cloudinary/url-gen": "^1.21.0",
     "@pdfme/common": "^5.2.9",

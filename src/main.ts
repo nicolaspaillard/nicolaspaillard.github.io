@@ -1,3 +1,4 @@
+import { provideCloudinaryLoader } from "@angular/common";
 import { provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
 import { getAnalytics, provideAnalytics, ScreenTrackingService, UserTrackingService } from "@angular/fire/analytics";
 import { FirebaseOptions, initializeApp, provideFirebaseApp } from "@angular/fire/app";
@@ -727,9 +728,11 @@ bootstrapApplication(AppComponent, {
       },
       ripple: true,
     }),
+
     ConfirmationService,
     MessageService,
     ScreenTrackingService,
     UserTrackingService,
+    provideCloudinaryLoader("https://res.cloudinary.com/dsuvd32up"),
   ],
 }).catch((err) => console.error(err));
