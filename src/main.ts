@@ -2,6 +2,7 @@ import { provideCloudinaryLoader } from "@angular/common";
 import { provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
 import { getAnalytics, provideAnalytics, ScreenTrackingService, UserTrackingService } from "@angular/fire/analytics";
 import { FirebaseOptions, initializeApp, provideFirebaseApp } from "@angular/fire/app";
+import { initializeAppCheck, provideAppCheck, ReCaptchaEnterpriseProvider } from "@angular/fire/app-check";
 import { getAuth, provideAuth } from "@angular/fire/auth";
 import { getFirestore, provideFirestore } from "@angular/fire/firestore";
 import { bootstrapApplication } from "@angular/platform-browser";
@@ -10,12 +11,6 @@ import { provideRouter, Routes, withComponentInputBinding, withInMemoryScrolling
 import { AuthGuard } from "@helpers/auth.guard";
 import { definePreset } from "@primeng/themes";
 import Aura from "@primeng/themes/aura";
-import { AboutComponent } from "@routes/about/about.component";
-import { CareerComponent } from "@routes/career/career.component";
-import { DesignerComponent } from "@routes/designer/designer.component";
-import { HomeComponent } from "@routes/home/home.component";
-import { ProjectsComponent } from "@routes/projects/projects.component";
-import { SkillsComponent } from "@routes/skills/skills.component";
 import { ConfirmationService, MessageService } from "primeng/api";
 import { providePrimeNG } from "primeng/config";
 import { AppComponent } from "./app/app.component";
@@ -692,14 +687,13 @@ const matrix = definePreset(Aura, {
 });
 // #endregion
 // #region routes
-
 export const routes: Routes = [
-  { path: "", title: "Nicolas Paillard", component: HomeComponent, data: { animation: 0 } },
-  { path: "about", title: "À propos", component: AboutComponent, data: { animation: 1 } },
-  { path: "career", title: "Carrière", component: CareerComponent, data: { animation: 2 } },
-  { path: "skills", title: "Compétences", component: SkillsComponent, data: { animation: 3 } },
-  { path: "projects", title: "Projets", component: ProjectsComponent, data: { animation: 4 } },
-  { path: "designer", title: "Designer", component: DesignerComponent, data: { animation: 5, role: "admin" }, canActivate: [AuthGuard] },
+  { path: "", title: "Nicolas Paillard", loadComponent: () => import("@routes/home/home.component").then((m) => m.HomeComponent), data: { animation: 0 } },
+  { path: "about", title: "À propos", loadComponent: () => import("@routes/about/about.component").then((m) => m.AboutComponent), data: { animation: 1 } },
+  { path: "career", title: "Carrière", loadComponent: () => import("@routes/career/career.component").then((m) => m.CareerComponent), data: { animation: 2 } },
+  { path: "skills", title: "Compétences", loadComponent: () => import("@routes/skills/skills.component").then((m) => m.SkillsComponent), data: { animation: 3 } },
+  { path: "projects", title: "Projets", loadComponent: () => import("@routes/projects/projects.component").then((m) => m.ProjectsComponent), data: { animation: 4 } },
+  { path: "designer", title: "Designer", loadComponent: () => import("@routes/designer/designer.component").then((m) => m.DesignerComponent), data: { animation: 5, role: "admin" }, canActivate: [AuthGuard] },
   { path: "cv", children: [] },
   { path: "**", redirectTo: "" },
 ];
@@ -719,7 +713,7 @@ bootstrapApplication(AppComponent, {
     provideFirestore(() => getFirestore()),
     provideAuth(() => getAuth()),
     provideAnalytics(() => getAnalytics()),
-    // provideAppCheck(() => initializeAppCheck(undefined, { provider: new ReCaptchaEnterpriseProvider("6LdH4IYqAAAAAFEF9U2RMeZGVxRXVZAf_67iHt9M"), isTokenAutoRefreshEnabled: true })),
+    provideAppCheck(() => initializeAppCheck(undefined, { provider: new ReCaptchaEnterpriseProvider("6LdH4IYqAAAAAFEF9U2RMeZGVxRXVZAf_67iHt9M"), isTokenAutoRefreshEnabled: true })),
     provideAnimationsAsync(),
     providePrimeNG({
       theme: {
@@ -732,6 +726,6 @@ bootstrapApplication(AppComponent, {
     MessageService,
     ScreenTrackingService,
     UserTrackingService,
-    provideCloudinaryLoader("https://res.cloudinary.com/dsuvd32up"),
+    provideCloudinaryLoader("https://res.cloudinary.com/" + cloudinaryConfig.cloudName),
   ],
 }).catch((err) => console.error(err));
