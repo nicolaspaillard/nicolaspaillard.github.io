@@ -4,7 +4,7 @@
       <div *ngIf="user && user['roles'].includes('admin')" class="absolute right-0 top-0 z-10">
         <p-fileupload (uploadHandler)="(null)" class="transition-opacity group-hover:opacity-100 lg:opacity-0" mode="basic" chooseIcon="pi pi-pencil" accept="image/*" maxFileSize="1000000" [customUpload]="true" [auto]="true" chooseLabel="" chooseStyleClass="p-button-icon-only p-button-text p-button-sm !text-[#00ff00]" />
       </div>
-      <img ngSrc="nicolaspaillard/profile" sizes="20vw" priority placeholder fill />
+      <img ngSrc="nicolaspaillard/profile" sizes="(max-width: 768px) 100vw, 30vw" priority placeholder fill />
     </div>
     <div class="card flex flex-col justify-center border-t-0 p-5 sm:p-10 lg:border-l-0 lg:border-t-2">
       <h1 class="m-0 -mb-2 truncate text-3xl font-light tracking-wider lg:text-5xl">Nicolas Paillard</h1>
