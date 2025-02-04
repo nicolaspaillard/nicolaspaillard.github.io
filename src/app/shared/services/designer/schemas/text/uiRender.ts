@@ -168,7 +168,7 @@ export const buildStyledTextContainer = async (arg: UIRenderProps<TextSchema>, v
   rootElement.appendChild(container);
 
   // text decoration
-  const textDecorations: string[] = [];
+  const textDecorations: any[] = [];
   if (schema.strikethrough) textDecorations.push("line-through");
   if (schema.underline) textDecorations.push("underline");
 

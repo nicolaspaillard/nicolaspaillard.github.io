@@ -62,6 +62,7 @@ export const propPanel: PropPanel<TextSchema> = {
         type: 'string',
         widget: 'select',
         default: fallbackFontName,
+        placeholder: fallbackFontName,
         props: { options: fontNames.map((name) => ({ label: name, value: name })) },
         span: 12,
       },
@@ -126,6 +127,9 @@ export const propPanel: PropPanel<TextSchema> = {
         title: i18n('schemas.textColor'),
         type: 'string',
         widget: 'color',
+        props: {
+          disabledAlpha: true
+        },
         rules: [
           {
             pattern: HEX_COLOR_PATTERN,
@@ -137,6 +141,9 @@ export const propPanel: PropPanel<TextSchema> = {
         title: i18n('schemas.bgColor'),
         type: 'string',
         widget: 'color',
+        props: {
+          disabledAlpha: true
+        },
         rules: [
           {
             pattern: HEX_COLOR_PATTERN,

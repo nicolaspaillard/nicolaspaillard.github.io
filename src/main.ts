@@ -695,6 +695,7 @@ export const routes: Routes = [
   { path: "skills", title: "Compétences", loadComponent: () => import("@routes/skills/skills.component").then((m) => m.SkillsComponent), data: { animation: 3 } },
   { path: "projects", title: "Projets", loadComponent: () => import("@routes/projects/projects.component").then((m) => m.ProjectsComponent), data: { animation: 4 } },
   { path: "designer", title: "Designer", loadComponent: () => import("@routes/designer/designer.component").then((m) => m.DesignerComponent), data: { animation: 5, role: "admin" }, canActivate: [AuthGuard] },
+  { path: "applications", title: "Candidatures", loadComponent: () => import("@routes/applications/applications.component").then((m) => m.ApplicationsComponent), data: { animation: 6, role: "admin" }, canActivate: [AuthGuard] },
   { path: "cv", children: [] },
   { path: "**", redirectTo: "" },
 ];

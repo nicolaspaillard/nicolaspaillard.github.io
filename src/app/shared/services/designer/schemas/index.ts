@@ -25,7 +25,6 @@ export {
   ellipse,
   image,
   line,
-  // link added
   link,
   multiVariableText,
   radioGroup,
@@ -33,6 +32,7 @@ export {
   select,
   svg,
   table,
+  // schemas
   text,
   time,
 };
