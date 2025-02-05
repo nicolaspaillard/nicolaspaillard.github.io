@@ -46,16 +46,12 @@
         <td>{{ application.relaunchDate | date: "dd/MM/yyyy" }}</td>
         <td>{{ application.answerDate | date: "dd/MM/yyyy" }}</td>
         <td>{{ application.answer }}</td>
-        <!-- <div *ngIf="user && user['roles'].includes('admin')" class="absolute right-0 top-0 z-10 transition-opacity group-hover:opacity-100 lg:opacity-0">
-          <p-button icon="pi pi-pencil" [text]="true" size="small" (onClick)="openDialog(application)" />
-          <p-button icon="pi pi-trash" [text]="true" size="small" severity="danger" (onClick)="deleteApplication(application)" />
-        </div> -->
       </tr>
     </ng-template>
     <ng-template #expandedrow let-application>
       <tr>
         <td colspan="8">
-          <div class="flex justify-between">
+          <div class="flex items-center justify-between">
             <div>
               Adresse
               <br />
