@@ -1,1 +1,0 @@
-import{g as a,h as b}from"./chunk-GMIHYJPF.js";import"./chunk-NYCCKBWR.js";import"./chunk-TZ4J2364.js";import"./chunk-JPJNKTZL.js";import"./chunk-EV2Y2F2S.js";import"./chunk-7HJCJGS6.js";import"./chunk-WIGCV5ZO.js";import"./chunk-IZSKTIJ7.js";import"./chunk-MG3ERZGY.js";export{a as cloudinaryConfig,b as routes};
