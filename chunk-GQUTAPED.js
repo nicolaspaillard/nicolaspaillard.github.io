@@ -1,1 +1,0 @@
-import{ca as t,ob as n,yc as i}from"./chunk-4TPAJTK6.js";var o="2.1.1",I={sdkSemver:o,techVersion:i.full,sdkCode:"K"};var V=(()=>{class e{}return e.\u0275fac=function(l){return new(l||e)},e.\u0275mod=n({type:e}),e.\u0275inj=t({imports:[[]]}),e})();export{V as a};
