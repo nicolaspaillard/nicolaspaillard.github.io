@@ -88,15 +88,15 @@ export class DesignerService {
       title = `nicolaspaillard.github.io/${title}# `;
       let result: string[] = [];
       data.forEach((item: Experience | Category | Section, index) => {
-        if (!(item instanceof Section)) result.push(title + item.title);
-        if (item instanceof Experience) {
-          if (item.text) result.push(title + item.text);
-          if (item.activities) result.push(...item.activities.split(";").map((activity) => title + activity));
-        } else if (item instanceof Category) {
-          result.push(...item.skills.map((skill) => title + skill.title));
-        } else if (item instanceof Section) {
-          result.push(title + item.text);
-        }
+        result.push(title + (item instanceof Section ? item.text : item.title));
+        // if (item instanceof Experience) {
+        //   if (item.text) result.push(title + item.text);
+        //   if (item.activities) result.push(...item.activities.split(";").map((activity) => title + activity));
+        // } else if (item instanceof Category) {
+        //   result.push(...item.skills.map((skill) => title + skill.title));
+        // } else if (item instanceof Section) {
+        //   result.push(title + item.text);
+        // }
       });
       return result;
     };
