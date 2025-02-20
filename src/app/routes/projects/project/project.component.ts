@@ -6,11 +6,12 @@ import { Cloudinary } from "@cloudinary/url-gen";
 import { scale } from "@cloudinary/url-gen/actions/resize";
 import { ButtonModule } from "primeng/button";
 import { CarouselModule } from "primeng/carousel";
+import { ImageModule } from "primeng/image";
 import { cloudinaryConfig } from "src/main";
 
 @Component({
   selector: "app-project",
-  imports: [CommonModule, ButtonModule, CarouselModule],
+  imports: [CommonModule, ButtonModule, CarouselModule, ImageModule],
   templateUrl: "./project.component.html",
 })
 export class ProjectComponent {
@@ -25,8 +26,7 @@ export class ProjectComponent {
   user: any = null;
   constructor(private authService: AuthService) {
     this.authService.user().subscribe((user) => (this.user = user));
-    console.log(this.project);
   }
   // prettier-ignore
-  getURL = (image: string) => this.cld.image("nicolasPaillard/" + image).resize(scale().height(500)).toURL();
+  getURL = (image: string, thumbnail: boolean = true) => this.cld.image("nicolasPaillard/" + image).resize(thumbnail?(scale().height(500)):(scale().width(1500))).toURL();
 }

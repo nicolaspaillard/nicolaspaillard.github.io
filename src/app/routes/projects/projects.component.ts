@@ -75,6 +75,13 @@ export class ProjectsComponent {
       activities: this.activities.join(";"),
     });
   };
+  moveActivity = (activity: string, up: boolean = false) => {
+    let fromIndex = this.activities.indexOf(activity);
+    if ((fromIndex == 0 && up) || (fromIndex == this.activities.length - 1 && !up)) return;
+    var element = this.activities[fromIndex];
+    this.activities.splice(fromIndex, 1);
+    this.activities.splice(fromIndex + (up ? -1 : 1), 0, element);
+  };
   createProject = async (images: File[]) => {
     this.projectsService.createProject(this.formProject.value as Project, images);
   };

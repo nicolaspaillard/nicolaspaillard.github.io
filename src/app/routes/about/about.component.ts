@@ -45,7 +45,7 @@ export class AboutComponent {
     this.authService.user().subscribe((user) => (this.user = user));
     this.sectionsService.sections().subscribe((sections) => (this.sections = sections));
   }
-  openDialogSection = (section?: Section) => {
+  openDialog = (section?: Section) => {
     if (section) {
       this.idEdit = section.id!;
       let tmp = new Section(section);

@@ -35,25 +35,20 @@ img
 .p-carousel
     .p-carousel-content
         position: relative
-        .p-carousel-container
-            position: relative
-            > button
-                background-color: rgba(0,0,0,0.1)
-                backdrop-filter: blur(3px)
-                width: fit-content
-                height: fit-content
-                border-radius: 0
-                z-index: 1
-                position: absolute
-                top: 50%
-                transform: translatey(-100%)
-                margin: 0
-                &:first-of-type
-                    left: theme('spacing.1')
-                &:last-of-type
-                    right: theme('spacing.1')
-    .p-carousel-indicators
-        display: none
+        > *:not(.p-carousel-viewport)
+            position: absolute
+            z-index: 1
+            &:first-child
+                left: theme('spacing.1')
+            &:last-child
+                right: theme('spacing.1')
+            > button:hover
+                background-color: rgba(0,0,0,.3)
+
+            // > button
+            //     padding: 0
+            //     height: fit-content !important
+            //     width: fit-content !important
 
 .p-select-items-wrapper
     .p-scroller-content

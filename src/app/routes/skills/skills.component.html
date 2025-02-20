@@ -1,5 +1,5 @@
-<div class="flex min-h-full flex-col items-center justify-center px-5 py-5 lg:px-0">
-  <p-button *ngIf="user && user['roles'].includes('admin')" size="large" class="mb-5 block text-center" icon="pi pi-plus" [text]="true" (onClick)="openDialog()"></p-button>
+<div class="flex min-h-full flex-col justify-center gap-10 p-10 lg:px-0">
+  <p-button *ngIf="user && user['roles'].includes('admin')" size="large" class="block text-center" icon="pi pi-plus" [text]="true" (onClick)="openDialog()"></p-button>
   <div class="grid grid-cols-1 items-stretch gap-5 lg:grid-cols-3">
     <app-category *ngFor="let category of categories" [skills]="category.skills" [title]="category.title" (onCategoryEdit)="editing = category.title; formCategory.setValue({ title: category.title }); isDialogCategoryShown = true" (onCategoryRemoved)="deleteCategory($event)" (onSkillEdit)="openDialog($event)" (onSkillRemoved)="deleteSkill($event)"></app-category>
   </div>

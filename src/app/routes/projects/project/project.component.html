@@ -1,6 +1,6 @@
-<div class="group card relative h-full p-5">
+<div class="group card relative h-full p-10">
   <h2 class="text-center text-xl font-bold">
-    {{ project.title }}
+    {{ project.url }}
     <span *ngIf="project.url" class="text-sm">
       <a [href]="'https://' + project.url" target="_blank" class="text-[#00a000]"><i class="pi pi-link"></i></a>
     </span>
@@ -9,9 +9,13 @@
     <p-button icon="pi pi-pencil" [text]="true" size="small" (onClick)="onProjectEdit.emit(project)" />
     <p-button icon="pi pi-trash" [text]="true" size="small" severity="danger" (onClick)="onProjectRemoved.emit(project)" />
   </div>
-  <p-carousel *ngIf="project.images" [value]="project.images.split(';')" [numVisible]="1" [numScroll]="1" [circular]="true" autoplayInterval="3000">
+  <p-carousel *ngIf="project.images" [value]="project.images.split(';')" [numVisible]="1" [numScroll]="1" [showIndicators]="false" [circular]="true" autoplayInterval="3000">
     <ng-template let-image pTemplate="item">
-      <img [src]="getURL(image)" class="block w-full border" />
+      <p-image [src]="getURL(image)" [previewImageSrc]="getURL(image, false)" class="[&_button]:!w-full" imageClass="w-full" width="250" [preview]="true" appendTo="body">
+        <ng-template #indicator>
+          <i class="pi pi-search"></i>
+        </ng-template>
+      </p-image>
     </ng-template>
     <ng-template pTemplate="previousicon">
       <p-button icon="pi pi-angle-left" class="block" [outlined]="true" size="small"></p-button>
@@ -20,7 +24,7 @@
       <p-button icon="pi pi-angle-right" class="block" [outlined]="true" size="small"></p-button>
     </ng-template>
   </p-carousel>
-  <i class="block text-center">{{ project.company }} {{ project.start | date: "MM/yyyy" }} - {{ project.end | date: "MM/yyyy" }}</i>
+  <i class="block text-center">{{ project.company }} | {{ project.start | date: "MM/yyyy" }} - {{ project.end | date: "MM/yyyy" }}</i>
   <p>{{ project.text }}</p>
   <h3 class="mb-0 text-lg font-bold">Activités</h3>
   <ul class="m-0">
