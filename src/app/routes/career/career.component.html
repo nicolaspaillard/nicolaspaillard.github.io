@@ -1,13 +1,13 @@
-<div class="flex min-h-full flex-col justify-center gap-10 p-10 lg:px-0">
+<div class="flex min-h-full flex-col justify-center p-10">
   <p-button *ngIf="user && user['roles'].includes('admin')" size="large" class="block text-center" icon="pi pi-plus" [text]="true" (onClick)="openDialog()"></p-button>
   <div class="relative w-full grow py-10">
-    <div class="absolute left-1/2 top-1 h-full w-[2px] -translate-x-[calc(100%-1px)] rounded-sm bg-[green]"></div>
-    <div class="absolute left-1/2 top-0 -translate-x-[10px] border-b-[15px] border-l-[10px] border-r-[10px] border-t-0 border-solid border-transparent border-b-[green]"></div>
+    <div class="absolute top-1 left-1/2 h-full w-[2px] -translate-x-[calc(100%-1px)] rounded-sm bg-[green]"></div>
+    <div class="absolute top-0 left-1/2 -translate-x-[10px] border-t-0 border-r-[10px] border-b-[15px] border-l-[10px] border-solid border-transparent border-b-[green]"></div>
     <app-experience (onExperienceRemoved)="deleteExperience(experience)" (onExperienceEdit)="openDialog(experience)" *ngFor="let experience of experiences; let index = index" [experience]="experience" [right]="index % 2 != 0" class="block nth-[n+4]:mt-5 lg:nth-[n+4]:-mt-10"></app-experience>
   </div>
 </div>
 <p-dialog [modal]="true" [header]="(idEdit.length ? 'Modifier' : 'Ajouter') + ' une expérience'" contentStyleClass="flex flex-col gap-2" [dismissableMask]="true" [(visible)]="isDialogShown">
-  <form [formGroup]="formExperience" class="flex flex-col gap-2 *:flex *:justify-evenly *:gap-2 [&>label]:gap-0 [&_label]:flex [&_label]:w-full [&_label]:flex-col">
+  <form [formGroup]="formExperience" class="flex flex-col gap-2 *:flex *:justify-evenly *:gap-2 [&_label]:flex [&_label]:w-full [&_label]:flex-col [&>label]:gap-0">
     <div>
       <label>
         Début

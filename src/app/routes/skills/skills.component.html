@@ -1,12 +1,12 @@
-<div class="flex min-h-full flex-col justify-center gap-10 p-10 lg:px-0">
+<div class="flex min-h-full flex-col justify-center p-10">
   <p-button *ngIf="user && user['roles'].includes('admin')" size="large" class="block text-center" icon="pi pi-plus" [text]="true" (onClick)="openDialog()"></p-button>
-  <div class="grid grid-cols-1 items-stretch gap-5 lg:grid-cols-3">
+  <div class="grid grid-cols-1 items-stretch gap-10 lg:grid-cols-3">
     <app-category *ngFor="let category of categories" [skills]="category.skills" [title]="category.title" (onCategoryEdit)="editing = category.title; formCategory.setValue({ title: category.title }); isDialogCategoryShown = true" (onCategoryRemoved)="deleteCategory($event)" (onSkillEdit)="openDialog($event)" (onSkillRemoved)="deleteSkill($event)"></app-category>
   </div>
 </div>
 
 <p-dialog [modal]="true" header="Modifier une catégorie" contentStyleClass="flex flex-col gap-2" [dismissableMask]="true" [(visible)]="isDialogCategoryShown">
-  <form [formGroup]="formCategory" class="flex flex-col gap-2 *:flex *:justify-evenly *:gap-2 [&>label]:gap-0 [&_label]:flex [&_label]:w-full [&_label]:flex-col">
+  <form [formGroup]="formCategory" class="flex flex-col gap-2 *:flex *:justify-evenly *:gap-2 [&_label]:flex [&_label]:w-full [&_label]:flex-col [&>label]:gap-0">
     <label>
       Titre
       <p-select [options]="categories" formControlName="title" placeholder="Catégorie" [editable]="true" optionLabel="title" optionValue="title" appendTo="body" />
@@ -18,7 +18,7 @@
   </div>
 </p-dialog>
 <p-dialog [modal]="true" [header]="(editing.length ? 'Modifier' : 'Ajouter') + ' une compétence'" contentStyleClass="flex flex-col gap-2" [dismissableMask]="true" [(visible)]="isDialogSkillShown">
-  <form [formGroup]="formSkill" class="flex flex-col gap-2 *:flex *:justify-evenly *:gap-2 [&>label]:gap-0 [&_label]:flex [&_label]:w-full [&_label]:flex-col">
+  <form [formGroup]="formSkill" class="flex flex-col gap-2 *:flex *:justify-evenly *:gap-2 [&_label]:flex [&_label]:w-full [&_label]:flex-col [&>label]:gap-0">
     <label>
       Titre
       <input pInputText type="text" formControlName="title" />

@@ -1,5 +1,5 @@
-<div class="flex min-h-full flex-col p-10 lg:px-0">
-  <p-button *ngIf="user && user['roles'].includes('admin')" size="large" class="block text-center" icon="pi pi-plus" [text]="true" (onClick)="openDialog()"></p-button>
+<div class="flex min-h-full flex-col">
+  <p-button *ngIf="user && user['roles'].includes('admin')" size="large" class="mt-2 block text-center" icon="pi pi-plus" [text]="true" (onClick)="openDialog()"></p-button>
   <p-table dataKey="id" [value]="applications" size="small" [expandedRowKeys]="expandedRows">
     <ng-template #header>
       <tr>
@@ -78,7 +78,7 @@
   </p-table>
 </div>
 <p-dialog [modal]="true" [header]="(editing.id.length ? 'Modifier' : 'Ajouter') + ' une candidature'" contentStyleClass="flex flex-col gap-2" [dismissableMask]="true" [(visible)]="isDialogShown">
-  <form [formGroup]="formApplication" class="flex flex-col gap-2 *:flex *:justify-evenly *:gap-2 [&>label]:gap-0 [&_label]:flex [&_label]:w-full [&_label]:flex-col">
+  <form [formGroup]="formApplication" class="flex flex-col gap-2 *:flex *:justify-evenly *:gap-2 [&_label]:flex [&_label]:w-full [&_label]:flex-col [&>label]:gap-0">
     <div>
       <label>
         Titre

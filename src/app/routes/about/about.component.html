@@ -1,11 +1,11 @@
-<div class="flex min-h-full flex-col justify-center gap-10 p-10 lg:px-0">
+<div class="flex min-h-full flex-col justify-center p-10">
   <p-button *ngIf="user && user['roles'].includes('admin')" size="large" class="block text-center" icon="pi pi-plus" [text]="true" (onClick)="openDialog()"></p-button>
   <div class="grid grid-cols-2 gap-10">
     <app-section *ngFor="let section of sections" [section]="section" (onSectionEdit)="openDialog(section)" (onSectionRemoved)="deleteSection(section)"></app-section>
   </div>
 </div>
 <p-dialog [modal]="true" [header]="(idEdit.length ? 'Modifier' : 'Ajouter') + ' une expérience'" contentStyleClass="flex flex-col gap-2" [dismissableMask]="true" [(visible)]="isDialogSectionShown">
-  <form [formGroup]="formSection" class="flex flex-col gap-2 *:flex *:justify-evenly *:gap-2 [&>label]:gap-0 [&_label]:flex [&_label]:w-full [&_label]:flex-col">
+  <form [formGroup]="formSection" class="flex flex-col gap-2 *:flex *:justify-evenly *:gap-2 [&_label]:flex [&_label]:w-full [&_label]:flex-col [&>label]:gap-0">
     <label>
       Texte
       <textarea pTextarea formControlName="text"></textarea>

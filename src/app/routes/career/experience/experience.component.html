@@ -10,20 +10,23 @@
     <p-button *ngIf="user && user['roles'].includes('admin')" icon="pi pi-trash" [text]="true" size="small" severity="danger" (onClick)="onExperienceRemoved.emit(experience)" />
   </div>
 
-  <div class="flex shrink flex-col border-0 border-solid border-white/25 lg:w-48 lg:shrink-0 xl:w-60 [&>*:last-child]:mb-0" [ngClass]="right ? 'mr-5 border-r pr-5 text-end' : 'mr-5 border-r pr-5 text-end lg:mr-0 lg:ml-5 lg:border-r-0 lg:border-l lg:pl-5 lg:text-start'">
-    <h3>
+  <div class="flex shrink flex-col border-0 border-solid border-white/25 lg:w-48 lg:shrink-0 xl:w-60" [ngClass]="right ? 'mr-5 border-r pr-5 text-end' : 'mr-5 border-r pr-5 text-end lg:mr-0 lg:ml-5 lg:border-r-0 lg:border-l lg:pl-5 lg:text-start'">
+    <i>
       <ng-container *ngIf="experience.end; else day">{{ experience.start | date: "MM/yyyy" }} - {{ experience.end | date: "MM/yyyy" }}</ng-container>
       <ng-template #day>{{ experience.start | date: "dd/MM/yyyy" }}</ng-template>
-    </h3>
-    <span *ngIf="experience.company">{{ experience.company }}</span>
+    </i>
+    <h3 class="text-lg font-bold" *ngIf="experience.company">{{ experience.company }}</h3>
     <span *ngIf="experience.address">{{ experience.address }}</span>
     <span *ngIf="experience.city || experience.postcode">{{ experience.city }} {{ experience.postcode }}</span>
   </div>
-  <div [ngClass]="{ 'text-end': !right }" class="[&>*:last-child]:mb-0">
-    <h3>{{ experience.title }}</h3>
-    <p *ngIf="experience.text">{{ experience.text }}</p>
-    <ul class="list-inside list-disc" *ngIf="experience.activities" [dir]="right ? 'ltr' : 'rtl'" [ngClass]="{ 'text-start': !right }">
-      <li *ngFor="let activity of experience.activities.split(';')">{{ activity }}</li>
-    </ul>
+  <div [ngClass]="{ 'text-end': !right }">
+    <h2 class="mb-3 text-xl font-bold">{{ experience.title }}</h2>
+    <p class="mb-2" *ngIf="experience.text">{{ experience.text }}</p>
+    <ng-container *ngIf="experience.activities">
+      <h3 class="text-lg font-bold">Activités</h3>
+      <ul class="list-inside list-disc" [dir]="right ? 'ltr' : 'rtl'" [ngClass]="{ 'text-start': !right }">
+        <li *ngFor="let activity of experience.activities.split(';')">{{ activity }}</li>
+      </ul>
+    </ng-container>
   </div>
 </div>

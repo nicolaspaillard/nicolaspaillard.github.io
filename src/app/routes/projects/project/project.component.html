@@ -1,8 +1,8 @@
 <div class="group card relative h-full p-10">
-  <h2 class="text-center text-xl font-bold">
+  <h2 class="mb-3 text-center text-xl font-bold">
     {{ project.url }}
     <span *ngIf="project.url" class="text-sm">
-      <a [href]="'https://' + project.url" target="_blank" class="text-[#00a000]"><i class="pi pi-link"></i></a>
+      <a [href]="'https://' + project.url" target="_blank" class="text-[#00c800]"><i class="pi pi-link"></i></a>
     </span>
   </h2>
   <div *ngIf="user && user['roles'].includes('admin')" class="absolute top-0 right-0 z-10 transition-opacity group-hover:opacity-100 lg:opacity-0">
@@ -25,7 +25,7 @@
     </ng-template>
   </p-carousel>
   <i class="block text-center">{{ project.company }} | {{ project.start | date: "MM/yyyy" }} - {{ project.end | date: "MM/yyyy" }}</i>
-  <p>{{ project.text }}</p>
+  <p class="my-2">{{ project.text }}</p>
   <h3 class="mb-0 text-lg font-bold">Activités</h3>
   <ul class="m-0 list-inside list-disc">
     <li *ngFor="let activity of project.activities.split(';')">{{ activity }}</li>
