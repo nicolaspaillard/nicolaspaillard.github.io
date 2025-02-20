@@ -3,7 +3,7 @@ import { Component, EventEmitter, Input, Output } from "@angular/core";
 import { AuthService } from "@app/shared/services/auth.service";
 import { Project } from "@app/shared/services/projects.service";
 import { Cloudinary } from "@cloudinary/url-gen";
-import { fill } from "@cloudinary/url-gen/actions/resize";
+import { scale } from "@cloudinary/url-gen/actions/resize";
 import { ButtonModule } from "primeng/button";
 import { CarouselModule } from "primeng/carousel";
 import { cloudinaryConfig } from "src/main";
@@ -25,7 +25,8 @@ export class ProjectComponent {
   user: any = null;
   constructor(private authService: AuthService) {
     this.authService.user().subscribe((user) => (this.user = user));
+    console.log(this.project);
   }
   // prettier-ignore
-  getURL = (image: string) => this.cld.image("nicolasPaillard/" + image).resize(fill().width(500).aspectRatio("1.0")).toURL();
+  getURL = (image: string) => this.cld.image("nicolasPaillard/" + image).resize(scale().height(500)).toURL();
 }

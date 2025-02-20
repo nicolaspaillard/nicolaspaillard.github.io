@@ -34,7 +34,6 @@ export class AboutComponent {
   isDialogSectionShown: boolean = false;
   idEdit: string = "";
   formSection = new FormGroup({
-    title: new FormControl("", [Validators.required]),
     text: new FormControl("", [Validators.required]),
   });
   sections: Section[] = [];
@@ -66,7 +65,7 @@ export class AboutComponent {
   };
   deleteSection = (section: Section) => {
     this.confirmService.confirm({
-      message: `Voulez-vous vraiment supprimer '${section.title}' ?`,
+      message: `Voulez-vous vraiment supprimer '${section.text}' ?`,
       accept: async () => {
         this.sectionsService.deleteSection(section);
       },

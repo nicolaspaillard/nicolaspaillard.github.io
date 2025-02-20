@@ -88,7 +88,7 @@ export class DesignerService {
       title = `nicolaspaillard.github.io/${title}# `;
       let result: string[] = [];
       data.forEach((item: Experience | Category | Section, index) => {
-        result.push(title + item.title);
+        if (!(item instanceof Section)) result.push(title + item.title);
         if (item instanceof Experience) {
           if (item.text) result.push(title + item.text);
           if (item.activities) result.push(...item.activities.split(";").map((activity) => title + activity));
@@ -154,7 +154,7 @@ export class DesignerService {
         title: "Nicolas Paillard",
         subtitle: "Développeur Full-Stack",
         picture: await this.getPhoto(),
-        intro: [[this.sections.length ? this.sections[0].text : "test"]],
+        intro: [[this.sections.length ? this.sections.map((section) => section.text).join("\n") : ""]],
         skills: JSON.stringify(this.categories.map((category) => ["\t- " + category.title + " : " + category.skills.map((skill) => skill.title).join(", ")])),
         experiences: JSON.stringify(formatExperiences(this.experiences.filter((experience) => experience.end && experience.start.getTime() != experience.end.getTime()))),
         address: "Montpellier",

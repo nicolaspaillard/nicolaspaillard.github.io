@@ -1,10 +1,9 @@
 import { Injectable } from "@angular/core";
-import { addDoc, collection, deleteDoc, doc, Firestore, getDocs, query, setDoc } from "@angular/fire/firestore";
+import { addDoc, collection, deleteDoc, doc, Firestore, getDocs, orderBy, query, setDoc } from "@angular/fire/firestore";
 import { ReplaySubject, Subject } from "rxjs";
 
 export class Section {
   id?: string;
-  title: string;
   text: string;
   constructor(section: Section) {
     Object.assign(this, section);
@@ -19,7 +18,7 @@ export class SectionsService {
   private _sections: Subject<Section[]> = new ReplaySubject(1);
   constructor(private db: Firestore) {
     try {
-      getDocs(query(collection(this.db, "data", "sections", "sections"))).then((sections) => {
+      getDocs(query(collection(this.db, "data", "sections", "sections"), orderBy("rank"))).then((sections) => {
         sections.docs.forEach((doc) => {
           let section: Section = new Section(doc.data() as any);
           section.id = doc.id;

@@ -3,6 +3,5 @@
     <p-button icon="pi pi-pencil" [text]="true" size="small" (onClick)="onSectionEdit.emit(section)" />
     <p-button icon="pi pi-trash" [text]="true" size="small" severity="danger" (onClick)="onSectionRemoved.emit(section)" />
   </div>
-  <h2>{{ section.title }}</h2>
   <p>{{ section.text }}</p>
 </div>

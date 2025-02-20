@@ -1,4 +1,4 @@
-<div class="flex min-h-full flex-col gap-10 py-10">
+<div class="flex min-h-full flex-col justify-center gap-10 py-10">
   <p-button *ngIf="user && user['roles'].includes('admin')" size="large" class="block text-center" icon="pi pi-plus" [text]="true" (onClick)="openDialog()"></p-button>
   <div class="grid grid-cols-3 items-stretch gap-10">
     <app-project *ngFor="let project of projects" [project]="project" (onProjectEdit)="openDialog(project)" (onProjectRemoved)="deleteProject(project)"></app-project>
