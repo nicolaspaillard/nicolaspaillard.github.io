@@ -15,6 +15,7 @@ module.exports = {
         },
       });
     }),
+    require("tailwindcss-primeui"),
   ],
   corePlugins: {
     preflight: false,

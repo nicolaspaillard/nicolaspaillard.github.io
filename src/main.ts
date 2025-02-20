@@ -721,6 +721,12 @@ bootstrapApplication(AppComponent, {
     providePrimeNG({
       theme: {
         preset: matrix,
+        options: {
+          cssLayer: {
+            name: "primeng",
+            order: "tailwind-base, primeng, tailwind-utilities",
+          },
+        },
       },
       ripple: true,
     }),
