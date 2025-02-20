@@ -52,7 +52,7 @@
         <input pInputText formControlName="city" />
       </label>
     </div>
-    <label class="!block">
+    <label class="block!">
       Activités
       <span *ngIf="!activities.length" class="opacity-50">&nbsp;(Aucune activité)</span>
       <div *ngFor="let activity of activities" class="group relative flex items-center justify-between ps-6 transition-colors after:absolute after:left-2 after:h-[6px] after:w-[6px] after:rounded-full after:bg-white after:opacity-50 after:content-[''] hover:bg-black/10">
@@ -72,7 +72,7 @@
         <button [disabled]="!activity.value" type="button" pButton icon="pi pi-plus" (click)="addActivity(activity.value)"></button>
       </p-inputGroup>
     </label>
-    <label class="!block">
+    <label class="block!">
       Images
       <span *ngIf="editing.id && !images._files.length" class="opacity-50">&nbsp;(Aucune modification)</span>
       <p-fileUpload #images [multiple]="true" accept="image/*">

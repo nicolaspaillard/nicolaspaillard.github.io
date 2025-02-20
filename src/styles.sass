@@ -1,56 +1,50 @@
-@import "primeicons/primeicons.css"
-@import url('https://fonts.googleapis.com/css2?family=Aldrich&display=swap')
-@tailwind base
-@tailwind components
-@tailwind utilities
+@use "tailwindcss" as *
+@use "primeicons/primeicons.css" as *
+@plugin "tailwindcss-primeui"
+@import "https://fonts.googleapis.com/css2?family=Aldrich&display=swap"
 
-html,body
-    margin: 0
-    height: 100%
+@layer components
+  .card
+    background-color: rgba(20, 20, 20, 0.1)
+    border: 2px solid #00a000
+    backdrop-filter: blur(4px)
 
+html,
 body
-    font-family: Aldrich
-    background-color: black
-    color: white
+  height: 100%
+  font-family: Aldrich
+  background-color: black
+  line-height: 1.2
 
-h1,h2,h3,h4,h5,h6
-    font-size: 16px
-    margin-top: 0
-
-img
-    display: block
-
-.p-link,.p-component
-    border-radius: 0 !important
+.p-link,
+.p-component
+  border-radius: 0 !important
 
 .p-button-icon-only.p-button-sm
-    width: auto !important
+  width: auto !important
 
-.p-datepicker,.p-inputtext,.p-select
-    width: 100%
+.p-datepicker,
+.p-inputtext,
+.p-select
+  width: 100%
 
-.p-button:not([class*='p-button-'])
-    color: black !important
+.p-button:not([class*="p-button-"])
+  color: black !important
 
-.p-carousel
-    .p-carousel-content
-        position: relative
-        > *:not(.p-carousel-viewport)
-            position: absolute
-            z-index: 1
-            &:first-child
-                left: theme('spacing.1')
-            &:last-child
-                right: theme('spacing.1')
-            > button:hover
-                background-color: rgba(0,0,0,.3)
+.p-carousel .p-carousel-content
+  position: relative
 
-            // > button
-            //     padding: 0
-            //     height: fit-content !important
-            //     width: fit-content !important
+.p-carousel .p-carousel-content
+  > *:not(.p-carousel-viewport)
+    position: absolute
+    z-index: 1
+    &:first-child
+      left: calc(var(--spacing) * 1)
+    &:last-child
+      right: calc(var(--spacing) * 1)
+    > button:hover
+      background-color: rgba(0, 0, 0, 0.3) !important
 
-.p-select-items-wrapper
-    .p-scroller-content
-        position: relative
-        width: 100%
+.p-select-items-wrapper .p-scroller-content
+  position: relative
+  width: 100%

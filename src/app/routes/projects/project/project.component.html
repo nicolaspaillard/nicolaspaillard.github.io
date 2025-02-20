@@ -5,13 +5,13 @@
       <a [href]="'https://' + project.url" target="_blank" class="text-[#00a000]"><i class="pi pi-link"></i></a>
     </span>
   </h2>
-  <div *ngIf="user && user['roles'].includes('admin')" class="absolute right-0 top-0 z-10 transition-opacity group-hover:opacity-100 lg:opacity-0">
+  <div *ngIf="user && user['roles'].includes('admin')" class="absolute top-0 right-0 z-10 transition-opacity group-hover:opacity-100 lg:opacity-0">
     <p-button icon="pi pi-pencil" [text]="true" size="small" (onClick)="onProjectEdit.emit(project)" />
     <p-button icon="pi pi-trash" [text]="true" size="small" severity="danger" (onClick)="onProjectRemoved.emit(project)" />
   </div>
   <p-carousel *ngIf="project.images" [value]="project.images.split(';')" [numVisible]="1" [numScroll]="1" [showIndicators]="false" [circular]="true" autoplayInterval="3000">
     <ng-template let-image pTemplate="item">
-      <p-image [src]="getURL(image)" [previewImageSrc]="getURL(image, false)" class="[&_button]:!w-full" imageClass="w-full" width="250" [preview]="true" appendTo="body">
+      <p-image [src]="getURL(image)" [previewImageSrc]="getURL(image, false)" class="[&_button]:w-full!" imageClass="w-full" width="250" [preview]="true" appendTo="body">
         <ng-template #indicator>
           <i class="pi pi-search"></i>
         </ng-template>
@@ -27,7 +27,7 @@
   <i class="block text-center">{{ project.company }} | {{ project.start | date: "MM/yyyy" }} - {{ project.end | date: "MM/yyyy" }}</i>
   <p>{{ project.text }}</p>
   <h3 class="mb-0 text-lg font-bold">Activités</h3>
-  <ul class="m-0">
+  <ul class="m-0 list-inside list-disc">
     <li *ngFor="let activity of project.activities.split(';')">{{ activity }}</li>
   </ul>
 </div>

@@ -8,6 +8,6 @@
     <p-button (onClick)="downloadTemplate()" icon="pi pi-download" label="Télécharger"></p-button>
     <p-button (onClick)="downloadPDF()" icon="pi pi-file-pdf" label="Générer"></p-button>
   </div>
-  <p-splitbutton menuStyleClass="!absolute" class="mx-auto lg:hidden" label="Sauvegarder" (onClick)="uploadTemplate()" [model]="menuItems" />
+  <p-splitbutton menuStyleClass="absolute!" class="mx-auto lg:hidden" label="Sauvegarder" (onClick)="uploadTemplate()" [model]="menuItems" />
   <div id="container" class="mt-2 h-full w-full overflow-hidden"></div>
 </div>

@@ -10,8 +10,8 @@
     "yzhang.markdown-all-in-one",
     "christian-kohler.path-intellisense",
     "esbenp.prettier-vscode",
-    "syler.sass-indented",
     "bradlc.vscode-tailwindcss",
-    "ecmel.vscode-html-css"
+    "ecmel.vscode-html-css",
+    "syler.sass-indented"
   ]
 }

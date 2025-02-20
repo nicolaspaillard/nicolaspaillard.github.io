@@ -14,15 +14,15 @@
   "workbench.editor.labelFormat": "default",
   "prettier.bracketSameLine": true,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "[sass]": {
-    "editor.defaultFormatter": "syler.sass-indented"
-  },
   "files.autoSave": "onFocusChange",
   "files.associations": {
-    "*.css": "css",
-    "css": "css"
+    "*.sass": "sass",
+    "*.scss,*.css": "tailwindcss"
   },
   "[typescript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[sass]": {
+    "editor.defaultFormatter": "syler.sass-indented"
   }
 }
