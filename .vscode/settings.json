@@ -16,13 +16,16 @@
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "files.autoSave": "onFocusChange",
   "files.associations": {
-    "*.sass": "sass",
-    "*.scss,*.css": "tailwindcss"
+    "*.css": "tailwindcss",
+    "*.scss": "tailwindcss",
+    "*.sass": "sass"
   },
   "[typescript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "[sass]": {
     "editor.defaultFormatter": "syler.sass-indented"
-  }
+  },
+  "tailwindCSS.experimental.configFile": "src/styles.scss",
+  "css.styleSheets": ["node_modules/primeicons/primeicons.css", "src/styles.scss"]
 }

@@ -1,9 +1,9 @@
-import { Injectable } from "@angular/core";
+import { Injectable, isDevMode } from "@angular/core";
 import { doc, Firestore, getDoc, setDoc } from "@angular/fire/firestore";
 import { CareerService, Experience } from "@app/shared/services/career.service";
 import { Cloudinary } from "@cloudinary/url-gen";
 import { fill } from "@cloudinary/url-gen/actions/resize";
-import { cloneDeep, Template } from "@pdfme/common";
+import { cloneDeep, Font, Template } from "@pdfme/common";
 import { generate } from "@pdfme/generator";
 import { Designer } from "@pdfme/ui";
 import { cloudinaryConfig } from "src/main";
@@ -27,10 +27,14 @@ const plugins = {
   Date: date,
   Time: time,
 };
-const font = {
-  Roboto_bold: {
-    data: "https://fonts.gstatic.com/s/roboto/v32/KFOlCnqEu92Fr1MmWUlfCxc4EsA.woff2",
-  },
+
+const fonts: Font = {
+  Roboto: { data: "https://fonts.cdnfonts.com/s/12165/Roboto-Regular.woff", fallback: true },
+  "Roboto thin": { data: "https://fonts.cdnfonts.com/s/12165/Roboto-Thin.woff" },
+  "Roboto light": { data: "https://fonts.cdnfonts.com/s/12165/Roboto-Light.woff" },
+  "Roboto medium": { data: "https://fonts.cdnfonts.com/s/12165/Roboto-Medium.woff" },
+  "Roboto bold": { data: "https://fonts.cdnfonts.com/s/12165/Roboto-Bold.woff" },
+  "Roboto black": { data: "https://fonts.cdnfonts.com/s/12165/Roboto-Black.woff" },
 };
 
 @Injectable({
@@ -46,7 +50,6 @@ export class DesignerService {
     },
     schemas: [[]],
   };
-
   experiences: Experience[] = [];
   categories: Category[] = [];
   sections: Section[] = [];
@@ -66,10 +69,10 @@ export class DesignerService {
   getTemplate = async () => await getDoc(doc(this.db, "data", "template")).then((document) => (document.exists() ? JSON.parse(document.data()!["template"]) : this.blank) as Template);
   timer: NodeJS.Timeout;
   init = async (containerId: string) => {
-    this.designer = new Designer({ domContainer: document.getElementById(containerId)!, template: await this.getTemplate(), plugins: plugins });
+    this.designer = new Designer({ domContainer: document.getElementById(containerId)!, template: await this.getTemplate(), plugins: plugins, options: { font: fonts } });
     this.designer.onChangeTemplate(() => {
       clearTimeout(this.timer);
-      this.timer = setTimeout(() => this.uploadTemplate(), 3000);
+      this.timer = setTimeout(() => this.uploadTemplate(), 10000);
     });
   };
   resetTemplate = () => this.designer.updateTemplate({ basePdf: { width: 210, height: 297, padding: [10, 10, 10, 10] }, schemas: [[]] });
@@ -89,26 +92,21 @@ export class DesignerService {
       let result: string[] = [];
       data.forEach((item: Experience | Category | Section, index) => {
         result.push(title + (item instanceof Section ? item.text : item.title));
-        // if (item instanceof Experience) {
-        //   if (item.text) result.push(title + item.text);
-        //   if (item.activities) result.push(...item.activities.split(";").map((activity) => title + activity));
-        // } else if (item instanceof Category) {
-        //   result.push(...item.skills.map((skill) => title + skill.title));
-        // } else if (item instanceof Section) {
-        //   result.push(title + item.text);
-        // }
       });
       return result;
     };
-    this.animationService.animate({
-      callback: async () => generate({ template: editing ? this.designer.getTemplate() : await this.getTemplate(), inputs: await this.getInputs(), plugins: plugins }).then((pdf) => window.open(URL.createObjectURL(new Blob([pdf.buffer], { type: "application/pdf" })), replace ? "_self" : "_blank")),
-      sections: [
-        { route: "home", lines: ["Accueil", "nicolaspaillard.github.io/home# " + (await this.getPhoto())] },
-        { route: "about", lines: ["A propos", ...format(this.sections, "about")] },
-        { route: "career", lines: ["Carrière", ...format(this.experiences, "career")] },
-        { route: "skills", lines: ["Compétences", ...format(this.categories, "skills")] },
-      ],
-    });
+    if (isDevMode()) {
+      generate({ template: editing ? this.designer.getTemplate() : await this.getTemplate(), inputs: await this.getInputs(), plugins: plugins, options: { font: fonts } }).then((pdf) => window.open(URL.createObjectURL(new Blob([pdf.buffer], { type: "application/pdf" })), replace ? "_self" : "_blank"));
+    } else
+      this.animationService.animate({
+        callback: async () => generate({ template: editing ? this.designer.getTemplate() : await this.getTemplate(), inputs: await this.getInputs(), plugins: plugins, options: { font: fonts } }).then((pdf) => window.open(URL.createObjectURL(new Blob([pdf.buffer], { type: "application/pdf" })), replace ? "_self" : "_blank")),
+        sections: [
+          { route: "home", lines: ["Accueil", "nicolaspaillard.github.io/home# " + (await this.getPhoto())] },
+          { route: "about", lines: ["A propos", ...format(this.sections, "about")] },
+          { route: "career", lines: ["Carrière", ...format(this.experiences, "career")] },
+          { route: "skills", lines: ["Compétences", ...format(this.categories, "skills")] },
+        ],
+      });
   };
 
   downloadTemplate = () => {
@@ -157,13 +155,14 @@ export class DesignerService {
         intro: [[this.sections.length ? this.sections.map((section) => section.text).join("\n") : ""]],
         skills: JSON.stringify(this.categories.map((category) => ["\t- " + category.title + " : " + category.skills.map((skill) => skill.title).join(", ")])),
         experiences: JSON.stringify(formatExperiences(this.experiences.filter((experience) => experience.end && experience.start.getTime() != experience.end.getTime()))),
+        hobbies: JSON.stringify([["Cuisine"], ["Festivals"], ["Voyages"], ["Sports extrêmes"]]),
         address: "Montpellier",
         phone: JSON.stringify([["07 81 48 00 36", "tel:0781480036"]]),
         email: JSON.stringify([["paillard.nicolas.pro@gmail.com", "mailto:paillard.nicolas.pro@gmail.com"]]),
         site: JSON.stringify([["nicolaspaillard.github.io", "https://nicolaspaillard.github.io"]]),
         github: JSON.stringify([["github.com/nicolaspaillard", "https://github.com/nicolaspaillard"]]),
         gitlab: JSON.stringify([["gitlab.com/nicolaspaillard", "https://gitlab.com/nicolaspaillard"]]),
-        linkedin: JSON.stringify([["nicolaspaillard.github.io", "https://nicolaspaillard.github.io"]]),
+        linkedin: JSON.stringify([["linkedin.com/in/nicolas--p", "https://www.linkedin.com/in/nicolas--p"]]),
       },
     ];
   };

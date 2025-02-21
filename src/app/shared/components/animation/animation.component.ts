@@ -36,7 +36,7 @@ export class AnimationComponent implements OnDestroy {
     this.interval = setInterval(
       () => {
         if (section >= animation.sections.length) {
-          this.skip();
+          this.finish();
           return;
         } else if (line == animation.sections[section].lines.length) {
           section++;
@@ -52,7 +52,7 @@ export class AnimationComponent implements OnDestroy {
       Math.random() * (150 - 100) + 100,
     );
   };
-  skip = () => {
+  finish = () => {
     this.callback();
     clearInterval(this.interval);
     this.isAnimationShown = false;

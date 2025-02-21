@@ -1,30 +1,29 @@
 <div
   class="group card relative flex w-full p-5 lg:w-[calc(50%-(--spacing(5)))] lg:before:content-[''] xl:w-[calc(50%-(--spacing(10)))] xl:p-10"
   [ngClass]="{
-    'lg:before:absolute lg:before:top-1/2 lg:before:h-[2px] lg:before:w-5 lg:before:-translate-y-full lg:before:bg-[green] xl:before:w-10': true,
+    'lg:before:bg-primary lg:before:absolute lg:before:top-1/2 lg:before:h-[2px] lg:before:w-5 lg:before:-translate-y-full xl:before:w-10': true,
     'lg:ml-auto lg:before:-left-[calc(--spacing(5)+1px)] xl:before:-left-[calc(--spacing(10)+1px)]': right,
-    'lg:flex-row-reverse lg:before:-right-[calc(--spacing(5)+1px)] xl:before:-right-[calc(--spacing(10)+1px)]': !right,
+    'lg:before:-right-[calc(--spacing(5)+1px)] xl:before:-right-[calc(--spacing(10)+1px)]': !right,
   }">
   <div class="absolute top-0 transition-opacity group-hover:opacity-100 lg:opacity-0" [ngClass]="right ? 'right-0 lg:left-0' : 'right-0'">
     <p-button *ngIf="user && user['roles'].includes('admin')" icon="pi pi-pencil" [text]="true" size="small" (onClick)="onExperienceEdit.emit(experience)" />
     <p-button *ngIf="user && user['roles'].includes('admin')" icon="pi pi-trash" [text]="true" size="small" severity="danger" (onClick)="onExperienceRemoved.emit(experience)" />
   </div>
-
-  <div class="flex shrink flex-col border-0 border-solid border-white/25 lg:w-48 lg:shrink-0 xl:w-60" [ngClass]="right ? 'mr-5 border-r pr-5 text-end' : 'mr-5 border-r pr-5 text-end lg:mr-0 lg:ml-5 lg:border-r-0 lg:border-l lg:pl-5 lg:text-start'">
-    <i>
+  <div class="flex shrink flex-col border-0 border-r border-solid border-white/25 pr-5 text-end lg:w-48 lg:shrink-0 xl:w-60">
+    <span class="text-primary text-xs">
       <ng-container *ngIf="experience.end; else day">{{ experience.start | date: "MM/yyyy" }} - {{ experience.end | date: "MM/yyyy" }}</ng-container>
       <ng-template #day>{{ experience.start | date: "dd/MM/yyyy" }}</ng-template>
-    </i>
-    <h3 class="text-lg font-bold" *ngIf="experience.company">{{ experience.company }}</h3>
+    </span>
+    <h3 class="-mt-2 text-lg font-bold" *ngIf="experience.company">{{ experience.company }}</h3>
     <span *ngIf="experience.address">{{ experience.address }}</span>
     <span *ngIf="experience.city || experience.postcode">{{ experience.city }} {{ experience.postcode }}</span>
   </div>
-  <div [ngClass]="{ 'text-end': !right }">
+  <div class="pl-5">
     <h2 class="mb-3 text-xl font-bold">{{ experience.title }}</h2>
     <p class="mb-2" *ngIf="experience.text">{{ experience.text }}</p>
     <ng-container *ngIf="experience.activities">
       <h3 class="text-lg font-bold">Activités</h3>
-      <ul class="list-inside list-disc" [dir]="right ? 'ltr' : 'rtl'" [ngClass]="{ 'text-start': !right }">
+      <ul class="list-inside list-disc">
         <li *ngFor="let activity of experience.activities.split(';')">{{ activity }}</li>
       </ul>
     </ng-container>
