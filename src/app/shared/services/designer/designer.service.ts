@@ -155,7 +155,6 @@ export class DesignerService {
         intro: [[this.sections.length ? this.sections.map((section) => section.text).join("\n") : ""]],
         skills: JSON.stringify(this.categories.map((category) => ["\t- " + category.title + " : " + category.skills.map((skill) => skill.title).join(", ")])),
         experiences: JSON.stringify(formatExperiences(this.experiences.filter((experience) => experience.end && experience.start.getTime() != experience.end.getTime()))),
-        hobbies: JSON.stringify([["Cuisine"], ["Festivals"], ["Voyages"], ["Sports extrêmes"]]),
         address: "Montpellier",
         phone: JSON.stringify([["07 81 48 00 36", "tel:0781480036"]]),
         email: JSON.stringify([["paillard.nicolas.pro@gmail.com", "mailto:paillard.nicolas.pro@gmail.com"]]),
