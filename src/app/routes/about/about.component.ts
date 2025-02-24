@@ -6,6 +6,7 @@ import { ConfirmService } from "@app/shared/services/frontend/confirm.service";
 import { Section, SectionsService } from "@app/shared/services/sections.service";
 import { ButtonModule } from "primeng/button";
 import { DialogModule } from "primeng/dialog";
+import { InputNumberModule } from "primeng/inputnumber";
 import { InputTextModule } from "primeng/inputtext";
 import { TextareaModule } from "primeng/textarea";
 import { SectionComponent } from "./section/section.component";
@@ -18,7 +19,7 @@ type bubble = {
 
 @Component({
   selector: "app-about",
-  imports: [CommonModule, SectionComponent, ReactiveFormsModule, DialogModule, ButtonModule, InputTextModule, TextareaModule],
+  imports: [CommonModule, SectionComponent, ReactiveFormsModule, DialogModule, ButtonModule, InputTextModule, TextareaModule, InputNumberModule],
   templateUrl: "./about.component.html",
 })
 export class AboutComponent {
@@ -34,6 +35,7 @@ export class AboutComponent {
   isDialogSectionShown: boolean = false;
   idEdit: string = "";
   formSection = new FormGroup({
+    rank: new FormControl(0, [Validators.required]),
     text: new FormControl("", [Validators.required]),
   });
   sections: Section[] = [];
@@ -53,7 +55,7 @@ export class AboutComponent {
       this.formSection.setValue(tmp);
     } else {
       this.idEdit = "";
-      this.formSection.reset();
+      this.formSection.setValue({ rank: this.sections[this.sections.length - 1].rank + 1, text: "" });
     }
     this.isDialogSectionShown = true;
   };

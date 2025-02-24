@@ -4,6 +4,7 @@ import { ReplaySubject, Subject } from "rxjs";
 
 export class Section {
   id?: string;
+  rank: number;
   text: string;
   constructor(section: Section) {
     Object.assign(this, section);
@@ -32,10 +33,22 @@ export class SectionsService {
     }
   }
   sections = () => this._sections.asObservable();
+  moveSections = (rank: number) => {
+    let previousRank: number = rank;
+    this.__sections.slice(rank).forEach((section) => {
+      if (section.rank > previousRank) return;
+      this.__sections[this.__sections.indexOf(section)].rank++;
+      let newSection = new Section({ ...section, rank: section.rank + 1 });
+      delete newSection.id;
+      setDoc(doc(this.db, "data", "sections", "sections", section.id!), Object.assign({}, newSection));
+    });
+  };
   createSection = async (section: Section) => {
     try {
+      this.moveSections(section.rank);
       section.id = (await addDoc(collection(this.db, "data", "sections", "sections"), section)).id;
       this.__sections.push(section);
+      this.__sections.sort((a, b) => a.rank! - b.rank!);
       this._sections.next(this.__sections);
     } catch (error) {
       console.error(error);
@@ -43,10 +56,12 @@ export class SectionsService {
   };
   updateSection = async (section: Section) => {
     try {
+      this.moveSections(section.rank);
       let newSection = new Section(section);
       delete newSection.id;
       await setDoc(doc(this.db, "data", "sections", "sections", section.id!), Object.assign({}, newSection));
       this.__sections[this.__sections.findIndex((tmp) => tmp.id === section.id)] = section;
+      this.__sections.sort((a, b) => a.rank! - b.rank!);
       this._sections.next(this.__sections);
     } catch (error) {
       console.error(error);

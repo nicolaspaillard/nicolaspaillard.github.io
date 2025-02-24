@@ -62,6 +62,7 @@ export class AppComponent implements OnInit {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationStart) {
         this.isTransitioning = true;
+        document.getElementById("router-container")!.scrollTop = 0;
         setTimeout(() => (this.isTransitioning = false), 600);
       }
       if (event instanceof NavigationEnd) {
@@ -122,7 +123,6 @@ function slideTo(direction: any) {
       [
         style({
           position: "absolute",
-          top: "0",
           width: "100%",
           height: "100%",
           [direction]: 0,

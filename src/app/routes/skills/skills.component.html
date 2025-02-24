@@ -1,7 +1,15 @@
-<div class="flex min-h-full flex-col justify-center p-10">
+<div class="flex min-h-full flex-col justify-center p-5 lg:p-10">
   <p-button *ngIf="user && user['roles'].includes('admin')" size="large" class="block text-center" icon="pi pi-plus" [text]="true" (onClick)="openDialog()"></p-button>
-  <div class="grid grid-cols-1 items-stretch gap-10 lg:grid-cols-3">
-    <app-category *ngFor="let category of categories" [skills]="category.skills" [title]="category.title" (onCategoryEdit)="editing = category.title; formCategory.setValue({ title: category.title }); isDialogCategoryShown = true" (onCategoryRemoved)="deleteCategory($event)" (onSkillEdit)="openDialog($event)" (onSkillRemoved)="deleteSkill($event)"></app-category>
+  <div class="flex flex-wrap justify-center gap-5 md:gap-10">
+    <app-category
+      class="flex-[0_0_100%] md:flex-[0_0_calc(50%-calc(var(--spacing)*2.5))] lg:flex-[0_0_calc(calc(100%/3)-calc(var(--spacing)*20))]"
+      *ngFor="let category of categories"
+      [skills]="category.skills"
+      [title]="category.title"
+      (onCategoryEdit)="editing = category.title; formCategory.setValue({ title: category.title }); isDialogCategoryShown = true"
+      (onCategoryRemoved)="deleteCategory($event)"
+      (onSkillEdit)="openDialog($event)"
+      (onSkillRemoved)="deleteSkill($event)"></app-category>
   </div>
 </div>
 

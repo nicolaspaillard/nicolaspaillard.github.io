@@ -153,7 +153,7 @@ export class DesignerService {
         subtitle: "Développeur Full-Stack",
         picture: await this.getPhoto(),
         intro: [[this.sections.length ? this.sections.map((section) => section.text).join("\n") : ""]],
-        skills: JSON.stringify(this.categories.map((category) => ["\t- " + category.title + " : " + category.skills.map((skill) => skill.title).join(", ")])),
+        skills: JSON.stringify(this.categories.map((category) => ["\t" + category.title + " : " + category.skills.map((skill) => skill.title).join(", ")])),
         experiences: JSON.stringify(formatExperiences(this.experiences.filter((experience) => experience.end && experience.start.getTime() != experience.end.getTime()))),
         address: "Montpellier",
         phone: JSON.stringify([["07 81 48 00 36", "tel:0781480036"]]),

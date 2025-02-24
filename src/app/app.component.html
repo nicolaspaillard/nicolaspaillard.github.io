@@ -1,6 +1,6 @@
 <canvas class="absolute top-0 right-0 bottom-0 left-0 opacity-50" (window:resize)="matrix()"></canvas>
-<div class="flex h-full w-full flex-col overflow-hidden" [@routeAnimations]="prepareRoute(outlet)">
-  <nav class="card sticky top-0 z-20 container mx-auto flex justify-between gap-2 border-b-0 p-2 lg:justify-center lg:border-b-2 [&_button]:h-full [&_button]:w-full">
+<div class="flex h-full w-full flex-col overflow-hidden">
+  <nav #nav class="card sticky top-0 z-20 container mx-auto flex justify-between gap-2 border-b-0 p-2 lg:justify-center lg:border-b-2 [&_button]:h-full [&_button]:w-full">
     <div class="flex gap-2">
       <p-button class="lg:hidden" icon="pi pi-bars" [text]="true" [ngClass]="{ '[&>button]:border-primary!': menuShown.checked }" (onClick)="menuShown.checked = !menuShown.checked"></p-button>
       <p-button routerLink="/" size="large" routerLinkActive="[&>button]:border-primary!" [ngClass]="{ '[&>button]:border-none!': menuShown.checked }" [routerLinkActiveOptions]="{ exact: true }" [text]="true" icon="pi pi-home"></p-button>
@@ -20,7 +20,7 @@
     <p-button *ngIf="!user" size="large" styleClass="text-black!" (onClick)="isSigninShown = true">Connexion</p-button>
     <p-button *ngIf="user" size="large" styleClass="text-black!" (onClick)="signout()">Déconnexion</p-button>
   </nav>
-  <div class="relative container mx-auto grow overflow-x-hidden" [ngClass]="{ 'overflow-hidden!': isTransitioning }">
+  <div id="router-container" class="relative container mx-auto grow overflow-x-hidden" [ngClass]="{ 'overflow-hidden!': isTransitioning }" [@routeAnimations]="prepareRoute(outlet)">
     <router-outlet #outlet="outlet"></router-outlet>
   </div>
 </div>

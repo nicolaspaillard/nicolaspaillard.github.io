@@ -690,7 +690,7 @@ const matrix = definePreset(Aura, {
 // #region routes
 export const routes: Routes = [
   { path: "", title: "Nicolas Paillard", loadComponent: () => import("@routes/home/home.component").then((m) => m.HomeComponent), data: { animation: 0 } },
-  { path: "about", title: "À propos", loadComponent: () => import("@routes/about/about.component").then((m) => m.AboutComponent), data: { animation: 1 } },
+  { path: "about", title: "Présentation", loadComponent: () => import("@routes/about/about.component").then((m) => m.AboutComponent), data: { animation: 1 } },
   { path: "career", title: "Carrière", loadComponent: () => import("@routes/career/career.component").then((m) => m.CareerComponent), data: { animation: 2 } },
   { path: "skills", title: "Compétences", loadComponent: () => import("@routes/skills/skills.component").then((m) => m.SkillsComponent), data: { animation: 3 } },
   { path: "projects", title: "Projets", loadComponent: () => import("@routes/projects/projects.component").then((m) => m.ProjectsComponent), data: { animation: 4 } },
@@ -706,6 +706,7 @@ bootstrapApplication(AppComponent, {
     provideRouter(
       routes,
       withComponentInputBinding(),
+      // withViewTransitions(),
       withInMemoryScrolling({
         scrollPositionRestoration: "enabled",
         anchorScrolling: "enabled",
