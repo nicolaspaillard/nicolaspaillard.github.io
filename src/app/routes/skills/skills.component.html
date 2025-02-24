@@ -1,8 +1,8 @@
 <div class="flex min-h-full flex-col justify-center p-5 lg:p-10">
   <p-button *ngIf="user && user['roles'].includes('admin')" size="large" class="block text-center" icon="pi pi-plus" [text]="true" (onClick)="openDialog()"></p-button>
-  <div class="flex flex-wrap justify-center gap-5 md:gap-10">
+  <div class="flex flex-wrap items-center justify-center gap-5 lg:gap-10">
     <app-category
-      class="flex-[0_0_100%] md:flex-[0_0_calc(50%-calc(var(--spacing)*2.5))] lg:flex-[0_0_calc(calc(100%/3)-calc(var(--spacing)*20))]"
+      class="flex-[0_0_100%] md:flex-[0_0_calc(50%-calc(var(--spacing)*5))] lg:flex-[0_0_calc(calc(100%/3)-calc(var(--spacing)*20/3))]"
       *ngFor="let category of categories"
       [skills]="category.skills"
       [title]="category.title"

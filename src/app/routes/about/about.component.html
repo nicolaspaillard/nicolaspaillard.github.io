@@ -1,7 +1,7 @@
-<div class="flex min-h-full flex-col justify-center p-5 md:p-10">
+<div class="flex min-h-full flex-col justify-center p-5 lg:p-10">
   <p-button *ngIf="user && user['roles'].includes('admin')" size="large" class="block text-center" icon="pi pi-plus" [text]="true" (onClick)="openDialog()"></p-button>
-  <div class="flex flex-wrap justify-center gap-5 md:gap-10">
-    <app-section class="flex-[0_0_100%] sm:flex-[0_0_calc(50%-calc(var(--spacing)*2.5))] md:flex-[0_0_calc(50%-calc(var(--spacing)*5))]" *ngFor="let section of sections" [section]="section" (onSectionEdit)="openDialog(section)" (onSectionRemoved)="deleteSection(section)"></app-section>
+  <div class="flex flex-wrap justify-center gap-5 lg:gap-10">
+    <app-section class="flex-[0_0_100%] sm:flex-[0_0_calc(50%-calc(var(--spacing)*calc(5/2)))] lg:flex-[0_0_calc(50%-calc(var(--spacing)*calc(10/2)))]" *ngFor="let section of sections" [section]="section" (onSectionEdit)="openDialog(section)" (onSectionRemoved)="deleteSection(section)"></app-section>
   </div>
 </div>
 <p-dialog [modal]="true" [header]="(idEdit.length ? 'Modifier' : 'Ajouter') + ' un paragraphe'" contentStyleClass="flex flex-col gap-2" [dismissableMask]="true" [(visible)]="isDialogSectionShown">
