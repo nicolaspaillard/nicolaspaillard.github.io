@@ -1,4 +1,4 @@
-<div class="flex min-h-full flex-col justify-center p-10">
+<div class="flex min-h-full flex-col justify-center p-5 md:p-10">
   <p-button *ngIf="user && user['roles'].includes('admin')" size="large" class="block text-center" icon="pi pi-plus" [text]="true" (onClick)="openDialog()"></p-button>
   <div class="relative w-full grow py-10">
     <div class="bg-primary absolute top-1 left-1/2 h-full w-[2px] -translate-x-[calc(100%-1px)] rounded-sm"></div>
