@@ -81,6 +81,9 @@ export class ProjectsComponent {
     var element = this.activities[fromIndex];
     this.activities.splice(fromIndex, 1);
     this.activities.splice(fromIndex + (up ? -1 : 1), 0, element);
+    this.formProject.patchValue({
+      activities: this.activities.join(";"),
+    });
   };
   createProject = async (images: File[]) => {
     this.projectsService.createProject(this.formProject.value as Project, images);

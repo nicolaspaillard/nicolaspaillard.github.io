@@ -75,6 +75,9 @@ export class CareerComponent {
     var element = this.activities[fromIndex];
     this.activities.splice(fromIndex, 1);
     this.activities.splice(fromIndex + (up ? -1 : 1), 0, element);
+    this.formExperience.patchValue({
+      activities: this.activities.join(";"),
+    });
   };
   createExperience = () => {
     this.careerService.createExperience(this.formExperience.value as Experience);

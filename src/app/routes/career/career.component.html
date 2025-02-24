@@ -50,7 +50,6 @@
       Activités
       <span *ngIf="!activities.length" class="opacity-50">&nbsp;(Aucune activité)</span>
       <div *ngFor="let activity of activities" class="group relative flex items-center justify-between ps-6 transition-colors after:absolute after:left-2 after:h-[6px] after:w-[6px] after:rounded-full after:bg-white after:opacity-50 after:content-[''] hover:bg-black/10">
-        <!-- [pTooltip]="activity" tooltipPosition="bottom" -->
         <span class="block max-w-[400px] truncate pe-2 opacity-50">{{ activity }}</span>
         <div class="opacity-0 transition-opacity group-hover:opacity-100">
           <p-button icon="pi pi-angle-up" styleClass="w-auto" [disabled]="activities[0] == activity" [text]="true" size="small" severity="secondary" (onClick)="moveActivity(activity, true)" />
