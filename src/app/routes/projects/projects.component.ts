@@ -4,7 +4,6 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from "@angula
 import { AuthService } from "@app/shared/services/auth.service";
 import { ConfirmService } from "@app/shared/services/frontend/confirm.service";
 import { Project, ProjectsService } from "@app/shared/services/projects.service";
-import { CloudinaryModule } from "@cloudinary/ng";
 import { ButtonModule } from "primeng/button";
 import { DatePickerModule } from "primeng/datepicker";
 import { DialogModule } from "primeng/dialog";
@@ -19,7 +18,7 @@ declare var cloudinary: any;
 
 @Component({
   selector: "app-projects",
-  imports: [CommonModule, ReactiveFormsModule, CloudinaryModule, ProjectComponent, ButtonModule, DialogModule, TooltipModule, InputGroupModule, DatePickerModule, InputTextModule, TextareaModule, FileUploadModule],
+  imports: [CommonModule, ReactiveFormsModule, ProjectComponent, ButtonModule, DialogModule, TooltipModule, InputGroupModule, DatePickerModule, InputTextModule, TextareaModule, FileUploadModule],
   templateUrl: "./projects.component.html",
 })
 export class ProjectsComponent {

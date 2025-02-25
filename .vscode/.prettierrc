@@ -4,5 +4,6 @@
   "htmlWhitespaceSensitivity": "ignore",
   "printWidth": 400,
   "semi": true,
+  "tailwindStylesheet": "./src/styles.scss",
   "tailwindAttributes": ["contentStyleClass", "tabStyleClass", "headerStyleClass", "styleClass", "routerLinkActive"]
 }

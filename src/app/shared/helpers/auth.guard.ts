@@ -1,9 +1,9 @@
 import { inject } from "@angular/core";
+import { User } from "@angular/fire/auth";
 import { CanActivateFn, Router } from "@angular/router";
 import { AuthService } from "@services/auth.service";
 import { EventBusService } from "@services/frontend/event-bus.service";
 import { ToastService } from "@services/frontend/toast.service";
-import { User } from "firebase/auth";
 
 export const AuthGuard: CanActivateFn = (route, state) => {
   let canActivate: boolean = false;
